@@ -184,6 +184,589 @@ html, body {
 
 const ORACLE_URL = 'https://oracle.promvis.io';
 
+// ─────────────────────────────────────────────────────────────
+// i18n — inline dictionaries + hook (mirrors the main-app pattern,
+// synced via localStorage 'promvis-lang')
+// ─────────────────────────────────────────────────────────────
+const LANG_KEY = 'promvis-lang';
+
+const en = {
+  // Nav (shared with main page)
+  'SIGN IN ↗': 'SIGN IN ↗',
+  'Talk to the Oracle': 'Talk to the Oracle',
+  'Manifesto': 'Manifesto',
+  'The Foundation': 'The Foundation',
+  'Oracle': 'Oracle',
+  'Forge': 'Forge',
+  'Trusted by': 'Trusted by',
+
+  // AlreadyInvited
+  'ALREADY INVITED?': 'ALREADY INVITED?',
+  'Sign in at oracle.promvis.io →': 'Sign in at oracle.promvis.io →',
+
+  // AccessModal — headings, ledes, badges
+  'Be among the first to read Forge.': 'Be among the first to read Forge.',
+  'Talk to the Oracle.': 'Talk to the Oracle.',
+  "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.": "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.",
+  'Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.': 'Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.',
+  'FORGE · WAITLIST': 'FORGE · WAITLIST',
+  'ORACLE · ACCESS REQUEST': 'ORACLE · ACCESS REQUEST',
+  'WE REPLY FROM ORACLE@PROMVIS.IO': 'WE REPLY FROM ORACLE@PROMVIS.IO',
+
+  // AccessModal — fields
+  'Name': 'Name',
+  'Work email': 'Work email',
+  'Firm': 'Firm',
+  'Role': 'Role',
+  'Choose…': 'Choose…',
+  'Dataset of interest': 'Dataset of interest',
+  'Why Oracle, why now?': 'Why Oracle, why now?',
+  'optional · 1–2 lines': 'optional · 1–2 lines',
+  'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.': 'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.',
+  'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.': 'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.',
+  'e.g. ABC Securities JSC': 'e.g. ABC Securities JSC',
+  'you@firm.vn': 'you@firm.vn',
+  'Use a valid work email': 'Use a valid work email',
+  'Sending…': 'Sending…',
+  'Join the waitlist': 'Join the waitlist',
+  'Request access': 'Request access',
+
+  // Roles
+  'Head of Research': 'Head of Research',
+  'Chief Investment Officer': 'Chief Investment Officer',
+  'Portfolio Manager': 'Portfolio Manager',
+  'Analyst': 'Analyst',
+  'COO / Head of Operations': 'COO / Head of Operations',
+  'Other': 'Other',
+
+  // Success state
+  'REQUEST RECEIVED': 'REQUEST RECEIVED',
+  "We'll be in touch.": "We'll be in touch.",
+  "You're on the Forge waitlist. We'll write to": "You're on the Forge waitlist. We'll write to",
+  'the moment the first dataset is ready to ship.': 'the moment the first dataset is ready to ship.',
+  'Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from': 'Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from',
+  'at': 'at',
+  'within three business days.': 'within three business days.',
+  'REF': 'REF',
+  'FIRM': 'FIRM',
+  'PRODUCT': 'PRODUCT',
+  'REPLY-BY': 'REPLY-BY',
+  'Forge — Waitlist': 'Forge — Waitlist',
+  'Oracle — Early access': 'Oracle — Early access',
+  '3 business days': '3 business days',
+  'Close': 'Close',
+
+  // Footer
+  'Products': 'Products',
+  'Oracle (Early access)': 'Oracle (Early access)',
+  'Forge (Coming soon)': 'Forge (Coming soon)',
+  'Roadmap': 'Roadmap',
+  'Company': 'Company',
+  'About': 'About',
+  'Careers': 'Careers',
+  'Contact': 'Contact',
+  'Reach us': 'Reach us',
+  'Hanoi · District Ba Đình': 'Hanoi · District Ba Đình',
+  "The AI-native financial data platform for Vietnam's capital markets.": "The AI-native financial data platform for Vietnam's capital markets.",
+  'Built by the people at ': 'Built by the people at ',
+  'MADE IN VIETNAM ★': 'MADE IN VIETNAM ★',
+  'ORIGIN': 'ORIGIN',
+  'EARLY ACCESS · 2026': 'EARLY ACCESS · 2026',
+
+  // OracleHero
+  'ORACLE · AVAILABLE · EARLY ACCESS': 'ORACLE · AVAILABLE · EARLY ACCESS',
+  'Your sharpest analyst,': 'Your sharpest analyst,',
+  'embedded in your app.': 'embedded in your app.',
+  "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.": "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.",
+  'See how it embeds': 'See how it embeds',
+
+  // BrokerAppScreen
+  'Markets': 'Markets',
+  'Detail': 'Detail',
+  'Portfolio': 'Portfolio',
+  'ORACLE INSIGHT': 'ORACLE INSIGHT',
+  'UPDATED 07:15 ICT': 'UPDATED 07:15 ICT',
+  'Q4 momentum on capacity utilisation;': 'Q4 momentum on capacity utilisation;',
+  'watch Dung Quat 2 commissioning.': 'watch Dung Quat 2 commissioning.',
+  'Fundamental': 'Fundamental',
+  'Technical': 'Technical',
+  'Sentiment': 'Sentiment',
+  'Steel volume guidance unchanged; iron-ore cost roll-off should expand Q1 margin by ~80bps if the price band holds.': 'Steel volume guidance unchanged; iron-ore cost roll-off should expand Q1 margin by ~80bps if the price band holds.',
+  '4 cited filings · ask follow-up →': '4 cited filings · ask follow-up →',
+  'Buy': 'Buy',
+  'Sell': 'Sell',
+
+  // AudienceStrip
+  'FOR': 'FOR',
+  'Vietnamese securities firms': 'Vietnamese securities firms',
+  'Brokerages, custodians, wealth managers.': 'Brokerages, custodians, wealth managers.',
+  'Embedded in your platform': 'Embedded in your platform',
+  'Web or mobile. APIs + drop-in UI.': 'Web or mobile. APIs + drop-in UI.',
+  'Branded as yours': 'Branded as yours',
+  'Your house view. Your customers. Your moat.': 'Your house view. Your customers. Your moat.',
+
+  // IntegrationSection
+  'ORACLE · §01': 'ORACLE · §01',
+  'Launch in days.': 'Launch in days.',
+  'Not quarters.': 'Not quarters.',
+  'Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.': 'Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.',
+  'Prebuilt insight APIs': 'Prebuilt insight APIs',
+  'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.': 'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.',
+  'Drop-in web + mobile UI': 'Drop-in web + mobile UI',
+  'A ready-to-embed chat and insight shell with minimal scaffolding. No risk to your existing product roadmap.': 'A ready-to-embed chat and insight shell with minimal scaffolding. No risk to your existing product roadmap.',
+  'No MLOps required': 'No MLOps required',
+  'No models to host. No vector stores to manage. Your team ships product; we keep the foundation refined.': 'No models to host. No vector stores to manage. Your team ships product; we keep the foundation refined.',
+  'Tickers covered': 'Tickers covered',
+  'DAILY': 'DAILY',
+  'Refresh cadence': 'Refresh cadence',
+  'ML engineers needed': 'ML engineers needed',
+
+  // AnalystSection
+  'ORACLE · §02': 'ORACLE · §02',
+  'Not a chatbot.': 'Not a chatbot.',
+  'An analyst.': 'An analyst.',
+  'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.': 'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.',
+
+  // MultiLensWidget
+  'MULTI-LENS ANALYSIS': 'MULTI-LENS ANALYSIS',
+  'Four lenses on the same question.': 'Four lenses on the same question.',
+  'QUERY': 'QUERY',
+  '"How is HPG positioned for Q1?"': '"How is HPG positioned for Q1?"',
+  '§ filings · ratios · guidance': '§ filings · ratios · guidance',
+  'Steel volume guidance reiterated at 9.5 Mt for FY26. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds. Capex on Dung Quat 2 tracking under-budget through April.': 'Steel volume guidance reiterated at 9.5 Mt for FY26. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds. Capex on Dung Quat 2 tracking under-budget through April.',
+  '20-day · regime · volume': '20-day · regime · volume',
+  "Closed above the 20-day for the 9th consecutive session on rising volume. RSI 64; not yet exhausted. Resistance at 29.5k cluster from January's consolidation.": "Closed above the 20-day for the 9th consecutive session on rising volume. RSI 64; not yet exhausted. Resistance at 29.5k cluster from January's consolidation.",
+  'broker notes · social · narrative': 'broker notes · social · narrative',
+  'Broker narrative has rotated from "margin risk" to "volume re-acceleration" over six weeks. Retail mentions up 38%. No regulatory chatter in the last 30 days.': 'Broker narrative has rotated from "margin risk" to "volume re-acceleration" over six weeks. Retail mentions up 38%. No regulatory chatter in the last 30 days.',
+  'Quantitative': 'Quantitative',
+  'factor · momentum · quality': 'factor · momentum · quality',
+  'Momentum factor +2.1σ vs HOSE basics universe. Quality (Piotroski F) 7/9. Earnings revision breadth net positive on a 60-day window.': 'Momentum factor +2.1σ vs HOSE basics universe. Quality (Piotroski F) 7/9. Earnings revision breadth net positive on a 60-day window.',
+  'CITED': 'CITED',
+
+  // FivePillarSpec
+  'THE 5-PILLAR FRAMEWORK': 'THE 5-PILLAR FRAMEWORK',
+  'How professionals evaluate companies — built in.': 'How professionals evaluate companies — built in.',
+  'ADVANCED MODE · DEFAULT': 'ADVANCED MODE · DEFAULT',
+  'Growth': 'Growth',
+  'Revenue acceleration, segment mix, end-market exposure.': 'Revenue acceleration, segment mix, end-market exposure.',
+  'Profitability': 'Profitability',
+  'Operating margin, ROIC, contribution by line of business.': 'Operating margin, ROIC, contribution by line of business.',
+  'Efficiency': 'Efficiency',
+  'Working-capital cycles, asset turnover, days-on-hand.': 'Working-capital cycles, asset turnover, days-on-hand.',
+  'Leverage & Solvency': 'Leverage & Solvency',
+  'Net debt, coverage, schedule, covenant headroom.': 'Net debt, coverage, schedule, covenant headroom.',
+  'Cash Quality': 'Cash Quality',
+  'FCF conversion, accruals quality, NWC drift.': 'FCF conversion, accruals quality, NWC drift.',
+
+  // QuickVsAdvanced + ModeToggle
+  'Quick': 'Quick',
+  'Advanced': 'Advanced',
+  'ONE PRODUCT, TWO AUDIENCES': 'ONE PRODUCT, TWO AUDIENCES',
+  'Quick for retail. Evidence-based for the desk.': 'Quick for retail. Evidence-based for the desk.',
+  'Should I hold HPG into earnings next week?': 'Should I hold HPG into earnings next week?',
+  'QUICK · CONCISE': 'QUICK · CONCISE',
+  'ADVANCED · EVIDENCE-BASED': 'ADVANCED · EVIDENCE-BASED',
+  'Momentum is on your side, but earnings volatility is real.': 'Momentum is on your side, but earnings volatility is real.',
+  "Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.": "Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.",
+  'Not advice — your call.': 'Not advice — your call.',
+  '· 2 sentences · plain language · 1 caveat': '· 2 sentences · plain language · 1 caveat',
+  'FUNDAMENTAL': 'FUNDAMENTAL',
+  'Guidance reiterated at the Q3 call': 'Guidance reiterated at the Q3 call',
+  '. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds': '. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds',
+  'TECHNICAL': 'TECHNICAL',
+  '9-session breakout on rising volume; RSI 64. Resistance cluster at 29,500 from January consolidation': '9-session breakout on rising volume; RSI 64. Resistance cluster at 29,500 from January consolidation',
+  'RISKS': 'RISKS',
+  'Coil-spread compression in Q4; one near-term covenant test on the related-party financing schedule.': 'Coil-spread compression in Q4; one near-term covenant test on the related-party financing schedule.',
+
+  // PersonalizationSection
+  'ORACLE · §03': 'ORACLE · §03',
+  'Your house view.': 'Your house view.',
+  "Your customer's portfolio.": "Your customer's portfolio.",
+  "Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.": "Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.",
+  'HOUSE VIEW · house.yml': 'HOUSE VIEW · house.yml',
+  'EDITED 4h AGO': 'EDITED 4h AGO',
+
+  // PortfolioChat
+  'ORACLE · CHAT (PERSONALISED)': 'ORACLE · CHAT (PERSONALISED)',
+  'USER · A.NGUYEN · ACCT 9241': 'USER · A.NGUYEN · ACCT 9241',
+  'YOU': 'YOU',
+  '· ORACLE': '· ORACLE',
+  'How is my portfolio doing today?': 'How is my portfolio doing today?',
+  'Your account is': 'Your account is',
+  '+0.42% on the day': '+0.42% on the day',
+  ', +3.1% MTD. The move came from': ', +3.1% MTD. The move came from',
+  'and': 'and',
+  'dragged 0.3%.': 'dragged 0.3%.',
+  "You're currently": "You're currently",
+  '39% in industrials': '39% in industrials',
+  '— drifting above the 30% target in your house allocation.': '— drifting above the 30% target in your house allocation.',
+  'Should I be worried about VCB?': 'Should I be worried about VCB?',
+  "Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.": "Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.",
+  'ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT': 'ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT',
+
+  // PushNotificationStrip
+  'PROACTIVE PUSH': 'PROACTIVE PUSH',
+  'Oracle knows what each customer holds — and notifies them when something changes.': 'Oracle knows what each customer holds — and notifies them when something changes.',
+  "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.": "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.",
+  'YourBroker · powered by Oracle': 'YourBroker · powered by Oracle',
+  'now': 'now',
+  'HPG · Hòa Phát filed an update on Dung Quat 2.': 'HPG · Hòa Phát filed an update on Dung Quat 2.',
+  'Capex schedule revised down by ~3%.': 'Capex schedule revised down by ~3%.',
+  'Open the analysis →': 'Open the analysis →',
+
+  // ComplianceSection
+  'ORACLE · §04': 'ORACLE · §04',
+  'Compliance,': 'Compliance,',
+  'by design.': 'by design.',
+  "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.": "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.",
+  'Dynamic disclaimers': 'Dynamic disclaimers',
+  'Disclaimer language adapts to the question, the asset class, and the retail/professional mode.': 'Disclaimer language adapts to the question, the asset class, and the retail/professional mode.',
+  'PII protection': 'PII protection',
+  'Customer data stays in your perimeter. Oracle reads what you allow, never more.': 'Customer data stays in your perimeter. Oracle reads what you allow, never more.',
+  'Reviewed, not retrofitted': 'Reviewed, not retrofitted',
+  'Compliance review is part of the build, not a layer bolted on at the end.': 'Compliance review is part of the build, not a layer bolted on at the end.',
+
+  // ScopeRoutingDiagram
+  'SCOPE ROUTING': 'SCOPE ROUTING',
+  'BEHAVIOUR · BY POLICY': 'BEHAVIOUR · BY POLICY',
+  'Every question lands in the right place.': 'Every question lands in the right place.',
+  'How do I open a margin account?': 'How do I open a margin account?',
+  'YourBroker support': 'YourBroker support',
+  "What's your view on HPG?": "What's your view on HPG?",
+  'Oracle answers': 'Oracle answers',
+  "What's the weather in Hanoi?": "What's the weather in Hanoi?",
+  'Politely declines': 'Politely declines',
+  'Show me my account password': 'Show me my account password',
+  'Refuses · logs event': 'Refuses · logs event',
+
+  // TPBSCaseStudy
+  'CASE STUDY': 'CASE STUDY',
+  'Already in a securities firm': 'Already in a securities firm',
+  'near you.': 'near you.',
+  'TPBank Securities': 'TPBank Securities',
+  '· LIVE ON ORACLE': '· LIVE ON ORACLE',
+  "VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM": "VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM",
+  'Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.': 'Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.',
+  '· TPBS LEADERSHIP · PLACEHOLDER QUOTE': '· TPBS LEADERSHIP · PLACEHOLDER QUOTE',
+  '< 30 days': '< 30 days',
+  'From kickoff to live in-app': 'From kickoff to live in-app',
+  'ML engineers hired': 'ML engineers hired',
+  'Retail flows in scope': 'Retail flows in scope',
+  '· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS': '· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS',
+
+  // OracleCTAStrip
+  'Bring Oracle into your platform.': 'Bring Oracle into your platform.',
+  'A 30-minute partner walkthrough is the fastest way to see Oracle in your app, with your colours, on your tickers.': 'A 30-minute partner walkthrough is the fastest way to see Oracle in your app, with your colours, on your tickers.',
+  'Book a partner walkthrough': 'Book a partner walkthrough',
+};
+
+const vi = {
+  // Nav (shared)
+  'SIGN IN ↗': 'ĐĂNG NHẬP ↗',
+  'Talk to the Oracle': 'Trò chuyện với Oracle',
+  'Manifesto': 'Tuyên ngôn',
+  'The Foundation': 'Nền tảng',
+  'Oracle': 'Oracle',
+  'Forge': 'Forge',
+  'Trusted by': 'Đối tác',
+
+  // AlreadyInvited
+  'ALREADY INVITED?': 'ĐÃ ĐƯỢC MỜI?',
+  'Sign in at oracle.promvis.io →': 'Đăng nhập tại oracle.promvis.io →',
+
+  // AccessModal
+  'Be among the first to read Forge.': 'Tiếp cận Forge sớm nhất.',
+  'Talk to the Oracle.': 'Trò chuyện với Oracle.',
+  "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.": 'Forge ưu tiên triển khai cho các đơn vị đang dùng Oracle. Để lại thông tin, chúng tôi sẽ liên hệ ngay khi bộ dữ liệu sẵn sàng.',
+  'Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.': 'Oracle hiện chỉ mở theo lời mời. Mỗi tháng chúng tôi tiếp nhận một số ít công ty chứng khoán và quỹ đầu tư Việt Nam, theo hình thức trực tiếp. Hãy giới thiệu về bạn.',
+  'FORGE · WAITLIST': 'FORGE · DANH SÁCH CHỜ',
+  'ORACLE · ACCESS REQUEST': 'ORACLE · YÊU CẦU TRUY CẬP',
+  'WE REPLY FROM ORACLE@PROMVIS.IO': 'PHẢN HỒI TỪ ORACLE@PROMVIS.IO',
+
+  // AccessModal — fields
+  'Name': 'Họ và tên',
+  'Work email': 'Email công việc',
+  'Firm': 'Công ty',
+  'Role': 'Chức vụ',
+  'Choose…': 'Chọn…',
+  'Dataset of interest': 'Bộ dữ liệu quan tâm',
+  'Why Oracle, why now?': 'Vì sao chọn Oracle, vì sao bây giờ?',
+  'optional · 1–2 lines': 'không bắt buộc · 1–2 dòng',
+  'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.': 'ví dụ: Dữ liệu ESG của công ty niêm yết VN phục vụ sàng lọc danh mục 2026.',
+  'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.': 'ví dụ: Chúng tôi theo dõi công ty niêm yết VN cho một quỹ thị trường biên và đọc công bố thông tin mỗi sáng.',
+  'e.g. ABC Securities JSC': 'ví dụ: CTCP Chứng khoán ABC',
+  'you@firm.vn': 'ban@congty.vn',
+  'Use a valid work email': 'Vui lòng dùng email công việc hợp lệ',
+  'Sending…': 'Đang gửi…',
+  'Join the waitlist': 'Tham gia danh sách chờ',
+  'Request access': 'Yêu cầu truy cập',
+
+  // Roles
+  'Head of Research': 'Trưởng phòng Nghiên cứu',
+  'Chief Investment Officer': 'Giám đốc Đầu tư',
+  'Portfolio Manager': 'Quản lý Danh mục',
+  'Analyst': 'Chuyên viên phân tích',
+  'COO / Head of Operations': 'COO / Trưởng phòng Vận hành',
+  'Other': 'Khác',
+
+  // Success state
+  'REQUEST RECEIVED': 'ĐÃ NHẬN YÊU CẦU',
+  "We'll be in touch.": 'Chúng tôi sẽ liên hệ với bạn.',
+  "You're on the Forge waitlist. We'll write to": 'Bạn đã có mặt trong danh sách chờ của Forge. Chúng tôi sẽ gửi thông tin tới',
+  'the moment the first dataset is ready to ship.': 'ngay khi bộ dữ liệu đầu tiên sẵn sàng phát hành.',
+  'Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from': 'Oracle được tuyển chọn kỹ. Mỗi tháng chúng tôi tiếp nhận một số ít đơn vị, theo hình thức trực tiếp. Bạn sẽ nhận được phản hồi từ',
+  'at': 'tại',
+  'within three business days.': 'trong vòng ba ngày làm việc.',
+  'REF': 'MÃ',
+  'FIRM': 'CÔNG TY',
+  'PRODUCT': 'SẢN PHẨM',
+  'REPLY-BY': 'PHẢN HỒI TRONG',
+  'Forge — Waitlist': 'Forge — Danh sách chờ',
+  'Oracle — Early access': 'Oracle — Truy cập sớm',
+  '3 business days': '3 ngày làm việc',
+  'Close': 'Đóng',
+
+  // Footer
+  'Products': 'Sản phẩm',
+  'Oracle (Early access)': 'Oracle (Truy cập sớm)',
+  'Forge (Coming soon)': 'Forge (Sắp ra mắt)',
+  'Roadmap': 'Lộ trình',
+  'Company': 'Công ty',
+  'About': 'Về chúng tôi',
+  'Careers': 'Tuyển dụng',
+  'Contact': 'Liên hệ',
+  'Reach us': 'Kết nối với chúng tôi',
+  'Hanoi · District Ba Đình': 'Hà Nội · Quận Ba Đình',
+  "The AI-native financial data platform for Vietnam's capital markets.": 'Nền tảng dữ liệu tài chính AI-native cho thị trường vốn Việt Nam.',
+  'Built by the people at ': 'Xây dựng bởi đội ngũ tại ',
+  'MADE IN VIETNAM ★': 'SẢN XUẤT TẠI VIỆT NAM ★',
+  'ORIGIN': 'NGUỒN GỐC',
+  'EARLY ACCESS · 2026': 'TRUY CẬP SỚM · 2026',
+
+  // OracleHero
+  'ORACLE · AVAILABLE · EARLY ACCESS': 'ORACLE · ĐÃ CÓ · TRUY CẬP SỚM',
+  'Your sharpest analyst,': 'Chuyên viên phân tích sắc sảo nhất,',
+  'embedded in your app.': 'tích hợp ngay trong ứng dụng của bạn.',
+  "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.": 'Trợ lý môi giới AI-native dành cho các công ty chứng khoán Việt Nam. Tích hợp vào nền tảng của bạn trong vài ngày, thay vì hàng quý — và mở rộng lợi thế cạnh tranh khi đối thủ vẫn còn đang lên kế hoạch.',
+  'See how it embeds': 'Xem cách tích hợp',
+
+  // BrokerAppScreen
+  'Markets': 'Thị trường',
+  'Detail': 'Chi tiết',
+  'Portfolio': 'Danh mục',
+  'ORACLE INSIGHT': 'PHÂN TÍCH ORACLE',
+  'UPDATED 07:15 ICT': 'CẬP NHẬT 07:15 ICT',
+  'Q4 momentum on capacity utilisation;': 'Đà tăng Q4 dựa trên hiệu suất công suất;',
+  'watch Dung Quat 2 commissioning.': 'theo dõi tiến độ vận hành Dung Quất 2.',
+  'Fundamental': 'Cơ bản',
+  'Technical': 'Kỹ thuật',
+  'Sentiment': 'Tâm lý',
+  'Steel volume guidance unchanged; iron-ore cost roll-off should expand Q1 margin by ~80bps if the price band holds.': 'Sản lượng thép theo định hướng không đổi; chi phí quặng sắt giảm có thể mở rộng biên Q1 khoảng 80bps nếu vùng giá duy trì.',
+  '4 cited filings · ask follow-up →': '4 tài liệu được trích dẫn · hỏi tiếp →',
+  'Buy': 'Mua',
+  'Sell': 'Bán',
+
+  // AudienceStrip
+  'FOR': 'DÀNH CHO',
+  'Vietnamese securities firms': 'Công ty chứng khoán Việt Nam',
+  'Brokerages, custodians, wealth managers.': 'Công ty môi giới, lưu ký, quản lý tài sản.',
+  'Embedded in your platform': 'Tích hợp trên nền tảng của bạn',
+  'Web or mobile. APIs + drop-in UI.': 'Web hoặc di động. API + giao diện sẵn dùng.',
+  'Branded as yours': 'Mang thương hiệu của bạn',
+  'Your house view. Your customers. Your moat.': 'Quan điểm nhà bạn. Khách hàng của bạn. Lợi thế của bạn.',
+
+  // IntegrationSection
+  'ORACLE · §01': 'ORACLE · §01',
+  'Launch in days.': 'Triển khai trong vài ngày.',
+  'Not quarters.': 'Không phải hàng quý.',
+  'Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.': 'Khách hàng của bạn đã ở trong ứng dụng của bạn. Oracle gắn vào trải nghiệm sẵn có — Trang chủ, Chi tiết Cổ phiếu, Đặt lệnh — qua API dựng sẵn và giao diện hội thoại tích hợp nhanh. Không cần đội MLOps. Không cần viết lại.',
+  'Prebuilt insight APIs': 'API phân tích dựng sẵn',
+  'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.': 'Gói phân tích cập nhật hàng ngày cho hơn 1.500 mã chứng khoán Việt Nam. Tích hợp trực tiếp trên màn hình Trang chủ, Chi tiết Cổ phiếu và Đặt lệnh.',
+  'Drop-in web + mobile UI': 'Giao diện web + mobile tích hợp nhanh',
+  'A ready-to-embed chat and insight shell with minimal scaffolding. No risk to your existing product roadmap.': 'Bộ giao diện hội thoại và phân tích sẵn sàng nhúng vào, gần như không cần dựng khung. Không ảnh hưởng tới lộ trình sản phẩm hiện có.',
+  'No MLOps required': 'Không cần MLOps',
+  'No models to host. No vector stores to manage. Your team ships product; we keep the foundation refined.': 'Không cần vận hành mô hình. Không cần quản lý vector store. Đội của bạn tập trung phát triển sản phẩm; chúng tôi đảm bảo nền tảng luôn được tinh chỉnh.',
+  'Tickers covered': 'Mã chứng khoán được phủ',
+  'DAILY': 'HÀNG NGÀY',
+  'Refresh cadence': 'Tần suất cập nhật',
+  'ML engineers needed': 'Kỹ sư ML cần thiết',
+
+  // AnalystSection
+  'ORACLE · §02': 'ORACLE · §02',
+  'Not a chatbot.': 'Không phải chatbot.',
+  'An analyst.': 'Mà là một chuyên viên phân tích.',
+  'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.': 'Oracle được đồng thiết kế với các chuyên viên phân tích, môi giới và kỹ sư AI đang hành nghề. Oracle vận hành trên đúng các khung phân tích đội của bạn đang dùng — và điều chỉnh văn phong theo người dùng đầu cuối.',
+
+  // MultiLensWidget
+  'MULTI-LENS ANALYSIS': 'PHÂN TÍCH ĐA LĂNG KÍNH',
+  'Four lenses on the same question.': 'Bốn lăng kính cho cùng một câu hỏi.',
+  'QUERY': 'CÂU HỎI',
+  '"How is HPG positioned for Q1?"': '"HPG có vị thế ra sao cho quý 1?"',
+  '§ filings · ratios · guidance': '§ hồ sơ · chỉ số · định hướng',
+  'Steel volume guidance reiterated at 9.5 Mt for FY26. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds. Capex on Dung Quat 2 tracking under-budget through April.': 'Định hướng sản lượng thép giữ nguyên ở 9,5 triệu tấn cho năm tài chính 2026. Chi phí quặng sắt hạ nhiệt có thể mở rộng biên Q1 thêm ~80bps nếu vùng giá đầu vào duy trì. Capex Dung Quất 2 vẫn dưới ngân sách tính đến tháng 4.',
+  '20-day · regime · volume': '20 phiên · trạng thái · khối lượng',
+  "Closed above the 20-day for the 9th consecutive session on rising volume. RSI 64; not yet exhausted. Resistance at 29.5k cluster from January's consolidation.": 'Đóng cửa trên MA20 phiên thứ 9 liên tiếp với khối lượng tăng. RSI 64; chưa quá mua. Vùng cản tại cụm 29,5k từ vùng tích lũy tháng 1.',
+  'broker notes · social · narrative': 'báo cáo môi giới · mạng xã hội · diễn ngôn',
+  'Broker narrative has rotated from "margin risk" to "volume re-acceleration" over six weeks. Retail mentions up 38%. No regulatory chatter in the last 30 days.': 'Diễn ngôn từ phía môi giới xoay từ "rủi ro biên" sang "tăng tốc khối lượng" trong sáu tuần. Lượng nhắc đến từ nhà đầu tư cá nhân tăng 38%. Không ghi nhận thông tin pháp lý đáng chú ý trong 30 ngày qua.',
+  'Quantitative': 'Định lượng',
+  'factor · momentum · quality': 'nhân tố · động lượng · chất lượng',
+  'Momentum factor +2.1σ vs HOSE basics universe. Quality (Piotroski F) 7/9. Earnings revision breadth net positive on a 60-day window.': 'Nhân tố động lượng +2,1σ so với rổ cơ bản HOSE. Chất lượng (Piotroski F) 7/9. Độ rộng điều chỉnh EPS ròng dương trong 60 ngày.',
+  'CITED': 'TRÍCH DẪN',
+
+  // FivePillarSpec
+  'THE 5-PILLAR FRAMEWORK': 'KHUNG 5 TRỤ CỘT',
+  'How professionals evaluate companies — built in.': 'Cách giới chuyên môn đánh giá doanh nghiệp — tích hợp sẵn.',
+  'ADVANCED MODE · DEFAULT': 'CHẾ ĐỘ NÂNG CAO · MẶC ĐỊNH',
+  'Growth': 'Tăng trưởng',
+  'Revenue acceleration, segment mix, end-market exposure.': 'Tăng tốc doanh thu, cơ cấu mảng kinh doanh, mức độ tiếp xúc thị trường cuối.',
+  'Profitability': 'Khả năng sinh lời',
+  'Operating margin, ROIC, contribution by line of business.': 'Biên hoạt động, ROIC, đóng góp theo mảng kinh doanh.',
+  'Efficiency': 'Hiệu quả',
+  'Working-capital cycles, asset turnover, days-on-hand.': 'Chu kỳ vốn lưu động, vòng quay tài sản, số ngày tồn kho.',
+  'Leverage & Solvency': 'Đòn bẩy & Khả năng thanh toán',
+  'Net debt, coverage, schedule, covenant headroom.': 'Nợ ròng, hệ số bao phủ, lịch trả nợ, biên độ điều khoản tài chính.',
+  'Cash Quality': 'Chất lượng dòng tiền',
+  'FCF conversion, accruals quality, NWC drift.': 'Chuyển hóa FCF, chất lượng dồn tích, biến động vốn lưu động ròng.',
+
+  // QuickVsAdvanced + ModeToggle
+  'Quick': 'Nhanh',
+  'Advanced': 'Nâng cao',
+  'ONE PRODUCT, TWO AUDIENCES': 'MỘT SẢN PHẨM, HAI NHÓM NGƯỜI DÙNG',
+  'Quick for retail. Evidence-based for the desk.': 'Gọn nhẹ cho nhà đầu tư cá nhân. Dẫn chứng đầy đủ cho phòng giao dịch.',
+  'Should I hold HPG into earnings next week?': 'Tôi có nên giữ HPG qua kỳ công bố lợi nhuận tuần tới không?',
+  'QUICK · CONCISE': 'NHANH · NGẮN GỌN',
+  'ADVANCED · EVIDENCE-BASED': 'NÂNG CAO · DỰA TRÊN BẰNG CHỨNG',
+  'Momentum is on your side, but earnings volatility is real.': 'Đà giá đang ủng hộ bạn, nhưng biến động quanh kỳ công bố lợi nhuận là có thật.',
+  "Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.": 'Khối lượng tăng, giọng điệu môi giới cải thiện. Nếu giữ với mục tiêu trading, hãy đặt cắt lỗ gần 27.000 và chốt dần khi tăng mạnh.',
+  'Not advice — your call.': 'Không phải khuyến nghị — quyết định là của bạn.',
+  '· 2 sentences · plain language · 1 caveat': '· 2 câu · ngôn ngữ đơn giản · 1 lưu ý',
+  'FUNDAMENTAL': 'CƠ BẢN',
+  'Guidance reiterated at the Q3 call': 'Định hướng được tái khẳng định tại buổi họp Q3',
+  '. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds': '. Chi phí quặng sắt hạ nhiệt có thể mở rộng biên Q1 ~80bps nếu vùng giá đầu vào duy trì',
+  'TECHNICAL': 'KỸ THUẬT',
+  '9-session breakout on rising volume; RSI 64. Resistance cluster at 29,500 from January consolidation': 'Bứt phá 9 phiên với khối lượng tăng; RSI 64. Cụm kháng cự tại 29.500 từ vùng tích lũy tháng 1',
+  'RISKS': 'RỦI RO',
+  'Coil-spread compression in Q4; one near-term covenant test on the related-party financing schedule.': 'Chênh lệch giá thép cuộn bị nén trong Q4; một mốc kiểm tra điều khoản tài chính ngắn hạn theo lịch trả nợ bên liên quan.',
+
+  // PersonalizationSection
+  'ORACLE · §03': 'ORACLE · §03',
+  'Your house view.': 'Quan điểm nhà bạn.',
+  "Your customer's portfolio.": 'Danh mục của khách hàng.',
+  "Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.": 'AI đại trà không biết ai đang hỏi. Oracle thì biết — bởi bạn kết nối Oracle với dữ liệu khách hàng và phân tích của chính công ty bạn. Quan điểm nhà bạn, trong túi của khách hàng.',
+  'HOUSE VIEW · house.yml': 'QUAN ĐIỂM NHÀ · house.yml',
+  'EDITED 4h AGO': 'CHỈNH SỬA 4 GIỜ TRƯỚC',
+
+  // PortfolioChat
+  'ORACLE · CHAT (PERSONALISED)': 'ORACLE · TRÒ CHUYỆN (CÁ NHÂN HÓA)',
+  'USER · A.NGUYEN · ACCT 9241': 'NGƯỜI DÙNG · A.NGUYEN · TK 9241',
+  'YOU': 'BẠN',
+  '· ORACLE': '· ORACLE',
+  'How is my portfolio doing today?': 'Hôm nay danh mục của tôi thế nào?',
+  'Your account is': 'Tài khoản của bạn',
+  '+0.42% on the day': '+0,42% trong ngày',
+  ', +3.1% MTD. The move came from': ', +3,1% từ đầu tháng. Đóng góp chính từ',
+  'and': 'và',
+  'dragged 0.3%.': 'kéo giảm 0,3%.',
+  "You're currently": 'Hiện bạn đang nắm',
+  '39% in industrials': '39% nhóm công nghiệp',
+  '— drifting above the 30% target in your house allocation.': '— vượt ngưỡng phân bổ mục tiêu 30% trong khung của công ty.',
+  'Should I be worried about VCB?': 'Tôi có nên lo về VCB không?',
+  "Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.": 'Không hẳn với mức biến động hôm nay. Trọng tâm là dự thảo thông tư mới của SBV về an toàn vốn — vẫn đang lấy ý kiến, chưa ảnh hưởng cụ thể tới vốn Q4.',
+  'ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT': 'ORACLE ĐỌC TÀI KHOẢN CỦA BẠN  ·  KHÔNG TRUY CẬP DỮ LIỆU CÁ NHÂN KHI CHƯA ĐỒNG Ý',
+
+  // PushNotificationStrip
+  'PROACTIVE PUSH': 'THÔNG BÁO CHỦ ĐỘNG',
+  'Oracle knows what each customer holds — and notifies them when something changes.': 'Oracle biết khách hàng đang nắm gì — và chủ động thông báo khi có biến động.',
+  "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.": 'Kết quả kinh doanh, xếp hạng, hồ sơ pháp lý, cập nhật công bố. Cá nhân hóa theo cổ phiếu trong tài khoản người dùng — gửi qua kênh thông báo sẵn có của bạn.',
+  'YourBroker · powered by Oracle': 'YourBroker · vận hành bởi Oracle',
+  'now': 'vừa xong',
+  'HPG · Hòa Phát filed an update on Dung Quat 2.': 'HPG · Hòa Phát cập nhật về Dung Quất 2.',
+  'Capex schedule revised down by ~3%.': 'Lịch capex được điều chỉnh giảm ~3%.',
+  'Open the analysis →': 'Xem phân tích →',
+
+  // ComplianceSection
+  'ORACLE · §04': 'ORACLE · §04',
+  'Compliance,': 'Tuân thủ,',
+  'by design.': 'ngay từ thiết kế.',
+  "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.": 'Xây dựng quanh khung pháp lý của thị trường Việt Nam. Định tuyến phạm vi, bảo vệ dữ liệu cá nhân, tuyên bố miễn trừ động — tất cả được bộ phận tuân thủ rà soát trước khi nhà đầu tư cá nhân thấy câu trả lời đầu tiên.',
+  'Dynamic disclaimers': 'Tuyên bố miễn trừ động',
+  'Disclaimer language adapts to the question, the asset class, and the retail/professional mode.': 'Ngôn ngữ tuyên bố miễn trừ điều chỉnh theo câu hỏi, loại tài sản, và chế độ cá nhân/chuyên nghiệp.',
+  'PII protection': 'Bảo vệ dữ liệu cá nhân',
+  'Customer data stays in your perimeter. Oracle reads what you allow, never more.': 'Dữ liệu khách hàng nằm trong phạm vi của bạn. Oracle chỉ đọc những gì bạn cho phép, không bao giờ vượt ra.',
+  'Reviewed, not retrofitted': 'Rà soát từ đầu, không chắp vá',
+  'Compliance review is part of the build, not a layer bolted on at the end.': 'Tuân thủ là một phần của quá trình xây dựng, không phải lớp gắn thêm ở cuối.',
+
+  // ScopeRoutingDiagram
+  'SCOPE ROUTING': 'ĐỊNH TUYẾN PHẠM VI',
+  'BEHAVIOUR · BY POLICY': 'HÀNH VI · THEO CHÍNH SÁCH',
+  'Every question lands in the right place.': 'Mọi câu hỏi đều đến đúng nơi.',
+  'How do I open a margin account?': 'Tôi mở tài khoản margin bằng cách nào?',
+  'YourBroker support': 'Hỗ trợ YourBroker',
+  "What's your view on HPG?": 'Quan điểm về HPG ra sao?',
+  'Oracle answers': 'Oracle trả lời',
+  "What's the weather in Hanoi?": 'Thời tiết Hà Nội thế nào?',
+  'Politely declines': 'Lịch sự từ chối',
+  'Show me my account password': 'Cho tôi xem mật khẩu tài khoản',
+  'Refuses · logs event': 'Từ chối · ghi nhận sự kiện',
+
+  // TPBSCaseStudy
+  'CASE STUDY': 'NGHIÊN CỨU ĐIỂN HÌNH',
+  'Already in a securities firm': 'Đã hiện diện tại một công ty chứng khoán',
+  'near you.': 'gần bạn.',
+  'TPBank Securities': 'Chứng khoán TPBank',
+  '· LIVE ON ORACLE': '· ĐANG SỬ DỤNG ORACLE',
+  "VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM": 'CÔNG TY CHỨNG KHOÁN AI-NATIVE ĐẦU TIÊN CỦA VIỆT NAM',
+  'Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.': 'Oracle cho phép chúng tôi đưa một chuyên viên phân tích AI vào ứng dụng bán lẻ mà không cần dựng đội ML — và không đánh đổi tuyên thủ. Cuộc trò chuyện của khách hàng bên trong sản phẩm của chúng tôi nay do chính chúng tôi định hình.',
+  '· TPBS LEADERSHIP · PLACEHOLDER QUOTE': '· LÃNH ĐẠO TPBS · TRÍCH DẪN TẠM',
+  '< 30 days': '< 30 ngày',
+  'From kickoff to live in-app': 'Từ khởi động đến chạy trong ứng dụng',
+  'ML engineers hired': 'Kỹ sư ML phải tuyển',
+  'Retail flows in scope': 'Luồng bán lẻ trong phạm vi',
+  '· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS': '· SỐ LIỆU MANG TÍNH ĐỊNH HƯỚNG · ĐANG CHỜ CON SỐ CHÍNH THỨC TỪ TPBS',
+
+  // OracleCTAStrip
+  'Bring Oracle into your platform.': 'Đưa Oracle vào nền tảng của bạn.',
+  'A 30-minute partner walkthrough is the fastest way to see Oracle in your app, with your colours, on your tickers.': 'Một buổi giới thiệu đối tác 30 phút là cách nhanh nhất để xem Oracle chạy trong ứng dụng của bạn, với bộ nhận diện của bạn, trên các mã chứng khoán của bạn.',
+  'Book a partner walkthrough': 'Đặt lịch giới thiệu đối tác',
+};
+
+const dictionaries = { en, vi };
+const LanguageContext = React.createContext({ lang: 'en', setLang: () => {}, t: (k) => k });
+
+function LanguageProvider({ children }) {
+  const [lang, setLang] = React.useState(() => {
+    if (typeof window === 'undefined') return 'en';
+    try {
+      const stored = window.localStorage.getItem(LANG_KEY);
+      return stored === 'en' || stored === 'vi' ? stored : 'en';
+    } catch {
+      return 'en';
+    }
+  });
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(LANG_KEY, lang);
+    } catch {}
+  }, [lang]);
+
+  const t = React.useCallback((key) => {
+    const dict = dictionaries[lang];
+    return dict && dict[key] !== undefined ? dict[key] : key;
+  }, [lang]);
+
+  return (
+    <LanguageContext.Provider value={{ lang, setLang, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+function useTranslation() {
+  return React.useContext(LanguageContext);
+}
+
 const accessStore = (() => {
   let open = false;
   let product = 'oracle';
@@ -205,6 +788,7 @@ function useAccessStore() {
 }
 
 function AlreadyInvited({ align = 'left', mobile }) {
+  const { t } = useTranslation();
   return (
     <div className="p-mono" style={{
       display: 'flex', alignItems: 'center', gap: 8,
@@ -213,12 +797,12 @@ function AlreadyInvited({ align = 'left', mobile }) {
       justifyContent: align === 'center' ? 'center' : 'flex-start',
       flexWrap: 'wrap',
     }}>
-      <span>ALREADY INVITED?</span>
+      <span>{t('ALREADY INVITED?')}</span>
       <a
         href={ORACLE_URL}
         style={{ color: 'var(--amber)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklab, var(--amber) 50%, transparent)', paddingBottom: 1 }}
       >
-        Sign in at oracle.promvis.io →
+        {t('Sign in at oracle.promvis.io →')}
       </a>
     </div>
   );
@@ -231,6 +815,7 @@ const ROLES = [
 
 function AccessModal() {
   const { open, product } = useAccessStore();
+  const { t } = useTranslation();
   const [step, setStep] = React.useState('form');
   const [form, setForm] = React.useState({ name: '', email: '', firm: '', role: '', why: '' });
   const [touched, setTouched] = React.useState(false);
@@ -264,10 +849,10 @@ function AccessModal() {
 
   if (!open) return null;
 
-  const headline = product === 'forge' ? 'Be among the first to read Forge.' : 'Talk to the Oracle.';
+  const headline = product === 'forge' ? t('Be among the first to read Forge.') : t('Talk to the Oracle.');
   const lede = product === 'forge'
-    ? "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready."
-    : 'Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.';
+    ? t("Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.")
+    : t('Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.');
 
   return (
     <div
@@ -346,7 +931,7 @@ function AccessModal() {
         {step !== 'done' ? (
           <form onSubmit={submit} style={{ padding: '36px 36px 32px', position: 'relative' }}>
             <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 14 }}>
-              · {product === 'forge' ? 'FORGE · WAITLIST' : 'ORACLE · ACCESS REQUEST'}
+              · {product === 'forge' ? t('FORGE · WAITLIST') : t('ORACLE · ACCESS REQUEST')}
             </div>
             <h3 style={{
               fontFamily: 'var(--font-serif)', fontSize: 34, lineHeight: 1.08,
@@ -355,41 +940,41 @@ function AccessModal() {
             <p style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--fg-mute)', margin: '14px 0 24px' }}>{lede}</p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-              <AMField label="Name" field="name" form={form} setForm={setForm} placeholder="Nguyễn An" />
-              <AMField label="Work email" req field="email" form={form} setForm={setForm}
-                     placeholder="you@firm.vn" type="email" touched={touched} valid={!form.email || emailOk}
-                     errorMsg="Use a valid work email" />
+              <AMField label={t('Name')} field="name" form={form} setForm={setForm} placeholder="Nguyễn An" />
+              <AMField label={t('Work email')} req field="email" form={form} setForm={setForm}
+                     placeholder={t('you@firm.vn')} type="email" touched={touched} valid={!form.email || emailOk}
+                     errorMsg={t('Use a valid work email')} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 14 }}>
-              <AMField label="Firm" req field="firm" form={form} setForm={setForm}
-                     placeholder="e.g. ABC Securities JSC" touched={touched} valid={!!form.firm} />
+              <AMField label={t('Firm')} req field="firm" form={form} setForm={setForm}
+                     placeholder={t('e.g. ABC Securities JSC')} touched={touched} valid={!!form.firm} />
               <div className={'am-field' + (touched && !form.role ? ' err' : '')}>
-                <label>Role <span className="req">*</span></label>
+                <label>{t('Role')} <span className="req">*</span></label>
                 <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
-                  <option value="" disabled>Choose…</option>
-                  {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
+                  <option value="" disabled>{t('Choose…')}</option>
+                  {ROLES.map(r => <option key={r} value={r}>{t(r)}</option>)}
                 </select>
               </div>
             </div>
 
             <div className="am-field" style={{ marginTop: 14 }}>
               <label>
-                <span>{product === 'forge' ? 'Dataset of interest' : 'Why Oracle, why now?'}</span>
-                <span style={{ color: 'var(--fg-faint)' }}>optional · 1–2 lines</span>
+                <span>{product === 'forge' ? t('Dataset of interest') : t('Why Oracle, why now?')}</span>
+                <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1–2 lines')}</span>
               </label>
               <textarea
                 value={form.why}
                 onChange={(e) => setForm({ ...form, why: e.target.value })}
                 placeholder={product === 'forge'
-                  ? 'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.'
-                  : 'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.'}
+                  ? t('e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.')
+                  : t('e.g. We cover VN listcos for a frontier-market fund and read filings every morning.')}
                 maxLength={400}
               />
             </div>
 
             <div style={{ marginTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
               <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>
-                <span style={{ color: 'var(--amber)' }}>·</span> WE REPLY FROM ORACLE@PROMVIS.IO
+                <span style={{ color: 'var(--amber)' }}>·</span> {t('WE REPLY FROM ORACLE@PROMVIS.IO')}
               </div>
               <button
                 type="submit"
@@ -397,7 +982,7 @@ function AccessModal() {
                 className="btn btn-primary"
                 style={{ padding: '14px 22px', opacity: step === 'sending' ? 0.7 : 1 }}
               >
-                {step === 'sending' ? 'Sending…' : (product === 'forge' ? 'Join the waitlist' : 'Request access')}
+                {step === 'sending' ? t('Sending…') : (product === 'forge' ? t('Join the waitlist') : t('Request access'))}
                 <span className="arr">→</span>
               </button>
             </div>
@@ -431,6 +1016,7 @@ function AMField({ label, req, field, form, setForm, placeholder, type = 'text',
 }
 
 function AMSuccessState({ email, firm, product }) {
+  const { t } = useTranslation();
   return (
     <div style={{ padding: '52px 36px 36px', position: 'relative', textAlign: 'left' }}>
       <div style={{
@@ -441,14 +1027,14 @@ function AMSuccessState({ email, firm, product }) {
       }}>
         <svg width="20" height="20" viewBox="0 0 20 20"><path className="ic" strokeWidth="1.6" d="M4 10.5l3.5 3.5L16 6" /></svg>
       </div>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 12 }}>· REQUEST RECEIVED</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 12 }}>· {t('REQUEST RECEIVED')}</div>
       <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: 32, lineHeight: 1.08, letterSpacing: '-0.018em', margin: 0, color: 'var(--fg)', fontWeight: 400, textWrap: 'balance' }}>
-        We'll be in touch.
+        {t("We'll be in touch.")}
       </h3>
       <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)', margin: '14px 0 0' }}>
         {product === 'forge'
-          ? <>You're on the Forge waitlist. We'll write to <strong style={{ color: 'var(--fg)' }}>{email}</strong> the moment the first dataset is ready to ship.</>
-          : <>Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from <strong style={{ color: 'var(--fg)' }}>oracle@promvis.io</strong> at <strong style={{ color: 'var(--fg)' }}>{email}</strong> within three business days.</>}
+          ? <>{t("You're on the Forge waitlist. We'll write to")} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('the moment the first dataset is ready to ship.')}</>
+          : <>{t('Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from')} <strong style={{ color: 'var(--fg)' }}>oracle@promvis.io</strong> {t('at')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('within three business days.')}</>}
       </p>
       <div style={{
         marginTop: 28, padding: '16px 18px',
@@ -457,18 +1043,18 @@ function AMSuccessState({ email, firm, product }) {
         display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 18, rowGap: 8,
         fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', color: 'var(--fg-mute)',
       }}>
-        <span style={{ color: 'var(--fg-soft)' }}>REF</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('REF')}</span>
         <span className="tnum">PV-{Math.random().toString(36).slice(2, 8).toUpperCase()}</span>
-        <span style={{ color: 'var(--fg-soft)' }}>FIRM</span><span>{firm}</span>
-        <span style={{ color: 'var(--fg-soft)' }}>PRODUCT</span>
-        <span>{product === 'forge' ? 'Forge — Waitlist' : 'Oracle — Early access'}</span>
-        <span style={{ color: 'var(--fg-soft)' }}>REPLY-BY</span><span>3 business days</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('FIRM')}</span><span>{firm}</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('PRODUCT')}</span>
+        <span>{product === 'forge' ? t('Forge — Waitlist') : t('Oracle — Early access')}</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('REPLY-BY')}</span><span>{t('3 business days')}</span>
       </div>
       <div style={{ marginTop: 28, paddingTop: 22, borderTop: '1px solid var(--border)' }}>
         <AlreadyInvited />
       </div>
       <div style={{ marginTop: 22, display: 'flex', gap: 12 }}>
-        <button onClick={() => accessStore.close()} className="btn btn-ghost" style={{ padding: '12px 20px' }}>Close</button>
+        <button onClick={() => accessStore.close()} className="btn btn-ghost" style={{ padding: '12px 20px' }}>{t('Close')}</button>
       </div>
     </div>
   );
@@ -506,14 +1092,32 @@ function Wordmark({ size = 13 }) {
 
 function Nav({ mobile, page }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const { t, lang, setLang } = useTranslation();
   const homePrefix = page === 'oracle' ? '/' : '';
+  const toggleLang = () => setLang(lang === 'en' ? 'vi' : 'en');
+
+  const LangSwitch = () => (
+    <button onClick={toggleLang} className="p-mono" style={{
+      background: 'transparent',
+      border: '1px solid var(--border)',
+      color: 'var(--fg-mute)',
+      padding: '4px 8px',
+      borderRadius: '4px',
+      fontSize: '10px',
+      cursor: 'pointer',
+      letterSpacing: '0.1em'
+    }}>
+      {lang.toUpperCase()}
+    </button>
+  );
 
   if (mobile) {
     return (
       <div className="nav" style={{ padding: '18px 24px' }}>
         <a href={page === 'oracle' ? '/' : '#'} style={{ textDecoration: 'none' }}><Wordmark size={12} /></a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>SIGN IN ↗</a>
+          <LangSwitch />
+          <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>{t('SIGN IN ↗')}</a>
           <button aria-label="menu" onClick={() => setMenuOpen(v => !v)} style={{
             background: 'transparent', border: '1px solid var(--border-strong)',
             width: 36, height: 36, borderRadius: 999, color: 'var(--fg)', display: 'grid', placeItems: 'center', cursor: 'pointer',
@@ -529,18 +1133,19 @@ function Nav({ mobile, page }) {
     <nav className="nav">
       <a href={page === 'oracle' ? '/' : '#'} style={{ textDecoration: 'none' }}><Wordmark /></a>
       <div className="nav-links">
-        <a href={homePrefix + '#manifesto'}>Manifesto</a>
-        <a href={homePrefix + '#foundation'}>The Foundation</a>
+        <a href={homePrefix + '#manifesto'}>{t('Manifesto')}</a>
+        <a href={homePrefix + '#foundation'}>{t('The Foundation')}</a>
         <a href={page === 'oracle' ? '#' : 'Oracle.html'} className="amber" style={page === 'oracle' ? { color: 'var(--amber)' } : undefined}>
-          Oracle{page === 'oracle' && <span style={{ marginLeft: 4, color: 'var(--amber)' }}> ·</span>}
+          {t('Oracle')}{page === 'oracle' && <span style={{ marginLeft: 4, color: 'var(--amber)' }}> ·</span>}
         </a>
-        <a href={homePrefix + '#forge'}>Forge</a>
-        <a href={homePrefix + '#trusted'}>Trusted by</a>
+        <a href={homePrefix + '#forge'}>{t('Forge')}</a>
+        <a href={homePrefix + '#trusted'}>{t('Trusted by')}</a>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>SIGN IN ↗</a>
+        <LangSwitch />
+        <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>{t('SIGN IN ↗')}</a>
         <button type="button" onClick={() => window.openAccess && window.openAccess('oracle')} className="btn btn-ghost" style={{ padding: '10px 18px', fontSize: 13 }}>
-          Talk to the Oracle <span className="arr">→</span>
+          {t('Talk to the Oracle')} <span className="arr">→</span>
         </button>
       </div>
     </nav>
@@ -548,6 +1153,7 @@ function Nav({ mobile, page }) {
 }
 
 function Footer({ mobile }) {
+  const { t } = useTranslation();
   return (
     <footer style={{ padding: mobile ? '48px 28px 36px' : '72px var(--pad-x) 48px', borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -555,25 +1161,25 @@ function Footer({ mobile }) {
           <div>
             <Wordmark />
             <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.3, color: 'var(--fg-mute)', marginTop: 18, maxWidth: '28ch' }}>
-              The AI-native financial data platform for Vietnam's capital markets.
+              {t("The AI-native financial data platform for Vietnam's capital markets.")}
             </div>
           </div>
-          <FooterCol title="Products" links={['Oracle (Early access)', 'Forge (Coming soon)', 'Roadmap']} />
-          <FooterCol title="Company" links={['Manifesto', 'About', 'Careers', 'Contact']} />
-          <FooterCol title="Reach us" links={['oracle@promvis.io', 'Hanoi · District Ba Đình', 'LinkedIn']} />
+          <FooterCol title={t('Products')} links={[t('Oracle (Early access)'), t('Forge (Coming soon)'), t('Roadmap')]} />
+          <FooterCol title={t('Company')} links={[t('Manifesto'), t('About'), t('Careers'), t('Contact')]} />
+          <FooterCol title={t('Reach us')} links={['oracle@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
         </div>
         <hr className="rule" />
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24, fontSize: 12, color: 'var(--fg-soft)', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
             <span>© 2026 PROMVIS</span>
             <span>·</span>
-            <span>Built by the people at <a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
+            <span>{t('Built by the people at ')}<a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
             <span>·</span>
-            <span>MADE IN VIETNAM ★</span>
+            <span>{t('MADE IN VIETNAM ★')}</span>
             <span>·</span>
-            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">ORIGIN</a>
+            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">{t('ORIGIN')}</a>
           </div>
-          <div>EARLY ACCESS · 2026</div>
+          <div>{t('EARLY ACCESS · 2026')}</div>
         </div>
       </div>
     </footer>
@@ -619,6 +1225,7 @@ function EmberField({ mobile }) {
 }
 
 function OracleHero({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section className="section" style={{
       paddingTop: mobile ? 56 : 72,
@@ -646,7 +1253,7 @@ function OracleHero({ mobile }) {
       }}>
         <div>
           <div className="p-eyebrow" style={{ marginBottom: mobile ? 28 : 36 }}>
-            <span className="dot" />ORACLE · AVAILABLE · EARLY ACCESS
+            <span className="dot" />{t('ORACLE · AVAILABLE · EARLY ACCESS')}
           </div>
           <h1 style={{
             fontFamily: 'var(--font-serif)',
@@ -655,8 +1262,8 @@ function OracleHero({ mobile }) {
             letterSpacing: '-0.022em',
             margin: 0, fontWeight: 400, color: 'var(--fg)', textWrap: 'balance',
           }}>
-            Your sharpest analyst,<br />
-            <span className="p-amber" style={{ fontStyle: 'italic' }}>embedded in your app.</span>
+            {t('Your sharpest analyst,')}<br />
+            <span className="p-amber" style={{ fontStyle: 'italic' }}>{t('embedded in your app.')}</span>
           </h1>
           <p style={{
             fontFamily: 'var(--font-sans)',
@@ -664,14 +1271,13 @@ function OracleHero({ mobile }) {
             color: 'var(--fg-mute)', maxWidth: '54ch',
             margin: mobile ? '24px 0 0' : '32px 0 0',
           }}>
-            An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform
-            in days, not quarters — and ship the moat your competitors are still scoping.
+            {t("An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.")}
           </p>
           <div style={{ display: 'flex', gap: 14, marginTop: mobile ? 28 : 40, flexWrap: 'wrap' }}>
             <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">
-              Talk to the Oracle <span className="arr">→</span>
+              {t('Talk to the Oracle')} <span className="arr">→</span>
             </button>
-            <a href="#architecture" className="btn btn-ghost">See how it embeds</a>
+            <a href="#architecture" className="btn btn-ghost">{t('See how it embeds')}</a>
           </div>
           <AlreadyInvited mobile={mobile} />
         </div>
@@ -724,6 +1330,7 @@ function PhoneShell({ children, width = 320 }) {
 }
 
 function BrokerAppScreen({ oracleHighlight }) {
+  const { t } = useTranslation();
   const brand = { name: 'YourBroker', accent: '#2a6acc' };
   return (
     <div style={{ height: '100%', background: '#f6f4f0', color: '#0c0a08', fontFamily: 'var(--font-sans)', display: 'flex', flexDirection: 'column' }}>
@@ -733,7 +1340,7 @@ function BrokerAppScreen({ oracleHighlight }) {
           <span style={{ fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>{brand.name}</span>
         </div>
         <div style={{ display: 'flex', gap: 12, fontSize: 11, color: '#666' }}>
-          <span>Markets</span><span style={{ color: '#0c0a08', fontWeight: 600 }}>Detail</span><span>Portfolio</span>
+          <span>{t('Markets')}</span><span style={{ color: '#0c0a08', fontWeight: 600 }}>{t('Detail')}</span><span>{t('Portfolio')}</span>
         </div>
       </div>
       <div style={{ padding: '4px 16px 12px' }}>
@@ -767,34 +1374,35 @@ function BrokerAppScreen({ oracleHighlight }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.14em', color: 'var(--amber)' }}>
             <span style={{ width: 4, height: 4, borderRadius: 99, background: 'var(--amber)', boxShadow: '0 0 6px var(--amber)' }} />
-            ORACLE INSIGHT
+            {t('ORACLE INSIGHT')}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: '#9d958a', letterSpacing: '0.06em' }}>UPDATED 07:15 ICT</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: '#9d958a', letterSpacing: '0.06em' }}>{t('UPDATED 07:15 ICT')}</div>
         </div>
         <div style={{ fontFamily: 'var(--font-serif)', fontSize: 14.5, lineHeight: 1.25 }}>
-          Q4 momentum on capacity utilisation; <span style={{ color: 'var(--amber)', fontStyle: 'italic' }}>watch Dung Quat 2 commissioning.</span>
+          {t('Q4 momentum on capacity utilisation;')} <span style={{ color: 'var(--amber)', fontStyle: 'italic' }}>{t('watch Dung Quat 2 commissioning.')}</span>
         </div>
         <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
-          {['Fundamental', 'Technical', 'Sentiment'].map(t => (
-            <span key={t} style={{ fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: 99, background: 'rgba(232,160,74,0.14)', color: 'var(--amber)' }}>{t}</span>
+          {['Fundamental', 'Technical', 'Sentiment'].map(tag => (
+            <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: 99, background: 'rgba(232,160,74,0.14)', color: 'var(--amber)' }}>{t(tag)}</span>
           ))}
         </div>
         <div style={{ fontSize: 10.5, lineHeight: 1.4, color: '#c8c1b3', marginTop: 2 }}>
-          Steel volume guidance unchanged; iron-ore cost roll-off should expand Q1 margin by ~80bps if the price band holds.
+          {t('Steel volume guidance unchanged; iron-ore cost roll-off should expand Q1 margin by ~80bps if the price band holds.')}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: '#8a8276', letterSpacing: '0.06em' }}>4 cited filings · ask follow-up →</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: '#8a8276', letterSpacing: '0.06em' }}>{t('4 cited filings · ask follow-up →')}</span>
         </div>
       </div>
       <div style={{ marginTop: 'auto', padding: '10px 16px 16px', borderTop: '1px solid #e9e5dc', display: 'flex', gap: 10 }}>
-        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#168745', color: '#fff', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>Buy</div>
-        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#d04848', color: '#fff', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>Sell</div>
+        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#168745', color: '#fff', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t('Buy')}</div>
+        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#d04848', color: '#fff', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t('Sell')}</div>
       </div>
     </div>
   );
 }
 
 function AudienceStrip({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section style={{
       padding: mobile ? '36px 28px' : '52px var(--pad-x)',
@@ -802,19 +1410,19 @@ function AudienceStrip({ mobile }) {
       background: 'color-mix(in oklab, var(--bg-elev) 50%, var(--bg))',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'auto 1fr 1fr 1fr', gap: mobile ? 20 : 48, alignItems: 'center' }}>
-        <div className="p-eyebrow" style={{ whiteSpace: 'nowrap' }}><span className="dot" />FOR</div>
-        <AudiencePitch t="Vietnamese securities firms" s="Brokerages, custodians, wealth managers." />
-        <AudiencePitch t="Embedded in your platform" s="Web or mobile. APIs + drop-in UI." />
-        <AudiencePitch t="Branded as yours" s="Your house view. Your customers. Your moat." />
+        <div className="p-eyebrow" style={{ whiteSpace: 'nowrap' }}><span className="dot" />{t('FOR')}</div>
+        <AudiencePitch title={t('Vietnamese securities firms')} s={t('Brokerages, custodians, wealth managers.')} />
+        <AudiencePitch title={t('Embedded in your platform')} s={t('Web or mobile. APIs + drop-in UI.')} />
+        <AudiencePitch title={t('Branded as yours')} s={t('Your house view. Your customers. Your moat.')} />
       </div>
     </section>
   );
 }
 
-function AudiencePitch({ t, s }) {
+function AudiencePitch({ title, s }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{t}</div>
+      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{title}</div>
       <div style={{ fontSize: 13, color: 'var(--fg-mute)' }}>{s}</div>
     </div>
   );
@@ -846,13 +1454,14 @@ function SectionHeader({ eyebrow, h2, lede, mobile }) {
 }
 
 function IntegrationSection({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section id="architecture" className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHeader
-          eyebrow="ORACLE · §01"
-          h2={<>Launch in days. <i className="p-amber">Not quarters.</i></>}
-          lede="Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite."
+          eyebrow={t('ORACLE · §01')}
+          h2={<>{t('Launch in days.')} <i className="p-amber">{t('Not quarters.')}</i></>}
+          lede={t('Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.')}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 24 : 48, alignItems: 'flex-start' }}>
@@ -863,9 +1472,9 @@ function IntegrationSection({ mobile }) {
             <ApiCodeBlock />
             <IntegrationStats />
             <BulletList items={[
-              { t: 'Prebuilt insight APIs', s: 'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.' },
-              { t: 'Drop-in web + mobile UI', s: 'A ready-to-embed chat and insight shell with minimal scaffolding. No risk to your existing product roadmap.' },
-              { t: 'No MLOps required', s: 'No models to host. No vector stores to manage. Your team ships product; we keep the foundation refined.' },
+              { t: t('Prebuilt insight APIs'), s: t('Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.') },
+              { t: t('Drop-in web + mobile UI'), s: t('A ready-to-embed chat and insight shell with minimal scaffolding. No risk to your existing product roadmap.') },
+              { t: t('No MLOps required'), s: t('No models to host. No vector stores to manage. Your team ships product; we keep the foundation refined.') },
             ]} />
           </div>
         </div>
@@ -900,11 +1509,12 @@ function ApiCodeBlock() {
 }
 
 function IntegrationStats() {
+  const { t } = useTranslation();
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, padding: '18px 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
-      <StatItem n="1,500+" l="Tickers covered" />
-      <StatItem n="DAILY" l="Refresh cadence" />
-      <StatItem n="0" l="ML engineers needed" />
+      <StatItem n="1,500+" l={t('Tickers covered')} />
+      <StatItem n={t('DAILY')} l={t('Refresh cadence')} />
+      <StatItem n="0" l={t('ML engineers needed')} />
     </div>
   );
 }
@@ -935,13 +1545,14 @@ function BulletList({ items }) {
 }
 
 function AnalystSection({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHeader
-          eyebrow="ORACLE · §02"
-          h2={<>Not a chatbot. <i className="p-amber">An analyst.</i></>}
-          lede="Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end."
+          eyebrow={t('ORACLE · §02')}
+          h2={<>{t('Not a chatbot.')} <i className="p-amber">{t('An analyst.')}</i></>}
+          lede={t('Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.')}
           mobile={mobile}
         />
         <MultiLensWidget mobile={mobile} />
@@ -955,19 +1566,20 @@ function AnalystSection({ mobile }) {
 }
 
 function MultiLensWidget({ mobile }) {
+  const { t } = useTranslation();
   const [active, setActive] = React.useState('fundamental');
   const lenses = [
-    { id: 'fundamental', label: 'Fundamental', tag: '§ filings · ratios · guidance',
-      body: 'Steel volume guidance reiterated at 9.5 Mt for FY26. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds. Capex on Dung Quat 2 tracking under-budget through April.',
+    { id: 'fundamental', label: t('Fundamental'), tag: t('§ filings · ratios · guidance'),
+      body: t('Steel volume guidance reiterated at 9.5 Mt for FY26. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds. Capex on Dung Quat 2 tracking under-budget through April.'),
       cites: ['AR-2024 §4.2', 'Q3 MD&A', 'Capex schedule', 'FY26 guidance call'] },
-    { id: 'technical', label: 'Technical', tag: '20-day · regime · volume',
-      body: "Closed above the 20-day for the 9th consecutive session on rising volume. RSI 64; not yet exhausted. Resistance at 29.5k cluster from January's consolidation.",
+    { id: 'technical', label: t('Technical'), tag: t('20-day · regime · volume'),
+      body: t("Closed above the 20-day for the 9th consecutive session on rising volume. RSI 64; not yet exhausted. Resistance at 29.5k cluster from January's consolidation."),
       cites: ['Daily bars · YTD', 'Volume profile · 90d'] },
-    { id: 'sentiment', label: 'Sentiment', tag: 'broker notes · social · narrative',
-      body: 'Broker narrative has rotated from "margin risk" to "volume re-acceleration" over six weeks. Retail mentions up 38%. No regulatory chatter in the last 30 days.',
+    { id: 'sentiment', label: t('Sentiment'), tag: t('broker notes · social · narrative'),
+      body: t('Broker narrative has rotated from "margin risk" to "volume re-acceleration" over six weeks. Retail mentions up 38%. No regulatory chatter in the last 30 days.'),
       cites: ['Local broker reports · 6w', 'Retail forum aggregate'] },
-    { id: 'quantitative', label: 'Quantitative', tag: 'factor · momentum · quality',
-      body: 'Momentum factor +2.1σ vs HOSE basics universe. Quality (Piotroski F) 7/9. Earnings revision breadth net positive on a 60-day window.',
+    { id: 'quantitative', label: t('Quantitative'), tag: t('factor · momentum · quality'),
+      body: t('Momentum factor +2.1σ vs HOSE basics universe. Quality (Piotroski F) 7/9. Earnings revision breadth net positive on a 60-day window.'),
       cites: ['Factor model · 60d', 'Piotroski breakdown'] },
   ];
   const A = lenses.find(l => l.id === active);
@@ -975,11 +1587,11 @@ function MultiLensWidget({ mobile }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· MULTI-LENS ANALYSIS</div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>Four lenses on the same question.</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· {t('MULTI-LENS ANALYSIS')}</div>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('Four lenses on the same question.')}</div>
         </div>
         <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)', letterSpacing: '0.08em' }}>
-          QUERY · <span style={{ color: 'var(--amber)' }}>"How is HPG positioned for Q1?"</span>
+          {t('QUERY')} · <span style={{ color: 'var(--amber)' }}>{t('"How is HPG positioned for Q1?"')}</span>
         </div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 0, border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden' }}>
@@ -1012,7 +1624,7 @@ function MultiLensWidget({ mobile }) {
       }}>
         <div style={{ fontSize: mobile ? 15.5 : 16.5, lineHeight: 1.6, color: 'var(--fg)' }}>{A.body}</div>
         <div style={{ minWidth: 200, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: 'var(--fg-soft)', textTransform: 'uppercase' }}>CITED</div>
+          <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: 'var(--fg-soft)', textTransform: 'uppercase' }}>{t('CITED')}</div>
           {A.cites.map(c => (
             <div key={c} className="p-mono" style={{ fontSize: 11, color: 'var(--amber)', borderLeft: '1px solid color-mix(in oklab, var(--amber) 40%, var(--border))', paddingLeft: 10, lineHeight: 1.5 }}>{c}</div>
           ))}
@@ -1023,21 +1635,22 @@ function MultiLensWidget({ mobile }) {
 }
 
 function FivePillarSpec({ mobile }) {
+  const { t } = useTranslation();
   const pillars = [
-    { k: 'GROWTH', t: 'Growth', d: 'Revenue acceleration, segment mix, end-market exposure.' },
-    { k: 'PROFITABILITY', t: 'Profitability', d: 'Operating margin, ROIC, contribution by line of business.' },
-    { k: 'EFFICIENCY', t: 'Efficiency', d: 'Working-capital cycles, asset turnover, days-on-hand.' },
-    { k: 'LEVERAGE', t: 'Leverage & Solvency', d: 'Net debt, coverage, schedule, covenant headroom.' },
-    { k: 'CASH', t: 'Cash Quality', d: 'FCF conversion, accruals quality, NWC drift.' },
+    { k: 'GROWTH', t: t('Growth'), d: t('Revenue acceleration, segment mix, end-market exposure.') },
+    { k: 'PROFITABILITY', t: t('Profitability'), d: t('Operating margin, ROIC, contribution by line of business.') },
+    { k: 'EFFICIENCY', t: t('Efficiency'), d: t('Working-capital cycles, asset turnover, days-on-hand.') },
+    { k: 'LEVERAGE', t: t('Leverage & Solvency'), d: t('Net debt, coverage, schedule, covenant headroom.') },
+    { k: 'CASH', t: t('Cash Quality'), d: t('FCF conversion, accruals quality, NWC drift.') },
   ];
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· THE 5-PILLAR FRAMEWORK</div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>How professionals evaluate companies — built in.</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· {t('THE 5-PILLAR FRAMEWORK')}</div>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('How professionals evaluate companies — built in.')}</div>
         </div>
-        <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)', letterSpacing: '0.08em' }}>ADVANCED MODE · DEFAULT</div>
+        <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)', letterSpacing: '0.08em' }}>{t('ADVANCED MODE · DEFAULT')}</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr 1fr' : 'repeat(5, 1fr)', gap: 0, border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden' }}>
         {pillars.map((p, i) => (
@@ -1064,9 +1677,10 @@ function FivePillarSpec({ mobile }) {
 }
 
 function ModeToggle({ mode, setMode }) {
+  const { t } = useTranslation();
   return (
     <div style={{ display: 'inline-flex', padding: 3, border: '1px solid var(--border-strong)', borderRadius: 999, background: 'var(--bg-elev)' }}>
-      {[{ v: 'quick', l: 'Quick' }, { v: 'advanced', l: 'Advanced' }].map(o => (
+      {[{ v: 'quick', l: t('Quick') }, { v: 'advanced', l: t('Advanced') }].map(o => (
         <button key={o.v} type="button" onClick={() => setMode(o.v)} style={{
           padding: '7px 16px', borderRadius: 999, border: 'none', cursor: 'pointer',
           background: mode === o.v ? 'var(--amber)' : 'transparent',
@@ -1080,50 +1694,51 @@ function ModeToggle({ mode, setMode }) {
 }
 
 function QuickVsAdvanced({ mobile }) {
+  const { t } = useTranslation();
   const [mode, setMode] = React.useState('quick');
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· ONE PRODUCT, TWO AUDIENCES</div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>Quick for retail. Evidence-based for the desk.</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· {t('ONE PRODUCT, TWO AUDIENCES')}</div>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('Quick for retail. Evidence-based for the desk.')}</div>
         </div>
         <ModeToggle mode={mode} setMode={setMode} />
       </div>
       <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', background: 'var(--bg-elev)' }}>
         <div style={{ padding: '14px 22px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="p-mono" style={{ fontSize: 11, color: 'var(--fg-soft)', letterSpacing: '0.06em' }}>
-            ›_ <span style={{ color: 'var(--fg)' }}>Should I hold HPG into earnings next week?</span>
+            ›_ <span style={{ color: 'var(--fg)' }}>{t('Should I hold HPG into earnings next week?')}</span>
           </div>
           <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: mode === 'quick' ? '#7cc1a0' : 'var(--amber)' }}>
-            {mode === 'quick' ? 'QUICK · CONCISE' : 'ADVANCED · EVIDENCE-BASED'}
+            {mode === 'quick' ? t('QUICK · CONCISE') : t('ADVANCED · EVIDENCE-BASED')}
           </div>
         </div>
         {mode === 'quick' ? (
           <div style={{ padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 20 : 24, lineHeight: 1.25, color: 'var(--fg)' }}>Momentum is on your side, but earnings volatility is real.</div>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 20 : 24, lineHeight: 1.25, color: 'var(--fg)' }}>{t('Momentum is on your side, but earnings volatility is real.')}</div>
             <div style={{ fontSize: 14.5, color: 'var(--fg-mute)', lineHeight: 1.55 }}>
-              Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength. <span className="p-amber">Not advice — your call.</span>
+              {t("Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.")} <span className="p-amber">{t('Not advice — your call.')}</span>
             </div>
-            <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.06em', marginTop: 6 }}>· 2 sentences · plain language · 1 caveat</div>
+            <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.06em', marginTop: 6 }}>{t('· 2 sentences · plain language · 1 caveat')}</div>
           </div>
         ) : (
           <div style={{ padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 18 }}>
             <div>
-              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>FUNDAMENTAL</div>
+              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>{t('FUNDAMENTAL')}</div>
               <div style={{ fontSize: 14.5, color: 'var(--fg)', lineHeight: 1.6 }}>
-                Guidance reiterated at the Q3 call <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[¹]</span>. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[²]</span>.
+                {t('Guidance reiterated at the Q3 call')} <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[¹]</span>{t('. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds')} <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[²]</span>.
               </div>
             </div>
             <div>
-              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>TECHNICAL</div>
+              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>{t('TECHNICAL')}</div>
               <div style={{ fontSize: 14.5, color: 'var(--fg)', lineHeight: 1.6 }}>
-                9-session breakout on rising volume; RSI 64. Resistance cluster at 29,500 from January consolidation <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[³]</span>.
+                {t('9-session breakout on rising volume; RSI 64. Resistance cluster at 29,500 from January consolidation')} <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[³]</span>.
               </div>
             </div>
             <div>
-              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>RISKS</div>
-              <div style={{ fontSize: 14.5, color: 'var(--fg-mute)', lineHeight: 1.6 }}>Coil-spread compression in Q4; one near-term covenant test on the related-party financing schedule.</div>
+              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>{t('RISKS')}</div>
+              <div style={{ fontSize: 14.5, color: 'var(--fg-mute)', lineHeight: 1.6 }}>{t('Coil-spread compression in Q4; one near-term covenant test on the related-party financing schedule.')}</div>
             </div>
             <div style={{ paddingTop: 14, borderTop: '1px solid var(--border)', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
               {['[¹] Q3 MD&A · §3', '[²] Iron-ore cost band · 60d', '[³] Daily bars · 6m'].map(c => (
@@ -1138,13 +1753,14 @@ function QuickVsAdvanced({ mobile }) {
 }
 
 function PersonalizationSection({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHeader
-          eyebrow="ORACLE · §03"
-          h2={<>Your house view. <i className="p-amber">Your customer's portfolio.</i></>}
-          lede="Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket."
+          eyebrow={t('ORACLE · §03')}
+          h2={<>{t('Your house view.')} <i className="p-amber">{t("Your customer's portfolio.")}</i></>}
+          lede={t("Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.")}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 24 : 36 }}>
@@ -1160,11 +1776,12 @@ function PersonalizationSection({ mobile }) {
 }
 
 function HouseViewConfig() {
+  const { t } = useTranslation();
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', background: 'var(--bg-elev)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· HOUSE VIEW · house.yml</div>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>EDITED 4h AGO</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· {t('HOUSE VIEW · house.yml')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>{t('EDITED 4h AGO')}</div>
       </div>
       <pre style={{ margin: 0, padding: '18px 20px', flex: 1, overflow: 'auto', fontFamily: 'var(--font-mono)', fontSize: 11.5, lineHeight: 1.65, color: 'var(--fg-mute)', background: 'color-mix(in oklab, var(--bg) 60%, var(--bg-elev))' }}>
         <span style={{ color: 'var(--fg-faint)' }}>{`# YourBroker — house investment policy\n# Plugged into Oracle.  No model retrain required.\n`}</span>
@@ -1175,42 +1792,44 @@ function HouseViewConfig() {
 }
 
 function ChatBubble({ role = 'oracle', children }) {
+  const { t } = useTranslation();
   if (role === 'user') {
     return (
       <div style={{ alignSelf: 'flex-end', maxWidth: '80%' }}>
-        <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.06em', textAlign: 'right', marginBottom: 4 }}>YOU</div>
+        <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.06em', textAlign: 'right', marginBottom: 4 }}>{t('YOU')}</div>
         <div style={{ padding: '10px 14px', borderRadius: 8, background: 'color-mix(in oklab, var(--fg) 5%, var(--bg-elev))', border: '1px solid var(--border)', fontSize: 13.5, color: 'var(--fg)', lineHeight: 1.5 }}>{children}</div>
       </div>
     );
   }
   return (
     <div style={{ maxWidth: '88%' }}>
-      <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.06em', marginBottom: 4 }}>· ORACLE</div>
+      <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.06em', marginBottom: 4 }}>{t('· ORACLE')}</div>
       <div style={{ padding: '12px 16px', borderRadius: 8, background: 'color-mix(in oklab, var(--amber) 4%, var(--bg))', border: '1px solid color-mix(in oklab, var(--amber) 22%, var(--border))', fontSize: 13.5, color: 'var(--fg-mute)', lineHeight: 1.55 }}>{children}</div>
     </div>
   );
 }
 
 function PortfolioChat() {
+  const { t } = useTranslation();
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, background: 'var(--bg-elev)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· ORACLE · CHAT (PERSONALISED)</div>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>USER · A.NGUYEN · ACCT 9241</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· {t('ORACLE · CHAT (PERSONALISED)')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>{t('USER · A.NGUYEN · ACCT 9241')}</div>
       </div>
       <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <ChatBubble role="user">How is my portfolio doing today?</ChatBubble>
+        <ChatBubble role="user">{t('How is my portfolio doing today?')}</ChatBubble>
         <ChatBubble>
-          Your account is <span className="p-amber">+0.42% on the day</span>, +3.1% MTD. The move came from <span style={{ color: 'var(--fg)' }}>HPG (+4.6%)</span> and <span style={{ color: 'var(--fg)' }}>FPT (+1.2%)</span>; <span style={{ color: 'var(--fg)' }}>VCB</span> dragged 0.3%.
+          {t('Your account is')} <span className="p-amber">{t('+0.42% on the day')}</span>{t(', +3.1% MTD. The move came from')} <span style={{ color: 'var(--fg)' }}>HPG (+4.6%)</span> {t('and')} <span style={{ color: 'var(--fg)' }}>FPT (+1.2%)</span>; <span style={{ color: 'var(--fg)' }}>VCB</span> {t('dragged 0.3%.')}
           <br /><br />
-          You're currently <span className="p-amber">39% in industrials</span> — drifting above the 30% target in your house allocation.
+          {t("You're currently")} <span className="p-amber">{t('39% in industrials')}</span> {t('— drifting above the 30% target in your house allocation.')}
         </ChatBubble>
-        <ChatBubble role="user">Should I be worried about VCB?</ChatBubble>
+        <ChatBubble role="user">{t('Should I be worried about VCB?')}</ChatBubble>
         <ChatBubble>
-          Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital. <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[¹ SBV draft circular]</span> <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[² VCB Q3 MD&A]</span>
+          {t("Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.")} <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[¹ SBV draft circular]</span> <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[² VCB Q3 MD&A]</span>
         </ChatBubble>
         <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.08em', textAlign: 'center', paddingTop: 4 }}>
-          ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT
+          {t('ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT')}
         </div>
       </div>
     </div>
@@ -1218,6 +1837,7 @@ function PortfolioChat() {
 }
 
 function PushNotificationStrip({ mobile }) {
+  const { t } = useTranslation();
   return (
     <div style={{
       border: '1px solid var(--border)', borderRadius: 4, padding: mobile ? 24 : 32,
@@ -1225,12 +1845,12 @@ function PushNotificationStrip({ mobile }) {
       display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr auto', gap: mobile ? 24 : 36, alignItems: 'center',
     }}>
       <div>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)', marginBottom: 8 }}>· PROACTIVE PUSH</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)', marginBottom: 8 }}>· {t('PROACTIVE PUSH')}</div>
         <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 22 : 26, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.012em', marginBottom: 8 }}>
-          Oracle knows what each customer holds — and notifies them when something changes.
+          {t('Oracle knows what each customer holds — and notifies them when something changes.')}
         </div>
         <div style={{ fontSize: 14, color: 'var(--fg-mute)', lineHeight: 1.55, maxWidth: '48ch' }}>
-          Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.
+          {t("Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.")}
         </div>
       </div>
       <div style={{
@@ -1241,35 +1861,36 @@ function PushNotificationStrip({ mobile }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 22, height: 22, borderRadius: 5, background: '#2a6acc', color: '#fff', fontSize: 10, fontWeight: 700, display: 'grid', placeItems: 'center' }}>YB</div>
-          <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em' }}>YourBroker · powered by Oracle</div>
-          <div style={{ marginLeft: 'auto', fontSize: 10, color: '#9d958a' }}>now</div>
+          <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em' }}>{t('YourBroker · powered by Oracle')}</div>
+          <div style={{ marginLeft: 'auto', fontSize: 10, color: '#9d958a' }}>{t('now')}</div>
         </div>
-        <div style={{ fontFamily: 'var(--font-serif)', fontSize: 14.5, lineHeight: 1.25 }}>HPG · Hòa Phát filed an update on Dung Quat 2.</div>
-        <div style={{ fontSize: 11, lineHeight: 1.4, color: '#c8c1b3' }}>Capex schedule revised down by ~3%. <span style={{ color: 'var(--amber)' }}>Open the analysis →</span></div>
+        <div style={{ fontFamily: 'var(--font-serif)', fontSize: 14.5, lineHeight: 1.25 }}>{t('HPG · Hòa Phát filed an update on Dung Quat 2.')}</div>
+        <div style={{ fontSize: 11, lineHeight: 1.4, color: '#c8c1b3' }}>{t('Capex schedule revised down by ~3%.')} <span style={{ color: 'var(--amber)' }}>{t('Open the analysis →')}</span></div>
       </div>
     </div>
   );
 }
 
 function ComplianceSection({ mobile }) {
-  const [lang, setLang] = React.useState('vi');
+  const { t } = useTranslation();
+  const [sampleLang, setSampleLang] = React.useState('vi');
   return (
     <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHeader
-          eyebrow="ORACLE · §04"
-          h2={<>Compliance, <i className="p-amber">by design.</i></>}
-          lede="Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer."
+          eyebrow={t('ORACLE · §04')}
+          h2={<>{t('Compliance,')} <i className="p-amber">{t('by design.')}</i></>}
+          lede={t("Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.")}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1.1fr 1fr', gap: mobile ? 24 : 36 }}>
-          <BilingualSample lang={lang} setLang={setLang} />
+          <BilingualSample lang={sampleLang} setLang={setSampleLang} />
           <ScopeRoutingDiagram />
         </div>
         <div style={{ marginTop: 36, display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'repeat(3, 1fr)', gap: 0, border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden' }}>
-          <ComplianceCell n="01" t="Dynamic disclaimers" s="Disclaimer language adapts to the question, the asset class, and the retail/professional mode." />
-          <ComplianceCell n="02" t="PII protection" s="Customer data stays in your perimeter. Oracle reads what you allow, never more." last={mobile} />
-          <ComplianceCell n="03" t="Reviewed, not retrofitted" s="Compliance review is part of the build, not a layer bolted on at the end." last />
+          <ComplianceCell n="01" t={t('Dynamic disclaimers')} s={t('Disclaimer language adapts to the question, the asset class, and the retail/professional mode.')} />
+          <ComplianceCell n="02" t={t('PII protection')} s={t('Customer data stays in your perimeter. Oracle reads what you allow, never more.')} last={mobile} />
+          <ComplianceCell n="03" t={t('Reviewed, not retrofitted')} s={t('Compliance review is part of the build, not a layer bolted on at the end.')} last />
         </div>
       </div>
     </section>
@@ -1324,19 +1945,20 @@ function routeColor(kind, alpha) {
 }
 
 function ScopeRoutingDiagram() {
+  const { t } = useTranslation();
   const cases = [
-    { q: 'How do I open a margin account?', r: 'YourBroker support', kind: 'route' },
-    { q: "What's your view on HPG?", r: 'Oracle answers', kind: 'answer' },
-    { q: "What's the weather in Hanoi?", r: 'Politely declines', kind: 'decline' },
-    { q: 'Show me my account password', r: 'Refuses · logs event', kind: 'refuse' },
+    { q: t('How do I open a margin account?'), r: t('YourBroker support'), kind: 'route' },
+    { q: t("What's your view on HPG?"), r: t('Oracle answers'), kind: 'answer' },
+    { q: t("What's the weather in Hanoi?"), r: t('Politely declines'), kind: 'decline' },
+    { q: t('Show me my account password'), r: t('Refuses · logs event'), kind: 'refuse' },
   ];
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, padding: '20px 22px', background: 'var(--bg-elev)', display: 'flex', flexDirection: 'column', gap: 14 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· SCOPE ROUTING</div>
-        <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>BEHAVIOUR · BY POLICY</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· {t('SCOPE ROUTING')}</div>
+        <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>{t('BEHAVIOUR · BY POLICY')}</div>
       </div>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.012em' }}>Every question lands in the right place.</div>
+      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{t('Every question lands in the right place.')}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
         {cases.map((c, i) => (
           <div key={i} style={{
@@ -1368,12 +1990,13 @@ function ComplianceCell({ n, t, s, last }) {
 }
 
 function TPBSCaseStudy({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section className="section" style={{ borderTop: '1px solid var(--border)', background: 'color-mix(in oklab, var(--bg-elev) 30%, var(--bg))' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHeader
-          eyebrow="CASE STUDY"
-          h2={<>Already in a securities firm <i className="p-amber">near you.</i></>}
+          eyebrow={t('CASE STUDY')}
+          h2={<>{t('Already in a securities firm')} <i className="p-amber">{t('near you.')}</i></>}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '0.9fr 1.1fr', gap: mobile ? 24 : 48, alignItems: 'flex-start' }}>
@@ -1383,25 +2006,24 @@ function TPBSCaseStudy({ mobile }) {
               <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.08em', fontSize: 44, color: 'var(--fg)' }}>
                 <span style={{ color: 'var(--amber)' }}>TP</span>BS
               </div>
-              <div style={{ fontSize: 13, color: 'var(--fg-mute)', marginTop: 8 }}>TPBank Securities</div>
-              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginTop: 18 }}>· LIVE ON ORACLE</div>
-              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-soft)', marginTop: 4 }}>VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM</div>
+              <div style={{ fontSize: 13, color: 'var(--fg-mute)', marginTop: 8 }}>{t('TPBank Securities')}</div>
+              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginTop: 18 }}>{t('· LIVE ON ORACLE')}</div>
+              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-soft)', marginTop: 4 }}>{t("VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM")}</div>
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.3, color: 'var(--fg)', letterSpacing: '-0.012em', textWrap: 'balance' }}>
               <span className="p-amber" style={{ fontStyle: 'italic' }}>"</span>
-              Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance.
-              The conversation our customers have inside our product is now ours to shape.
+              {t('Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.')}
               <span className="p-amber" style={{ fontStyle: 'italic' }}>"</span>
             </div>
-            <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.14em', color: 'var(--fg-soft)' }}>· TPBS LEADERSHIP · PLACEHOLDER QUOTE</div>
+            <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.14em', color: 'var(--fg-soft)' }}>{t('· TPBS LEADERSHIP · PLACEHOLDER QUOTE')}</div>
             <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: 0, border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginTop: 8 }}>
-              <CaseStat n="< 30 days" l="From kickoff to live in-app" />
-              <CaseStat n="0" l="ML engineers hired" last={mobile} />
-              <CaseStat n="100%" l="Retail flows in scope" last />
+              <CaseStat n={t('< 30 days')} l={t('From kickoff to live in-app')} />
+              <CaseStat n="0" l={t('ML engineers hired')} last={mobile} />
+              <CaseStat n="100%" l={t('Retail flows in scope')} last />
             </div>
-            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-faint)' }}>· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS</div>
+            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-faint)' }}>{t('· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS')}</div>
           </div>
         </div>
       </div>
@@ -1419,6 +2041,7 @@ function CaseStat({ n, l, last }) {
 }
 
 function OracleCTAStrip({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section className="section" style={{
       paddingTop: 120, paddingBottom: 120,
@@ -1435,14 +2058,14 @@ function OracleCTAStrip({ mobile }) {
           fontSize: mobile ? 36 : 'clamp(40px, 5vw, 72px)',
           lineHeight: 1.02, letterSpacing: '-0.02em', margin: '24px 0 16px', fontWeight: 400, textWrap: 'balance',
         }}>
-          Bring Oracle into your platform.
+          {t('Bring Oracle into your platform.')}
         </h2>
         <p style={{ fontSize: mobile ? 16 : 18, lineHeight: 1.5, color: 'var(--fg-mute)', maxWidth: '54ch', margin: '0 auto 32px' }}>
-          A 30-minute partner walkthrough is the fastest way to see Oracle in your app, with your colours, on your tickers.
+          {t('A 30-minute partner walkthrough is the fastest way to see Oracle in your app, with your colours, on your tickers.')}
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">Talk to the Oracle <span className="arr">→</span></button>
-          <a href="mailto:oracle@promvis.io?subject=Partner%20walkthrough" className="btn btn-ghost">Book a partner walkthrough</a>
+          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">{t('Talk to the Oracle')} <span className="arr">→</span></button>
+          <a href="mailto:oracle@promvis.io?subject=Partner%20walkthrough" className="btn btn-ghost">{t('Book a partner walkthrough')}</a>
         </div>
         <div style={{ marginTop: 22 }}><AlreadyInvited align="center" /></div>
       </div>
@@ -1482,10 +2105,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <LanguageProvider>
       <AccessModal />
       <OraclePage />
-    </>
+    </LanguageProvider>
   );
 }
 
