@@ -115,6 +115,41 @@ function Nav({ mobile }) {
             </div>
             
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div className="p-mono" style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '12px 0', borderTop: '1px solid var(--border)',
+                fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)'
+              }}>
+                <span>{t('LANGUAGE')}</span>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  <button
+                    type="button"
+                    onClick={() => setLang('en')}
+                    className="p-mono"
+                    aria-pressed={lang === 'en'}
+                    style={{
+                      background: lang === 'en' ? 'var(--fg)' : 'transparent',
+                      border: '1px solid var(--border)',
+                      color: lang === 'en' ? 'var(--bg)' : 'var(--fg-mute)',
+                      padding: '6px 12px', borderRadius: 4,
+                      fontSize: 11, letterSpacing: '0.1em', cursor: 'pointer'
+                    }}
+                  >EN</button>
+                  <button
+                    type="button"
+                    onClick={() => setLang('vi')}
+                    className="p-mono"
+                    aria-pressed={lang === 'vi'}
+                    style={{
+                      background: lang === 'vi' ? 'var(--fg)' : 'transparent',
+                      border: '1px solid var(--border)',
+                      color: lang === 'vi' ? 'var(--bg)' : 'var(--fg-mute)',
+                      padding: '6px 12px', borderRadius: 4,
+                      fontSize: 11, letterSpacing: '0.1em', cursor: 'pointer'
+                    }}
+                  >VI</button>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => {

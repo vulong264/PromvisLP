@@ -9,6 +9,7 @@ const en = {
   'Oracle': 'Oracle',
   'Forge': 'Forge',
   'Trusted by': 'Trusted by',
+  'LANGUAGE': 'LANGUAGE',
 
   // Hero
   'AI-NATIVE FINANCIAL INTELLIGENCE · VIETNAM': 'AI-NATIVE FINANCIAL INTELLIGENCE · VIETNAM',
@@ -148,6 +149,7 @@ const vi = {
   'Oracle': 'Oracle',
   'Forge': 'Forge',
   'Trusted by': 'Đối tác',
+  'LANGUAGE': 'NGÔN NGỮ',
 
   // Hero
   'AI-NATIVE FINANCIAL INTELLIGENCE · VIETNAM': 'NỀN TẢNG DỮ LIỆU TÀI CHÍNH AI-NATIVE · VIỆT NAM',
