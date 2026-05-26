@@ -281,9 +281,26 @@ const vi = {
 const dictionaries = { en, vi };
 const LanguageContext = React.createContext({ lang: 'en', setLang: () => {}, t: (k) => k });
 
+const LANG_KEY = 'promvis-lang';
+
 function LanguageProvider({ children }) {
-  const [lang, setLang] = React.useState('en');
-  
+  const [lang, setLang] = React.useState(() => {
+    if (typeof window === 'undefined') return 'en';
+    try {
+      const stored = window.localStorage.getItem(LANG_KEY);
+      return stored === 'en' || stored === 'vi' ? stored : 'en';
+    } catch {
+      return 'en';
+    }
+  });
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(LANG_KEY, lang);
+    } catch {}
+  }, [lang]);
+
   const t = React.useCallback((key) => {
     const dict = dictionaries[lang];
     return dict[key] !== undefined ? dict[key] : key;
