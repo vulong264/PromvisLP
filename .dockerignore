@@ -1,0 +1,25 @@
+# Don't ship the local working tree's build/dep state into the image —
+# the build stage runs npm ci + vite build fresh.
+node_modules
+dist
+dist-ssr
+
+# VCS + editor noise
+.git
+.gitignore
+.gitattributes
+.vscode
+.idea
+.DS_Store
+
+# Tooling that's irrelevant at build time
+.claude
+
+# Bundled handoff material (Claude Design transcripts + original prototypes).
+# Not used by the production build.
+chats
+project
+
+# Local-only artifacts
+*.log
+*.local
