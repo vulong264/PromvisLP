@@ -1,53 +1,679 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PROMVIS | AI BI + Deep Research</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promvis | AI-Native Financial Data Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-      :root {
-        --bg: #0B0C10;
-        --panel: #101218;
-        --text: #E6E7EA;
-        --muted: #9AA0A6;
-        --accent: #5EE6A8;
-        --accent2: #7CB5FF;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        background-color: var(--bg);
-        font-family: 'Inter', system-ui, sans-serif;
-      }
-      .font-heading {
-        font-family: 'Inter', 'SF Pro Display', sans-serif;
-      }
-      .font-body {
-        font-family: 'Inter', system-ui, sans-serif;
-      }
-      .font-mono {
-        font-family: 'JetBrains Mono', 'SF Mono', monospace;
-      }
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-panel: #121318;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --primary: #4F46E5;
+            --accent: #10B981; /* Neon green/teal */
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            background-color: var(--bg-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05), transparent 25%);
+            background-attachment: fixed;
+        }
+
+        /* Grid Background Pattern */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        /* Nav */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .lang-toggle {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: var(--font-mono);
+            background: var(--bg-card);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .lang-toggle span.active {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 8rem 5% 6rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            color: #818CF8;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to right, #ffffff, #9CA3AF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);
+            color: #000;
+            padding: 1rem 2.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Pain Band */
+        .pain-band {
+            padding: 2rem 5% 6rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pain-card {
+            background-color: var(--bg-panel);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+
+        .pain-card:hover::before {
+            opacity: 1;
+        }
+
+        .pain-icon {
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 5%;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 50px;
+            width: 1px;
+            height: 80%;
+            background: linear-gradient(to bottom, transparent, var(--border-color) 10%, var(--border-color) 90%, transparent);
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .features::before { display: none; }
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .feature-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 3rem;
+            color: var(--accent);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon::after {
+            opacity: 1;
+        }
+
+        .feature-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .feature-content h3 {
+            font-size: 1.75rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .feature-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            padding: 4rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.01), transparent);
+        }
+
+        .social-proof p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+        }
+
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            opacity: 0.5;
+            filter: grayscale(100%);
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .logos:hover {
+            opacity: 0.8;
+            filter: grayscale(50%);
+        }
+
+        .logo-placeholder {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-placeholder::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: currentColor;
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E");
+        }
+
+        /* Waitlist Form */
+        .waitlist {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .waitlist::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 1px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 50%);
+            opacity: 0.3;
+        }
+
+        .waitlist-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--bg-panel);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waitlist-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+
+        .waitlist h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .waitlist p.sub {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background-color: rgba(16, 185, 129, 0.05);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #4B5563;
+        }
+
+        .waitlist .btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1.125rem;
+        }
+
+        .fine-print {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            text-align: center;
+            font-family: var(--font-mono);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2.5rem 5%;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            background-color: var(--bg-dark);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero { padding: 5rem 5% 4rem; }
+            .feature-item { flex-direction: column; }
+            .feature-icon { margin-bottom: 1.5rem; }
+            .waitlist-container { padding: 2rem 1.5rem; }
+            .logos { gap: 2rem; flex-direction: column; align-items: center; }
+        }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
-  }
-}
-</script>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-dot"></div>
+            promvis.io
+        </a>
+        <div class="lang-toggle">
+            <span class="active">EN</span> <span style="opacity:0.3">|</span> <span onclick="alert('Vietnamese version coming soon')">VI</span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-badge">EARLY ADOPTER PROGRAM</div>
+        <h1>Vietnam's Financial Data Infrastructure, Rebuilt for the AI Era</h1>
+        <p>The first platform purpose-built for IFRS compliance, real-time market data, and AI-powered financial analysis — built specifically for Vietnam's securities firms.</p>
+        <a href="#waitlist" class="btn">
+            Join the waitlist
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+    </header>
+
+    <section class="pain-band">
+        <div class="pain-card">
+            <div class="pain-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div>Circular 99 is live. Your legacy data stack isn't ready.</div>
+        </div>
+        <div class="pain-card">
+            <div class="pain-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <div>Other vendors give you raw data. Promvis gives you answers.</div>
+        </div>
+        <div class="pain-card">
+            <div class="pain-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+            <div>IFRS mapping that took analysts 3 days now takes 3 seconds.</div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-item">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <div class="feature-content">
+                <h3>AI-Powered IFRS Engine</h3>
+                <p>Automatically converts VAS financial statements to IFRS equivalents. Engineered for 90%+ baseline accuracy with streamlined human-in-the-loop review for complex edge cases.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+            </div>
+            <div class="feature-content">
+                <h3>Real-Time Market Data API</h3>
+                <p>Low-latency live and historical data covering all ~800 listed and ~400 UPCoM securities. Designed as a seamless, drop-in replacement for legacy data feeds.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+            </div>
+            <div class="feature-content">
+                <h3>Natural Language Financial Analysis</h3>
+                <p>Query complex company financials directly in Vietnamese. Bypass clunky dashboards and complex SQL queries—just ask questions and get verified data points instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-proof">
+        <p>Built for Vietnam's Leading Securities Firms</p>
+        <div class="logos">
+            <div class="logo-placeholder">SSI</div>
+            <div class="logo-placeholder">VNDIRECT</div>
+            <div class="logo-placeholder">MBS</div>
+            <div class="logo-placeholder">TPS</div>
+        </div>
+    </section>
+
+    <section id="waitlist" class="waitlist">
+        <div class="waitlist-container">
+            <h2>Get Early Access</h2>
+            <p class="sub">We're onboarding a limited number of securities firms in Q2 2026. Apply now to secure your spot.</p>
+            
+            <!-- Form submits to Formspree -->
+            <form action="https://formspree.io/f/xkokgagv" method="POST">
+                <div class="form-group">
+                    <label for="name">FULL NAME</label>
+                    <input type="text" id="name" name="name" placeholder="Nguyen Van A" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">COMPANY</label>
+                    <input type="text" id="company" name="company" placeholder="Securities Firm Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="title">JOB TITLE</label>
+                    <input type="text" id="title" name="title" placeholder="CIO, Head of Data, etc." required>
+                </div>
+                <div class="form-group">
+                    <label for="email">WORK EMAIL</label>
+                    <input type="email" id="email" name="email" placeholder="name@company.com.vn" required>
+                </div>
+                <button type="submit" class="btn">Apply for Early Access</button>
+            </form>
+            <p class="fine-print">No spam. We'll reach out personally within 48 hours.</p>
+        </div>
+    </section>
+
+    <footer>
+        promvis.io | &copy; 2026 Promvis | Built in Vietnam
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+            document.querySelectorAll('.feature-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
 </html>
