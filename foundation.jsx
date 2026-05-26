@@ -69,7 +69,7 @@ function ArrowSep() {
 function ProductChip({ name, status, accent, muted }) {
   return (
     <div style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
       padding: '10px 14px', border: '1px solid var(--border)', borderRadius: 3,
       background: accent ? 'color-mix(in oklab, var(--amber) 8%, transparent)' : 'transparent',
       borderColor: accent ? 'color-mix(in oklab, var(--amber) 40%, var(--border))' : 'var(--border)',
@@ -153,7 +153,7 @@ function ColumnCard({ idx, label, title, sub, body, accent }) {
       position: 'relative', overflow: 'hidden',
     }}>
       {accent && <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, var(--amber-soft), transparent 60%)', pointerEvents: 'none' }} />}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', position: 'relative' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', position: 'relative', gap: 16 }}>
         <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{label}</span>
         <span className="p-mono" style={{ fontSize: 28, color: accent ? 'var(--amber)' : 'var(--fg-faint)', fontWeight: 300 }}>{idx}</span>
       </div>

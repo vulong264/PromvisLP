@@ -38,24 +38,74 @@ function Wordmark({ size = 13 }) {
 // Nav
 // ─────────────────────────────────────────────────────────────
 function Nav({ mobile }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; }
+  }, [isOpen]);
+
   if (mobile) {
     return (
-      <div className="nav" style={{ padding: '18px 24px' }}>
-        <Wordmark size={12} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <a href={window.ORACLE_URL || 'https://oracle.promvis.io'}
-             className="p-mono"
-             style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>
-            SIGN IN ↗
-          </a>
-          <button aria-label="menu" style={{
-            background: 'transparent', border: '1px solid var(--border-strong)',
-            width: 36, height: 36, borderRadius: 999, color: 'var(--fg)', display: 'grid', placeItems: 'center',
-          }}>
-            <svg width="16" height="16" viewBox="0 0 16 16"><path className="ic" d="M2 5h12M2 11h12" /></svg>
-          </button>
+      <>
+        <div className="nav" style={{ padding: '18px 24px', position: 'relative', zIndex: 100 }}>
+          <Wordmark size={12} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <a href={window.ORACLE_URL || 'https://oracle.promvis.io'}
+               className="p-mono"
+               style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none', display: isOpen ? 'none' : 'block' }}>
+              SIGN IN ↗
+            </a>
+            <button aria-label="menu" onClick={() => setIsOpen(!isOpen)} style={{
+              background: 'transparent', border: '1px solid var(--border-strong)',
+              width: 36, height: 36, borderRadius: 999, color: 'var(--fg)', display: 'grid', placeItems: 'center',
+            }}>
+              {isOpen ? (
+                <svg width="16" height="16" viewBox="0 0 16 16"><path className="ic" d="M4 4l8 8M4 12L12 4" /></svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 16 16"><path className="ic" d="M2 5h12M2 11h12" /></svg>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+
+        {isOpen && (
+          <div style={{
+            position: 'fixed', top: 73, left: 0, right: 0, bottom: 0,
+            background: 'var(--bg)', zIndex: 99,
+            padding: '40px 32px',
+            display: 'flex', flexDirection: 'column', gap: 32,
+            borderTop: '1px solid var(--border)',
+            overflowY: 'auto'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, fontSize: 24, fontFamily: 'var(--font-serif)' }}>
+              <a href="#manifesto" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>Manifesto</a>
+              <a href="#foundation" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>The Foundation</a>
+              <a href="#oracle" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>Oracle</a>
+              <a href="#forge" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>Forge</a>
+              <a href="#trusted" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>Trusted by</a>
+            </div>
+            
+            <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  window.openAccess && window.openAccess('oracle');
+                }}
+                className="btn btn-ghost"
+                style={{ justifyContent: 'center', padding: '16px', fontSize: 16, border: '1px solid var(--amber)', color: 'var(--amber)' }}
+              >
+                Talk to the Oracle <span className="arr">→</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
   return (
@@ -179,7 +229,7 @@ function Hero({ motif, mobile }) {
             display: 'flex', flexDirection: 'column', gap: 14,
           }}>
             <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>
-              · LIVE WITH <a href="https://tpbs.com.vn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TPBS</a>
+              · LIVE WITH <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TPS</a>
             </div>
             <div style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.4, color: 'var(--fg-mute)' }}>
               Vietnam’s first AI-native securities firm is already on Oracle.
@@ -443,7 +493,7 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, s
         <div aria-hidden style={{ position: 'absolute', top: -1, left: -1, right: -1, height: 1, background: 'linear-gradient(90deg, transparent, var(--amber), transparent)' }} />
       )}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
         <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--fg)' }}>
           {name}
         </div>
@@ -505,7 +555,7 @@ function StatusPill({ label, kind }) {
   }[kind] || {};
   return (
     <span className="p-mono" style={{
-      display: 'inline-flex', alignItems: 'center', gap: 8,
+      display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
       padding: '5px 10px 5px 8px', borderRadius: 999,
       border: '1px solid ' + (kind === 'live' ? 'color-mix(in oklab, var(--amber) 35%, var(--border))' : 'var(--border)'),
       background: colors.bg, fontSize: 9.5, letterSpacing: '0.14em', color: colors.fg,
@@ -548,7 +598,7 @@ function TrustedBy({ mobile }) {
           borderRadius: 4,
           overflow: 'hidden',
         }}>
-          <TPBSlot />
+          <TPSLot />
           <LogoSlot label="Coming soon" />
           <LogoSlot label="Coming soon" />
           <LogoSlot label="Coming soon" />
@@ -562,19 +612,30 @@ function TrustedBy({ mobile }) {
   );
 }
 
-function TPBSlot() {
+function TPSLot() {
   return (
-    <a href="https://tpbs.com.vn/" target="_blank" rel="noopener noreferrer" style={{
+    <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{
       padding: '48px 32px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14,
       borderRight: '1px solid var(--border)', background: 'color-mix(in oklab, var(--amber) 4%, transparent)',
       position: 'relative', minHeight: 180, textDecoration: 'none', transition: 'background 0.2s ease', cursor: 'alias'
     }}>
       <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 50%, var(--amber-soft), transparent 70%)', pointerEvents: 'none' }} />
-      <div style={{
-        fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.08em',
-        fontSize: 28, color: 'var(--fg)', position: 'relative', textDecoration: 'none'
-      }}>
-        <span style={{ color: 'var(--amber)' }}>TP</span>BS
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 140, height: 50 }}>
+        {/* We use the original logo as a mask, and paint it with our amber gradient to match the site's effect */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          WebkitMaskImage: 'url(/tps-logo.png)',
+          WebkitMaskSize: 'contain',
+          WebkitMaskRepeat: 'no-repeat',
+          WebkitMaskPosition: 'center',
+          maskImage: 'url(/tps-logo.png)',
+          maskSize: 'contain',
+          maskRepeat: 'no-repeat',
+          maskPosition: 'center',
+          background: 'linear-gradient(90deg, var(--amber), color-mix(in oklab, var(--amber) 50%, transparent))'
+        }} />
+        {/* Fallback text just in case the image hasn't been uploaded yet */}
+        <span style={{ opacity: 0 }} className="p-mono">TPS LOGO</span>
       </div>
       <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.18em', color: 'var(--amber)', position: 'relative' }}>· LIVE ON ORACLE</div>
     </a>
@@ -645,7 +706,7 @@ function Pillar({ num, title, body, glyph, last, mobile }) {
       borderRight: (!last && !mobile) ? '1px solid var(--border)' : 'none',
       borderBottom: (mobile && !last) ? '1px solid var(--border)' : 'none',
     }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
         <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--fg-soft)' }}>· {num}</span>
         <div style={{ color: 'var(--amber)' }}><Glyph /></div>
       </div>
