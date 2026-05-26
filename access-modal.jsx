@@ -310,7 +310,7 @@ function SuccessState({ email, firm, product }) {
       <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)', margin: '14px 0 0' }}>
         {product === 'forge'
           ? <>You’re on the Forge waitlist. We’ll write to <strong style={{ color: 'var(--fg)' }}>{email}</strong> the moment the first dataset is ready to ship.</>
-          : <>Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from <strong style={{ color: 'var(--fg)' }}>oracle@promvis.io</strong> at <strong style={{ color: 'var(--fg)' }}>{email}</strong> within three business days.</>}
+          : <>Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from <strong style={{ color: 'var(--fg)' }}>PROMVIS</strong> at <strong style={{ color: 'var(--fg)' }}>{email}</strong> within 24 hours.</>}
       </p>
 
       {/* Receipt-style detail panel */}
@@ -328,7 +328,7 @@ function SuccessState({ email, firm, product }) {
         <span style={{ color: 'var(--fg-soft)' }}>PRODUCT</span>
         <span>{product === 'forge' ? 'Forge — Waitlist' : 'Oracle — Early access'}</span>
         <span style={{ color: 'var(--fg-soft)' }}>REPLY-BY</span>
-        <span>3 business days</span>
+        <span>24 hours</span>
       </div>
 
       <div style={{ marginTop: 28, paddingTop: 22, borderTop: '1px solid var(--border)' }}>

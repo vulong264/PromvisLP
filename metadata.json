@@ -1,5 +1,5 @@
 {
   "name": "Promvis Landing Page",
-  "description": "A single-file HTML landing page for promvis.io, an AI-native financial data platform targeting Vietnam's securities firms.",
+  "description": "Promvis is Vietnam's first AI-native financial data infrastructure platform built for securities firms. Features include real-time market data API, automated VAS to IFRS compliance, and natural language financial analysis.",
   "requestFramePermissions": []
 }
