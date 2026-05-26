@@ -1,6 +1,10 @@
 // PROMVIS landing — sections.
 
 // ─────────────────────────────────────────────────────────────
+function useTranslation() {
+  return React.useContext(window.LanguageContext) || { lang: 'en', setLang: () => {}, t: (k) => k };
+}
+
 // Brand spark (used in nav + footer + foundation)
 // ─────────────────────────────────────────────────────────────
 function BrandSpark({ size = 14, animated = true }) {
@@ -39,6 +43,7 @@ function Wordmark({ size = 13 }) {
 // ─────────────────────────────────────────────────────────────
 function Nav({ mobile }) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { t, lang, setLang } = useTranslation();
 
   React.useEffect(() => {
     if (isOpen) {
@@ -49,20 +54,39 @@ function Nav({ mobile }) {
     return () => { document.body.style.overflow = ''; }
   }, [isOpen]);
 
+  const toggleLang = () => setLang(lang === 'en' ? 'vi' : 'en');
+
+  const LangSwitch = () => (
+    <button onClick={toggleLang} className="p-mono" style={{
+      background: 'transparent',
+      border: '1px solid var(--border)',
+      color: 'var(--fg-mute)',
+      padding: '4px 8px',
+      borderRadius: '4px',
+      fontSize: '10px',
+      cursor: 'pointer',
+      letterSpacing: '0.1em'
+    }}>
+      {lang.toUpperCase()}
+    </button>
+  );
+
   if (mobile) {
     return (
       <>
-        <div className="nav" style={{ padding: '18px 24px', position: 'relative', zIndex: 100 }}>
+        <div className="nav" style={{ padding: '18px 24px', top: 0, zIndex: 100, position: 'sticky' }}>
           <Wordmark size={12} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            { !isOpen && <LangSwitch /> }
             <a href={window.ORACLE_URL || 'https://oracle.promvis.io'}
                className="p-mono"
                style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none', display: isOpen ? 'none' : 'block' }}>
-              SIGN IN ↗
+              {t('SIGN IN ↗')}
             </a>
             <button aria-label="menu" onClick={() => setIsOpen(!isOpen)} style={{
               background: 'transparent', border: '1px solid var(--border-strong)',
               width: 36, height: 36, borderRadius: 999, color: 'var(--fg)', display: 'grid', placeItems: 'center',
+              cursor: 'pointer'
             }}>
               {isOpen ? (
                 <svg width="16" height="16" viewBox="0 0 16 16"><path className="ic" d="M4 4l8 8M4 12L12 4" /></svg>
@@ -83,11 +107,11 @@ function Nav({ mobile }) {
             overflowY: 'auto'
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, fontSize: 24, fontFamily: 'var(--font-serif)' }}>
-              <a href="#manifesto" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>Manifesto</a>
-              <a href="#foundation" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>The Foundation</a>
-              <a href="#oracle" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>Oracle</a>
-              <a href="#forge" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>Forge</a>
-              <a href="#trusted" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>Trusted by</a>
+              <a href="#manifesto" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Manifesto')}</a>
+              <a href="#foundation" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('The Foundation')}</a>
+              <a href="#oracle" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>{t('Oracle')}</a>
+              <a href="#forge" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Forge')}</a>
+              <a href="#trusted" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Trusted by')}</a>
             </div>
             
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -100,7 +124,7 @@ function Nav({ mobile }) {
                 className="btn btn-ghost"
                 style={{ justifyContent: 'center', padding: '16px', fontSize: 16, border: '1px solid var(--amber)', color: 'var(--amber)' }}
               >
-                Talk to the Oracle <span className="arr">→</span>
+                {t('Talk to the Oracle')} <span className="arr">→</span>
               </button>
             </div>
           </div>
@@ -112,19 +136,20 @@ function Nav({ mobile }) {
     <nav className="nav">
       <Wordmark />
       <div className="nav-links">
-        <a href="#manifesto">Manifesto</a>
-        <a href="#foundation">The Foundation</a>
-        <a href="#oracle" className="amber">Oracle</a>
-        <a href="#forge">Forge</a>
-        <a href="#trusted">Trusted by</a>
+        <a href="#manifesto">{t('Manifesto')}</a>
+        <a href="#foundation">{t('The Foundation')}</a>
+        <a href="#oracle" className="amber">{t('Oracle')}</a>
+        <a href="#forge">{t('Forge')}</a>
+        <a href="#trusted">{t('Trusted by')}</a>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <LangSwitch />
         <a
           href={window.ORACLE_URL || 'https://oracle.promvis.io'}
           className="p-mono"
           style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}
         >
-          SIGN IN ↗
+          {t('SIGN IN ↗')}
         </a>
         <button
           type="button"
@@ -132,7 +157,7 @@ function Nav({ mobile }) {
           className="btn btn-ghost"
           style={{ padding: '10px 18px', fontSize: 13 }}
         >
-          Talk to the Oracle <span className="arr">→</span>
+          {t('Talk to the Oracle')} <span className="arr">→</span>
         </button>
       </div>
     </nav>
@@ -143,6 +168,7 @@ function Nav({ mobile }) {
 // Hero — type-led massive serif, low horizon sweep, ember spark
 // ─────────────────────────────────────────────────────────────
 function Hero({ motif, mobile }) {
+  const { t } = useTranslation();
   // motif: "horizon" | "ember-rain" | "type-only"
   return (
     <section className="section" style={{
@@ -186,7 +212,7 @@ function Hero({ motif, mobile }) {
       {/* Content */}
       <div style={{ position: 'relative', maxWidth: mobile ? '100%' : 1180, margin: '0 auto', width: '100%' }}>
         <div className="p-eyebrow" style={{ marginBottom: mobile ? 28 : 40 }}>
-          <span className="dot" />AI-NATIVE FINANCIAL INTELLIGENCE · VIETNAM
+          <span className="dot" />{t('AI-NATIVE FINANCIAL INTELLIGENCE · VIETNAM')}
         </div>
 
         <h1 style={{
@@ -198,9 +224,9 @@ function Hero({ motif, mobile }) {
           color: 'var(--fg)', textWrap: 'balance',
           maxWidth: mobile ? '100%' : '15ch',
         }}>
-          Read what databases <span className="p-amber" style={{ fontStyle: 'italic' }}>couldn’t.</span>
+          {t('Read what databases')} <span className="p-amber" style={{ fontStyle: 'italic' }}>{t('couldn’t.')}</span>
           <br />
-          <span style={{ color: 'var(--fg-mute)' }}>Built for Vietnam’s markets.</span>
+          <span style={{ color: 'var(--fg-mute)' }}>{t('Built for Vietnam’s markets.')}</span>
         </h1>
 
         <p style={{
@@ -211,13 +237,12 @@ function Hero({ motif, mobile }) {
           maxWidth: mobile ? '100%' : '52ch',
           margin: mobile ? '28px 0 0' : '40px 0 0',
         }}>
-          The AI-native financial data platform for Vietnam’s capital markets — reading footnotes,
-          filings, and disclosures the pre-LLM stacks could never hold.
+          {t('The AI-native financial data platform for Vietnam’s capital markets — reading footnotes, filings, and disclosures the pre-LLM stacks could never hold.')}
         </p>
 
         <div style={{ display: 'flex', gap: 14, marginTop: mobile ? 32 : 48, flexWrap: 'wrap' }}>
-          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">Talk to the Oracle <span className="arr">→</span></button>
-          <a href="#manifesto" className="btn btn-ghost">Read our manifesto</a>
+          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">{t('Talk to the Oracle')} <span className="arr">→</span></button>
+          <a href="#manifesto" className="btn btn-ghost">{t('Read our manifesto')}</a>
         </div>
         <AlreadyInvited mobile={mobile} />
 
@@ -229,10 +254,10 @@ function Hero({ motif, mobile }) {
             display: 'flex', flexDirection: 'column', gap: 14,
           }}>
             <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>
-              · LIVE WITH <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TPS</a>
+              {t('· LIVE WITH')} <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TPS</a>
             </div>
             <div style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.4, color: 'var(--fg-mute)' }}>
-              Vietnam’s first AI-native securities firm is already on Oracle.
+              {t('Vietnam’s first AI-native securities firm is already on Oracle.')}
             </div>
           </div>
         )}
@@ -244,7 +269,7 @@ function Hero({ motif, mobile }) {
           position: 'absolute', left: 'var(--pad-x)', bottom: 32, display: 'flex',
           alignItems: 'center', gap: 12, color: 'var(--fg-soft)',
         }}>
-          <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.18em' }}>SCROLL</span>
+          <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.18em' }}>{t('SCROLL')}</span>
           <span style={{ width: 36, height: 1, background: 'var(--fg-faint)' }} />
         </div>
       )}
@@ -280,6 +305,7 @@ function EmberField({ mobile }) {
 // Etymology callout (between hero + manifesto)
 // ─────────────────────────────────────────────────────────────
 function Etymology({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section style={{
       padding: mobile ? '64px 28px' : '88px var(--pad-x)',
@@ -289,7 +315,7 @@ function Etymology({ mobile }) {
     }}>
       <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'auto 1fr', gap: mobile ? 28 : 80, alignItems: 'start' }}>
         <div className="p-eyebrow" style={{ whiteSpace: 'nowrap' }}>
-          <span className="dot" />ON THE NAME
+          <span className="dot" />{t('ON THE NAME')}
         </div>
         <div>
           <div style={{
@@ -301,9 +327,9 @@ function Etymology({ mobile }) {
             <span className="p-mono p-amber" style={{ fontSize: mobile ? 14 : 18, letterSpacing: '0.18em', display: 'block', marginBottom: 18 }}>
               PROM · VIS
             </span>
-            <i>Prometheus stole fire from the gods and gave it to humans.</i>
+            <i>{t('Prometheus stole fire from the gods and gave it to humans.')}</i>
             <br />
-            <span style={{ color: 'var(--fg-mute)' }}>We use LLMs to surface what databases couldn’t — and hand it back to the people pricing Vietnam.</span>
+            <span style={{ color: 'var(--fg-mute)' }}>{t('We use LLMs to surface what databases couldn’t — and hand it back to the people pricing Vietnam.')}</span>
           </div>
         </div>
       </div>
@@ -315,10 +341,11 @@ function Etymology({ mobile }) {
 // Manifesto
 // ─────────────────────────────────────────────────────────────
 function Manifesto({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section id="manifesto" className="section">
       <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-        <div className="p-eyebrow" style={{ marginBottom: 36 }}><span className="dot" />MANIFESTO · §01</div>
+        <div className="p-eyebrow" style={{ marginBottom: 36 }}><span className="dot" />{t('MANIFESTO · §01')}</div>
 
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 36 : 96 }}>
           <div>
@@ -328,26 +355,24 @@ function Manifesto({ mobile }) {
               lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400,
               textWrap: 'balance',
             }}>
-              For a quarter century, the most valuable signals in Vietnam’s market
-              <span className="p-amber" style={{ fontStyle: 'italic' }}> lived where databases couldn’t see them.</span>
+              {t('For a quarter century, the most valuable signals in Vietnam’s market')}
+              <span className="p-amber" style={{ fontStyle: 'italic' }}> {t('lived where databases couldn’t see them.')}</span>
             </h2>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 26, fontSize: mobile ? 16 : 17.5, lineHeight: 1.6, color: 'var(--fg-mute)' }}>
             <p style={{ margin: 0 }}>
-              Footnotes. Narrative disclosures. Sustainability reports. Regulatory filings. The signal sat in <i>text</i> — pages of it —
-              and the pre-LLM stacks that defined Vietnam’s data layer could not efficiently structure, store, or query it.
+              {t('Footnotes. Narrative disclosures. Sustainability reports. Regulatory filings. The signal sat in ')}<i>{t('text')}</i>{t(' — pages of it — and the pre-LLM stacks that defined Vietnam’s data layer could not efficiently structure, store, or query it.')}
             </p>
             <p style={{ margin: 0 }}>
-              The pre-LLM incumbents who still define this market built their pipelines, schemas, and org charts before LLMs existed.
-              Those decisions are dependencies they cannot shed.
+              {t('The pre-LLM incumbents who still define this market built their pipelines, schemas, and org charts before LLMs existed. Those decisions are dependencies they cannot shed.')}
             </p>
             <p style={{ margin: 0, color: 'var(--fg)' }}>
-              PROMVIS was built in the AI era to do one thing: <span className="p-amber"><i>read what databases couldn’t</i></span>, and refine it into the foundation under every product we ship.
+              {t('PROMVIS was built in the AI era to do one thing: ')}<span className="p-amber"><i>{t('read what databases couldn’t')}</i></span>{t(', and refine it into the foundation under every product we ship.')}
             </p>
             <div style={{ marginTop: 12 }}>
               <a className="btn-quiet btn" href="#foundation">
-                See the foundation <span className="arr">→</span>
+                {t('See the foundation')} <span className="arr">→</span>
               </a>
             </div>
           </div>
@@ -361,6 +386,7 @@ function Manifesto({ mobile }) {
 // Foundation section (variant chosen via tweak)
 // ─────────────────────────────────────────────────────────────
 function Foundation({ variant, mobile }) {
+  const { t } = useTranslation();
   let Viz;
   if (mobile) Viz = window.FoundationMobile;
   else if (variant === 'columns') Viz = window.FoundationColumns;
@@ -372,29 +398,28 @@ function Foundation({ variant, mobile }) {
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, gap: 24, flexWrap: 'wrap' }}>
           <div>
-            <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />MANIFESTO · §02 — THE FOUNDATION</div>
+            <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('MANIFESTO · §02 — THE FOUNDATION')}</div>
             <h2 style={{
               fontFamily: 'var(--font-serif)',
               fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
               lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400,
               textWrap: 'balance', maxWidth: '18ch',
             }}>
-              Ore into something <i className="p-amber">molten and useful.</i>
+              {t('Ore into something ')}<i className="p-amber">{t('molten and useful.')}</i>
             </h2>
           </div>
           <p style={{ maxWidth: 44 + 'ch', fontSize: mobile ? 15 : 16, lineHeight: 1.55, color: 'var(--fg-mute)', margin: 0 }}>
-            Public disclosures, refined by LLMs into a structured, grounded, citable layer.
-            Every product we ship stands on it — so every answer is the same kind of answer.
+            {t('Public disclosures, refined by LLMs into a structured, grounded, citable layer. Every product we ship stands on it — so every answer is the same kind of answer.')}
           </p>
         </div>
 
         <Viz />
 
         <div style={{ marginTop: 36, display: 'grid', gridTemplateColumns: mobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 24, paddingTop: 36, borderTop: '1px solid var(--border)' }}>
-          <FoundationStat n="~1,600" label="Public companies indexed" foot="HOSE · HNX · UPCoM" />
-          <FoundationStat n="25 yrs" label="Of disclosure history" foot="Since the market opened, 2000" />
-          <FoundationStat n="VN" label="Native disclosure language" foot="Vietnamese + English filings" />
-          <FoundationStat n="100%" label="Public source, fully cited" foot="Never LLM-guessed" />
+          <FoundationStat n="~1,600" label={t('Public companies indexed')} foot={t('HOSE · HNX · UPCoM')} />
+          <FoundationStat n="25 yrs" label={t('Of disclosure history')} foot={t('Since the market opened, 2000')} />
+          <FoundationStat n="VN" label={t('Native disclosure language')} foot={t('Vietnamese + English filings')} />
+          <FoundationStat n="100%" label={t('Public source, fully cited')} foot={t('Never LLM-guessed')} />
         </div>
       </div>
     </section>
@@ -415,64 +440,68 @@ function FoundationStat({ n, label, foot }) {
 // Product family
 // ─────────────────────────────────────────────────────────────
 function ProductFamily({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section id="oracle" className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, gap: 24, flexWrap: 'wrap' }}>
           <div>
-            <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />THE PRODUCT FAMILY</div>
+            <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('THE PRODUCT FAMILY')}</div>
             <h2 style={{
               fontFamily: 'var(--font-serif)',
               fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
               lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400,
               maxWidth: '20ch', textWrap: 'balance',
             }}>
-              Not a feature list. <i className="p-amber">A family.</i>
+              {t('Not a feature list. ')}<i className="p-amber">{t('A family.')}</i>
             </h2>
           </div>
           <p style={{ maxWidth: 44 + 'ch', fontSize: mobile ? 15 : 16, lineHeight: 1.55, color: 'var(--fg-mute)', margin: 0 }}>
-            Each product is a different shape of the same answer: take the foundation, and put it where the work happens.
+            {t('Each product is a different shape of the same answer: take the foundation, and put it where the work happens.')}
           </p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr 1fr', gap: mobile ? 16 : 20 }}>
           <ProductCard
             name="Oracle"
-            status="AVAILABLE · EARLY ACCESS"
+            status={t('AVAILABLE · EARLY ACCESS')}
             statusKind="live"
-            tagline="The AI analyst on your desk."
-            body="Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst — grounded in the foundation, citing the filing, never guessing."
-            audience="Built for securities firms."
-            cta="Request access"
+            tagline={t('The AI analyst on your desk.')}
+            body={t('Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst — grounded in the foundation, citing the filing, never guessing.')}
+            audience={t('Built for securities firms.')}
+            cta={t('Request access')}
             samples={[
-              { q: 'What changed in HPG’s related-party disclosure this quarter?', kind: 'live' },
-              { q: 'Show every Vietnamese listco with a Scope 3 commitment by 2030.' },
-              { q: 'Summarise VCB’s capital adequacy narrative across the last 4 quarters.' },
+              { q: t('What changed in HPG’s related-party disclosure this quarter?'), kind: 'live' },
+              { q: t('Show every Vietnamese listco with a Scope 3 commitment by 2030.') },
+              { q: t('Summarise VCB’s capital adequacy narrative across the last 4 quarters.') },
             ]}
             highlight
+            mobile={mobile}
           />
           <ProductCard
             name="Forge"
-            status="COMING SOON"
+            status={t('COMING SOON')}
             statusKind="soon"
-            tagline="Datasets you can’t buy anywhere else."
-            body="Research-grade datasets forged from raw corporate disclosures. We start with ESG and sustainability activity of public-listed companies — the data that incumbents can’t structure."
-            audience="Built for research firms and institutional investors."
-            cta="Get notified"
+            tagline={t('Datasets you can’t buy anywhere else.')}
+            body={t('Research-grade datasets forged from raw corporate disclosures. We start with ESG and sustainability activity of public-listed companies — the data that incumbents can’t structure.')}
+            audience={t('Built for research firms and institutional investors.')}
+            cta={t('Get notified')}
             samples={[
-              { dataset: 'VN-ESG-100', note: 'ESG narrative dataset · 14 yrs history' },
-              { dataset: 'VN-RPT', note: 'Related-party transaction graph' },
-              { dataset: 'VN-GUIDANCE', note: 'Management guidance language, classified' },
+              { dataset: 'VN-ESG-100', note: t('ESG narrative dataset · 14 yrs history') },
+              { dataset: 'VN-RPT', note: t('Related-party transaction graph') },
+              { dataset: 'VN-GUIDANCE', note: t('Management guidance language, classified') },
             ]}
+            mobile={mobile}
           />
           <ProductCard
             name="…"
-            status="IN THE FORGE"
+            status={t('IN THE FORGE')}
             statusKind="ghost"
-            tagline="More on the way."
-            body="The foundation supports many shapes of product. We’re shipping the next one when it earns its name — not before."
-            cta="Stay close"
+            tagline={t('More on the way.')}
+            body={t('The foundation supports many shapes of product. We’re shipping the next one when it earns its name — not before.')}
+            cta={t('Stay close')}
             ghost
+            mobile={mobile}
           />
         </div>
       </div>
@@ -480,7 +509,7 @@ function ProductFamily({ mobile }) {
   );
 }
 
-function ProductCard({ name, status, statusKind, tagline, body, audience, cta, samples, ghost, highlight }) {
+function ProductCard({ name, status, statusKind, tagline, body, audience, cta, samples, ghost, highlight, mobile }) {
   return (
     <div className="card" style={{
       borderColor: highlight ? 'color-mix(in oklab, var(--amber) 40%, var(--border))' : 'var(--border)',
@@ -493,7 +522,7 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, s
         <div aria-hidden style={{ position: 'absolute', top: -1, left: -1, right: -1, height: 1, background: 'linear-gradient(90deg, transparent, var(--amber), transparent)' }} />
       )}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
         <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--fg)' }}>
           {name}
         </div>
@@ -573,6 +602,7 @@ function StatusPill({ label, kind }) {
 // Trusted by
 // ─────────────────────────────────────────────────────────────
 function TrustedBy({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section id="trusted" className="section" style={{
       paddingTop: 'calc(var(--pad-section) * 0.7)', paddingBottom: 'calc(var(--pad-section) * 0.7)',
@@ -581,12 +611,12 @@ function TrustedBy({ mobile }) {
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <div className="p-eyebrow" style={{ marginBottom: 18, justifyContent: 'center' }}><span className="dot" />TRUSTED BY</div>
+          <div className="p-eyebrow" style={{ marginBottom: 18, justifyContent: 'center' }}><span className="dot" />{t('TRUSTED BY')}</div>
           <div style={{
             fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 32, lineHeight: 1.2,
             color: 'var(--fg)', maxWidth: '32ch', margin: '0 auto', textWrap: 'balance',
           }}>
-            Vietnam’s most forward-looking institutions.
+            {t('Vietnam’s most forward-looking institutions.')}
           </div>
         </div>
 
@@ -599,13 +629,13 @@ function TrustedBy({ mobile }) {
           overflow: 'hidden',
         }}>
           <TPSLot />
-          <LogoSlot label="Coming soon" />
-          <LogoSlot label="Coming soon" />
-          <LogoSlot label="Coming soon" />
+          <LogoSlot label={t('Coming soon')} />
+          <LogoSlot label={t('Coming soon')} />
+          <LogoSlot label={t('Coming soon')} />
         </div>
 
         <div style={{ marginTop: 32, textAlign: 'center', fontSize: 13, color: 'var(--fg-soft)' }}>
-          TPBank Securities — Vietnam’s first AI-native securities firm — is live on Oracle.
+          {t('TPBank Securities — Vietnam’s first AI-native securities firm — is live on Oracle.')}
         </div>
       </div>
     </section>
@@ -613,6 +643,7 @@ function TrustedBy({ mobile }) {
 }
 
 function TPSLot() {
+  const { t } = useTranslation();
   return (
     <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{
       padding: '48px 32px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14,
@@ -637,7 +668,7 @@ function TPSLot() {
         {/* Fallback text just in case the image hasn't been uploaded yet */}
         <span style={{ opacity: 0 }} className="p-mono">TPS LOGO</span>
       </div>
-      <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.18em', color: 'var(--amber)', position: 'relative' }}>· LIVE ON ORACLE</div>
+      <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.18em', color: 'var(--amber)', position: 'relative' }}>{t('· LIVE ON ORACLE')}</div>
     </a>
   );
 }
@@ -658,20 +689,21 @@ function LogoSlot({ label }) {
 // Why us
 // ─────────────────────────────────────────────────────────────
 function WhyUs({ mobile }) {
+  const { t } = useTranslation();
   const pillars = [
     {
-      num: '01', title: 'Built AI-First',
-      body: 'We were founded in the AI era. There is no legacy stack to defend, no pre-LLM schema to retrofit, no org chart to renegotiate.',
+      num: '01', title: t('Built AI-First'),
+      body: t('We were founded in the AI era. There is no legacy stack to defend, no pre-LLM schema to retrofit, no org chart to renegotiate.'),
       glyph: 'flame',
     },
     {
-      num: '02', title: 'Vietnam-Native',
-      body: 'Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively — diacritics, conventions, regulatory dialect.',
+      num: '02', title: t('Vietnam-Native'),
+      body: t('Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively — diacritics, conventions, regulatory dialect.'),
       glyph: 'star',
     },
     {
-      num: '03', title: 'Foundation-Driven',
-      body: 'Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.',
+      num: '03', title: t('Foundation-Driven'),
+      body: t('Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.'),
       glyph: 'forge',
     },
   ];
@@ -679,13 +711,13 @@ function WhyUs({ mobile }) {
     <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ marginBottom: 64 }}>
-          <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />WHY NOW · WHY US</div>
+          <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('WHY NOW · WHY US')}</div>
           <h2 style={{
             fontFamily: 'var(--font-serif)',
             fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
             lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400, maxWidth: '24ch', textWrap: 'balance',
           }}>
-            Three reasons we’re the company built to do this.
+            {t('Three reasons we’re the company built to do this.')}
           </h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr 1fr', gap: 0, border: '1px solid var(--border)', borderRadius: 4 }}>
@@ -747,6 +779,7 @@ function ForgeGlyph() {
 // CTA + Footer
 // ─────────────────────────────────────────────────────────────
 function CTAStrip({ mobile }) {
+  const { t } = useTranslation();
   return (
     <section id="contact" className="section" style={{
       paddingTop: 120, paddingBottom: 120,
@@ -770,22 +803,23 @@ function CTAStrip({ mobile }) {
           fontSize: mobile ? 36 : 'clamp(40px, 5.4vw, 76px)',
           lineHeight: 1.02, letterSpacing: '-0.02em', margin: '24px 0 16px', fontWeight: 400, textWrap: 'balance',
         }}>
-          Put the foundation on your desk.
+          {t('Put the foundation on your desk.')}
         </h2>
         <p style={{ fontSize: mobile ? 16 : 18, lineHeight: 1.5, color: 'var(--fg-mute)', maxWidth: '52ch', margin: '0 auto 36px' }}>
-          Oracle is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.
+          {t('Oracle is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.')}
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">Talk to the Oracle <span className="arr">→</span></button>
-          <a href="mailto:oracle@promvis.io" className="btn btn-ghost">Email oracle@promvis.io</a>
+          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">{t('Talk to the Oracle')} <span className="arr">→</span></button>
+          <a href="mailto:oracle@promvis.io" className="btn btn-ghost">{t('Email oracle@promvis.io')}</a>
         </div>
-        <div style={{ marginTop: 22 }}><AlreadyInvited align="center" /></div>
+        <div style={{ marginTop: 22 }}><AlreadyInvited align="center" mobile={mobile} /></div>
       </div>
     </section>
   );
 }
 
 function Footer({ mobile }) {
+  const { t } = useTranslation();
   return (
     <footer style={{
       padding: mobile ? '48px 28px 36px' : '72px var(--pad-x) 48px',
@@ -796,13 +830,13 @@ function Footer({ mobile }) {
           <div>
             <Wordmark />
             <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.3, color: 'var(--fg-mute)', marginTop: 18, maxWidth: '28ch' }}>
-              The AI-native financial data platform for Vietnam’s capital markets.
+              {t('The AI-native financial data platform for Vietnam’s capital markets.')}
             </div>
           </div>
-          <FooterCol title="Products" links={['Oracle (Early access)', 'Forge (Coming soon)', 'Roadmap']} />
-          <FooterCol title="Company" links={['Manifesto', 'About', 'Careers', 'Contact']} />
+          <FooterCol title={t('Products')} links={[t('Oracle (Early access)'), t('Forge (Coming soon)'), t('Roadmap')]} />
+          <FooterCol title={t('Company')} links={[t('Manifesto'), t('About'), t('Careers'), t('Contact')]} />
           {/* The Prometheus inception story lives at /origin — surfaced quietly only in the footer copyright row. */}
-          <FooterCol title="Reach us" links={['oracle@promvis.io', 'Hanoi · District Ba Đình', 'LinkedIn']} />
+          <FooterCol title={t('Reach us')} links={['oracle@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
         </div>
         <hr className="rule" />
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24,
@@ -810,13 +844,13 @@ function Footer({ mobile }) {
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
             <span>© 2026 PROMVIS</span>
             <span>·</span>
-            <span>Built by the people at <a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
+            <span>{t('Built by the people at ')}<a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
             <span>·</span>
-            <span>MADE IN VIETNAM ★</span>
+            <span>{t('MADE IN VIETNAM ')}★</span>
             <span>·</span>
             <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">ORIGIN</a>
           </div>
-          <div>EARLY ACCESS · 2026</div>
+          <div>{t('EARLY ACCESS · 2026')}</div>
         </div>
       </div>
     </footer>

@@ -9,6 +9,10 @@
 
 const ORACLE_URL = 'https://oracle.promvis.io';
 
+function useTranslation() {
+  return React.useContext(window.LanguageContext) || { lang: 'en', setLang: () => {}, t: (k) => k };
+}
+
 // ─────────────────────────────────────────────────────────────
 // Tiny pub-sub store so every CTA can pop the modal
 // ─────────────────────────────────────────────────────────────
@@ -36,6 +40,7 @@ function useAccessStore() {
 // "Already invited?" inline shortcut — sits under primary CTAs
 // ─────────────────────────────────────────────────────────────
 function AlreadyInvited({ align = 'left', mobile }) {
+  const { t } = useTranslation();
   return (
     <div className="p-mono" style={{
       display: 'flex', alignItems: 'center', gap: 8,
@@ -43,12 +48,12 @@ function AlreadyInvited({ align = 'left', mobile }) {
       marginTop: mobile ? 18 : 22,
       justifyContent: align === 'center' ? 'center' : 'flex-start',
     }}>
-      <span>ALREADY INVITED?</span>
+      <span>{t('ALREADY INVITED?')}</span>
       <a
         href={ORACLE_URL}
         style={{ color: 'var(--amber)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklab, var(--amber) 50%, transparent)', paddingBottom: 1 }}
       >
-        Sign in at oracle.promvis.io →
+        {t('Sign in at oracle.promvis.io →')}
       </a>
     </div>
   );
@@ -64,6 +69,7 @@ const ROLES = [
 
 function AccessModal() {
   const { open, product } = useAccessStore();
+  const { t } = useTranslation();
   const [step, setStep] = React.useState('form'); // 'form' | 'sending' | 'done'
   const [form, setForm] = React.useState({ name: '', email: '', firm: '', role: '', why: '' });
   const [touched, setTouched] = React.useState(false);
@@ -115,11 +121,11 @@ function AccessModal() {
   if (!open) return null;
 
   const headline = product === 'forge'
-    ? 'Be among the first to read Forge.'
-    : 'Talk to the Oracle.';
+    ? t('Be among the first to read Forge.')
+    : t('Talk to the Oracle.');
   const lede = product === 'forge'
-    ? 'Forge ships first to firms already on Oracle. Leave your details and we’ll bring you in when the dataset is ready.'
-    : 'Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.';
+    ? t('Forge ships first to firms already on Oracle. Leave your details and we’ll bring you in when the dataset is ready.')
+    : t('Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.');
 
   return (
     <div
@@ -200,7 +206,7 @@ function AccessModal() {
         {step !== 'done' ? (
           <form onSubmit={submit} style={{ padding: '36px 36px 32px', position: 'relative' }}>
             <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 14 }}>
-              · {product === 'forge' ? 'FORGE · WAITLIST' : 'ORACLE · ACCESS REQUEST'}
+              · {product === 'forge' ? t('FORGE · WAITLIST') : t('ORACLE · ACCESS REQUEST')}
             </div>
             <h3 style={{
               fontFamily: 'var(--font-serif)', fontSize: 34, lineHeight: 1.08,
@@ -211,41 +217,41 @@ function AccessModal() {
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-              <Field label="Name" field="name" form={form} setForm={setForm} placeholder="Nguyễn An" />
-              <Field label="Work email" req field="email" form={form} setForm={setForm}
+              <Field label={t('Name')} field="name" form={form} setForm={setForm} placeholder="Nguyễn An" />
+              <Field label={t('Work email')} req field="email" form={form} setForm={setForm}
                      placeholder="you@firm.vn" type="email" touched={touched} valid={!form.email || emailOk}
-                     errorMsg="Use a valid work email" />
+                     errorMsg={t('Use a valid work email')} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 14 }}>
-              <Field label="Firm" req field="firm" form={form} setForm={setForm}
+              <Field label={t('Firm')} req field="firm" form={form} setForm={setForm}
                      placeholder="e.g. ABC Securities JSC" touched={touched} valid={!!form.firm} />
               <div className={'am-field' + (touched && !form.role ? ' err' : '')}>
-                <label>Role <span className="req">*</span></label>
+                <label>{t('Role')} <span className="req">*</span></label>
                 <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
-                  <option value="" disabled>Choose…</option>
-                  {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
+                  <option value="" disabled>{t('Choose…')}</option>
+                  {ROLES.map(r => <option key={r} value={r}>{t(r)}</option>)}
                 </select>
               </div>
             </div>
 
             <div className="am-field" style={{ marginTop: 14 }}>
               <label>
-                <span>{product === 'forge' ? 'Dataset of interest' : 'Why Oracle, why now?'}</span>
-                <span style={{ color: 'var(--fg-faint)' }}>optional · 1–2 lines</span>
+                <span>{product === 'forge' ? t('Dataset of interest') : t('Why Oracle, why now?')}</span>
+                <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1–2 lines')}</span>
               </label>
               <textarea
                 value={form.why}
                 onChange={(e) => setForm({ ...form, why: e.target.value })}
                 placeholder={product === 'forge'
-                  ? 'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.'
-                  : 'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.'}
+                  ? t('e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.')
+                  : t('e.g. We cover VN listcos for a frontier-market fund and read filings every morning.')}
                 maxLength={400}
               />
             </div>
 
             <div style={{ marginTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
               <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>
-                <span style={{ color: 'var(--amber)' }}>·</span> WE REPLY FROM ORACLE@PROMVIS.IO
+                <span style={{ color: 'var(--amber)' }}>·</span> {t('WE REPLY FROM ORACLE@PROMVIS.IO')}
               </div>
               <button
                 type="submit"
@@ -253,7 +259,7 @@ function AccessModal() {
                 className="btn btn-primary"
                 style={{ padding: '14px 22px', opacity: step === 'sending' ? 0.7 : 1 }}
               >
-                {step === 'sending' ? 'Sending…' : (product === 'forge' ? 'Join the waitlist' : 'Request access')}
+                {step === 'sending' ? t('Sending…') : (product === 'forge' ? t('Join the waitlist') : t('Request access'))}
                 <span className="arr">→</span>
               </button>
             </div>
@@ -287,6 +293,7 @@ function Field({ label, req, field, form, setForm, placeholder, type = 'text', t
 }
 
 function SuccessState({ email, firm, product }) {
+  const { t } = useTranslation();
   return (
     <div style={{ padding: '52px 36px 36px', position: 'relative', textAlign: 'left' }}>
       <div style={{
@@ -299,18 +306,18 @@ function SuccessState({ email, firm, product }) {
       </div>
 
       <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 12 }}>
-        · REQUEST RECEIVED
+        · {t('REQUEST RECEIVED')}
       </div>
       <h3 style={{
         fontFamily: 'var(--font-serif)', fontSize: 32, lineHeight: 1.08,
         letterSpacing: '-0.018em', margin: 0, color: 'var(--fg)', fontWeight: 400, textWrap: 'balance',
       }}>
-        We’ll be in touch.
+        {t('We’ll be in touch.')}
       </h3>
       <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)', margin: '14px 0 0' }}>
         {product === 'forge'
-          ? <>You’re on the Forge waitlist. We’ll write to <strong style={{ color: 'var(--fg)' }}>{email}</strong> the moment the first dataset is ready to ship.</>
-          : <>Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from <strong style={{ color: 'var(--fg)' }}>PROMVIS</strong> at <strong style={{ color: 'var(--fg)' }}>{email}</strong> within 24 hours.</>}
+          ? <>{t('You’re on the Forge waitlist. We’ll write to')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('the moment the first dataset is ready to ship.')}</>
+          : <>{t('Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from PROMVIS at')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('within 24 hours.')}</>}
       </p>
 
       {/* Receipt-style detail panel */}
@@ -323,12 +330,12 @@ function SuccessState({ email, firm, product }) {
       }}>
         <span style={{ color: 'var(--fg-soft)' }}>REF</span>
         <span className="tnum">PV-{Math.random().toString(36).slice(2, 8).toUpperCase()}</span>
-        <span style={{ color: 'var(--fg-soft)' }}>FIRM</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('FIRM')}</span>
         <span>{firm}</span>
-        <span style={{ color: 'var(--fg-soft)' }}>PRODUCT</span>
-        <span>{product === 'forge' ? 'Forge — Waitlist' : 'Oracle — Early access'}</span>
-        <span style={{ color: 'var(--fg-soft)' }}>REPLY-BY</span>
-        <span>24 hours</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('PRODUCT')}</span>
+        <span>{product === 'forge' ? t('Forge — Waitlist') : t('Oracle — Early access')}</span>
+        <span style={{ color: 'var(--fg-soft)' }}>{t('REPLY-BY')}</span>
+        <span>{t('24 hours')}</span>
       </div>
 
       <div style={{ marginTop: 28, paddingTop: 22, borderTop: '1px solid var(--border)' }}>
@@ -336,7 +343,7 @@ function SuccessState({ email, firm, product }) {
       </div>
 
       <div style={{ marginTop: 22, display: 'flex', gap: 12 }}>
-        <button onClick={() => accessStore.close()} className="btn btn-ghost" style={{ padding: '12px 20px' }}>Close</button>
+        <button onClick={() => accessStore.close()} className="btn btn-ghost" style={{ padding: '12px 20px' }}>{t('Close')}</button>
       </div>
     </div>
   );

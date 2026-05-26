@@ -21,7 +21,7 @@ function App() {
   const mobile = useMobile();
 
   return (
-    <>
+    <window.LanguageProvider>
       <AccessModal />
       <div style={{
         background: 'var(--bg)',
@@ -39,7 +39,7 @@ function App() {
         <CTAStrip mobile={mobile} />
         <Footer mobile={mobile} />
       </div>
-    </>
+    </window.LanguageProvider>
   );
 }
 
