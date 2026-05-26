@@ -470,6 +470,8 @@ function ProductFamily({ mobile }) {
             body={t('Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst — grounded in the foundation, citing the filing, never guessing.')}
             audience={t('Built for securities firms.')}
             cta={t('Request access')}
+            learnMoreHref="/Oracle.html"
+            learnMoreLabel={t('Explore Oracle')}
             samples={[
               { q: t('What changed in HPG’s related-party disclosure this quarter?'), kind: 'live' },
               { q: t('Show every Vietnamese listco with a Scope 3 commitment by 2030.') },
@@ -509,7 +511,7 @@ function ProductFamily({ mobile }) {
   );
 }
 
-function ProductCard({ name, status, statusKind, tagline, body, audience, cta, samples, ghost, highlight, mobile }) {
+function ProductCard({ name, status, statusKind, tagline, body, audience, cta, learnMoreHref, learnMoreLabel, samples, ghost, highlight, mobile }) {
   return (
     <div className="card" style={{
       borderColor: highlight ? 'color-mix(in oklab, var(--amber) 40%, var(--border))' : 'var(--border)',
@@ -560,7 +562,7 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, s
         </div>
       )}
 
-      <div style={{ marginTop: 'auto' }}>
+      <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <button
           type="button"
           onClick={() => window.openAccess(name === 'Forge' ? 'forge' : 'oracle')}
@@ -571,6 +573,19 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, s
           <span>{cta}</span>
           <span className="arr">→</span>
         </button>
+        {learnMoreHref && (
+          <a
+            href={learnMoreHref}
+            className="p-mono"
+            style={{
+              fontSize: 11, letterSpacing: '0.08em',
+              color: 'var(--amber)', textDecoration: 'none',
+              textAlign: 'center',
+            }}
+          >
+            {learnMoreLabel} <span className="arr">→</span>
+          </a>
+        )}
       </div>
     </div>
   );

@@ -266,7 +266,7 @@ function AccessModal() {
 
   const headline = product === 'forge' ? 'Be among the first to read Forge.' : 'Talk to the Oracle.';
   const lede = product === 'forge'
-    ? 'Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.'
+    ? "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready."
     : 'Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.';
 
   return (
@@ -506,12 +506,12 @@ function Wordmark({ size = 13 }) {
 
 function Nav({ mobile, page }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const homePrefix = page === 'oracle' ? 'PROMVIS Landing.html' : '';
+  const homePrefix = page === 'oracle' ? '/' : '';
 
   if (mobile) {
     return (
       <div className="nav" style={{ padding: '18px 24px' }}>
-        <a href={page === 'oracle' ? 'PROMVIS Landing.html' : '#'} style={{ textDecoration: 'none' }}><Wordmark size={12} /></a>
+        <a href={page === 'oracle' ? '/' : '#'} style={{ textDecoration: 'none' }}><Wordmark size={12} /></a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>SIGN IN ↗</a>
           <button aria-label="menu" onClick={() => setMenuOpen(v => !v)} style={{
@@ -527,7 +527,7 @@ function Nav({ mobile, page }) {
 
   return (
     <nav className="nav">
-      <a href={page === 'oracle' ? 'PROMVIS Landing.html' : '#'} style={{ textDecoration: 'none' }}><Wordmark /></a>
+      <a href={page === 'oracle' ? '/' : '#'} style={{ textDecoration: 'none' }}><Wordmark /></a>
       <div className="nav-links">
         <a href={homePrefix + '#manifesto'}>Manifesto</a>
         <a href={homePrefix + '#foundation'}>The Foundation</a>
@@ -564,7 +564,15 @@ function Footer({ mobile }) {
         </div>
         <hr className="rule" />
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24, fontSize: 12, color: 'var(--fg-soft)', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
-          <div>© 2026 PROMVIS · MADE IN VIETNAM ★ · <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">ORIGIN</a></div>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <span>© 2026 PROMVIS</span>
+            <span>·</span>
+            <span>Built by the people at <a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
+            <span>·</span>
+            <span>MADE IN VIETNAM ★</span>
+            <span>·</span>
+            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">ORIGIN</a>
+          </div>
           <div>EARLY ACCESS · 2026</div>
         </div>
       </div>
