@@ -10,7 +10,7 @@
 const ORACLE_URL = 'https://oracle.promvis.io';
 
 function useTranslation() {
-  return React.useContext(window.LanguageContext) || { lang: 'en', setLang: () => {}, t: (k) => k };
+  return React.useContext(window.LanguageContext) || { lang: 'vi', setLang: () => {}, t: (k) => k };
 }
 
 // ─────────────────────────────────────────────────────────────
