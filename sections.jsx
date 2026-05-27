@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────────
 function useTranslation() {
-  return React.useContext(window.LanguageContext) || { lang: 'en', setLang: () => {}, t: (k) => k };
+  return React.useContext(window.LanguageContext) || { lang: 'vi', setLang: () => {}, t: (k) => k };
 }
 
 // Brand spark (used in nav + footer + foundation)
@@ -67,7 +67,7 @@ function Nav({ mobile }) {
       cursor: 'pointer',
       letterSpacing: '0.1em'
     }}>
-      {lang.toUpperCase()}
+      {lang === 'en' ? 'VI' : 'EN'}
     </button>
   );
 
