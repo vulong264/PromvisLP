@@ -1,0 +1,39 @@
+server {
+    listen       ${PORT};
+    listen       [::]:${PORT};
+    server_name  _;
+
+    root         /usr/share/nginx/html;
+    index        index.html;
+
+    # gzip — small wins for the JS/CSS bundle and HTML.
+    gzip              on;
+    gzip_vary         on;
+    gzip_min_length   1024;
+    gzip_types        text/plain text/css text/javascript application/javascript application/json image/svg+xml;
+
+    # Static assets emitted by Vite are content-hashed → safe to cache hard.
+    location /assets/ {
+        expires    1y;
+        add_header Cache-Control "public, immutable";
+        try_files  $uri =404;
+    }
+
+    # Standalone product page lives in public/ → served as a real file.
+    # The `try_files $uri` block below handles it, but we declare it explicitly
+    # so an exact match short-circuits the SPA fallback.
+    location = /Oracle.html {
+        try_files $uri =404;
+    }
+
+    # SPA fallback: serve real files when they exist, otherwise hand off to
+    # index.html so the React app can route client-side.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # No-cache on the index so deploys go live immediately for repeat visitors.
+    location = /index.html {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+    }
+}
