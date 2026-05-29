@@ -17,7 +17,7 @@
   --amber-soft: oklch(0.755 0.13 70 / 0.18);
   --amber-glow: oklch(0.755 0.16 65 / 0.4);
 
-  --font-serif: "Instrument Serif", "Cormorant Garamond", "Source Serif Pro", Georgia, serif;
+  --font-serif: "Noto Serif Display", "Instrument Serif", "Cormorant Garamond", "Source Serif Pro", Georgia, serif;
   --font-sans: "Be Vietnam Pro", "Söhne", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
 
