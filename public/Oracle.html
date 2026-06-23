@@ -2003,8 +2003,22 @@ function TPBSCaseStudy({ mobile }) {
           <div style={{ border: '1px solid var(--border)', borderRadius: 4, padding: 36, background: 'color-mix(in oklab, var(--amber) 4%, var(--bg-elev))', position: 'relative', overflow: 'hidden' }}>
             <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 0%, var(--amber-soft), transparent 60%)', pointerEvents: 'none' }} />
             <div style={{ position: 'relative' }}>
-              <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.08em', fontSize: 44, color: 'var(--fg)' }}>
-                <span style={{ color: 'var(--amber)' }}>TP</span>BS
+              <div style={{ position: 'relative', width: 170, height: 72 }}>
+                {/* TPBank Securities logo — original art painted with the site's amber gradient, matching the home-page ĐỐI TÁC treatment */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  WebkitMaskImage: 'url(/tps-logo.png)',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'left center',
+                  maskImage: 'url(/tps-logo.png)',
+                  maskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                  maskPosition: 'left center',
+                  background: 'linear-gradient(90deg, var(--amber), color-mix(in oklab, var(--amber) 50%, transparent))',
+                }} />
+                {/* Fallback text in case the image fails to load */}
+                <span style={{ opacity: 0 }} className="p-mono">TPBS LOGO</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--fg-mute)', marginTop: 8 }}>{t('TPBank Securities')}</div>
               <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginTop: 18 }}>{t('· LIVE ON ORACLE')}</div>
