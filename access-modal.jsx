@@ -1,13 +1,13 @@
 // Access Request modal + "already invited?" sign-in shortcut.
 // Two visitors arrive at promvis.io:
-//   1. existing invitees  → quiet "Sign in" link → oracle.promvis.io
+//   1. existing invitees  → quiet "Sign in" link → chatbot.promvis.io
 //   2. new prospects      → modal that captures email + firm + role + why
 //
 // State is driven by a window.__access store so any CTA in any section can
 // open it without prop drilling. The store is mounted by <AccessRoot/> in
 // app.jsx.
 
-const ORACLE_URL = 'https://oracle.promvis.io';
+const ORACLE_URL = 'https://chatbot.promvis.io';
 
 function useTranslation() {
   return React.useContext(window.LanguageContext) || { lang: 'vi', setLang: () => {}, t: (k) => k };
@@ -53,7 +53,7 @@ function AlreadyInvited({ align = 'left', mobile }) {
         href={ORACLE_URL}
         style={{ color: 'var(--amber)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklab, var(--amber) 50%, transparent)', paddingBottom: 1 }}
       >
-        {t('Sign in at oracle.promvis.io →')}
+        {t('Sign in at chatbot.promvis.io →')}
       </a>
     </div>
   );

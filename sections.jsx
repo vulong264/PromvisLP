@@ -78,7 +78,7 @@ function Nav({ mobile }) {
           <Wordmark size={12} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             { !isOpen && <LangSwitch /> }
-            <a href={window.ORACLE_URL || 'https://oracle.promvis.io'}
+            <a href={window.ORACLE_URL || 'https://chatbot.promvis.io'}
                className="p-mono"
                style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none', display: isOpen ? 'none' : 'block' }}>
               {t('SIGN IN ↗')}
@@ -182,7 +182,7 @@ function Nav({ mobile }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <LangSwitch />
         <a
-          href={window.ORACLE_URL || 'https://oracle.promvis.io'}
+          href={window.ORACLE_URL || 'https://chatbot.promvis.io'}
           className="p-mono"
           style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}
         >
