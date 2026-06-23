@@ -9,6 +9,7 @@ const en = {
   'Oracle': 'Oracle',
   'Forge': 'Forge',
   'Trusted by': 'Trusted by',
+  'Blog': 'Blog',
   'LANGUAGE': 'LANGUAGE',
 
   // Hero
@@ -149,6 +150,7 @@ const vi = {
   'Oracle': 'Oracle',
   'Forge': 'Forge',
   'Trusted by': 'Đối tác',
+  'Blog': 'Blog',
   'LANGUAGE': 'NGÔN NGỮ',
 
   // Hero

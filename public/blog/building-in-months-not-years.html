@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="vi" data-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building in months, not years · PROMVIS Blog</title>
+<meta name="description" content="How AI let a small team build, in under a year, what incumbents took a decade to build — on Amazon Bedrock.">
+<script>
+  (function () {
+    try { var l = localStorage.getItem('promvis-lang'); document.documentElement.setAttribute('data-lang', l === 'en' || l === 'vi' ? l : 'vi'); }
+    catch (e) { document.documentElement.setAttribute('data-lang', 'vi'); }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+
+<nav class="blog-nav">
+  <a class="wordmark" href="/"><span class="spark"></span>PROMVIS</a>
+  <div class="nav-right">
+    <a class="nav-link" href="/blog.html"><span class="lang-en">Blog</span><span class="lang-vi">Blog</span></a>
+    <a class="nav-link" href="/Oracle.html">Oracle</a>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" data-lang-set="en">EN</button>
+      <button type="button" data-lang-set="vi">VI</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <article class="article">
+
+    <div class="article-head">
+      <div class="p-eyebrow"><span class="dot"></span><span class="lang-en">Engineering</span><span class="lang-vi">Kỹ thuật</span></div>
+      <h1>
+        <span class="lang-en">Building in months, not years</span>
+        <span class="lang-vi">Xây trong vài tháng, thay vì nhiều năm</span>
+      </h1>
+      <p class="deck">
+        <span class="lang-en">The incumbents spent a decade building their data moats. AI let a small team match them in under a year. Here's how.</span>
+        <span class="lang-vi">Các ông lớn mất cả thập kỷ để dựng nên hào dữ liệu. AI giúp một đội ngũ nhỏ làm được điều tương đương trong chưa đầy một năm. Đây là cách chúng tôi làm.</span>
+      </p>
+      <div class="head-meta">
+        <div class="byline">
+          <span class="avatar">HT</span>
+          <span class="who">
+            <span class="name">Hieu Tran</span>
+            <span class="sub"><span class="lang-en">Lead Engineer</span><span class="lang-vi">Trưởng nhóm Kỹ thuật</span></span>
+          </span>
+        </div>
+        <div class="dateline"><span class="lang-en">18 June 2026 · 5 min read</span><span class="lang-vi">18 Tháng 6, 2026 · 5 phút đọc</span></div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p class="first">
+        <span class="lang-en">There's a number that explains why PROMVIS can exist today and couldn't have five years ago. The traditional way to build financial data infrastructure in Vietnam takes five to ten years.</span>
+        <span class="lang-vi">Có một con số giải thích vì sao PROMVIS có thể tồn tại hôm nay mà năm năm trước thì không. Cách truyền thống để xây dựng hạ tầng dữ liệu tài chính ở Việt Nam mất từ năm đến mười năm.</span>
+      </p>
+      <p>
+        <span class="lang-en">You hire analysts to read filings by hand and key them into rigid templates. You build brittle parsers for every statement format. You maintain it all with a standing team. The incumbents who dominate this market did exactly that — and they're still selling the result.</span>
+        <span class="lang-vi">Bạn thuê các chuyên viên đọc báo cáo bằng tay rồi nhập vào những biểu mẫu cứng nhắc. Bạn viết những bộ phân tích mong manh cho từng định dạng báo cáo. Bạn duy trì tất cả bằng một đội ngũ thường trực. Những ông lớn đang thống trị thị trường này đã làm đúng như vậy — và vẫn đang bán chính cái kết quả đó.</span>
+      </p>
+      <p>
+        <span class="lang-en">We built a comparable foundation, plus a live AI product on top of it, in under a year — with a small team. The difference isn't that we worked harder. It's that the economics of reading changed.</span>
+        <span class="lang-vi">Chúng tôi đã dựng nên một nền tảng tương đương, cộng thêm một sản phẩm AI vận hành thực tế bên trên, trong chưa đầy một năm — với một đội ngũ nhỏ. Khác biệt không nằm ở chỗ chúng tôi làm việc cật lực hơn. Mà ở chỗ kinh tế học của việc đọc đã thay đổi.</span>
+      </p>
+
+      <blockquote class="pullquote">
+        <span class="lang-en">What used to require a department now requires a pipeline.</span>
+        <span class="lang-vi">Thứ trước đây cần cả một phòng ban, giờ chỉ cần một quy trình.</span>
+      </blockquote>
+
+      <p>
+        <span class="lang-en"><strong class="lead">One AI layer, every model.</strong> All of our AI runs on Amazon Bedrock — a single, governed API. It sounds like a small detail; it's the most important architectural decision we made. We're model-agnostic: we pick the best model for each task and switch with a config change, not a rebuild. In production we run cost-efficient open-weight models by default to keep inference cheap at scale, and we've validated the exact same pipelines on the premium Claude family — Opus, Sonnet, Haiku — so any high-stakes task can be dialed up instantly. Cheap by default, premium on demand.</span>
+        <span class="lang-vi"><strong class="lead">Một tầng AI, mọi mô hình.</strong> Toàn bộ AI của chúng tôi chạy trên Amazon Bedrock — một API duy nhất, được quản trị chặt chẽ. Nghe như một chi tiết nhỏ, nhưng đó là quyết định kiến trúc quan trọng nhất chúng tôi đưa ra. Chúng tôi không phụ thuộc vào bất kỳ mô hình nào: chọn mô hình tốt nhất cho từng tác vụ, và đổi mô hình chỉ bằng một thay đổi cấu hình, không phải xây lại. Trong vận hành, mặc định chúng tôi dùng các mô hình mã nguồn mở tiết kiệm chi phí để giữ chi phí suy luận ở mức thấp khi mở rộng, đồng thời đã kiểm chứng đúng những pipeline đó trên dòng Claude cao cấp — Opus, Sonnet, Haiku — để bất kỳ tác vụ quan trọng nào cũng có thể nâng cấp tức thì. Rẻ theo mặc định, cao cấp khi cần.</span>
+      </p>
+      <p>
+        <span class="lang-en"><strong class="lead">Reading documents like a human, not a parser.</strong> The hardest part of this domain is that the signal lives in PDFs — financial statements laid out as tables and page scans, not clean data. Our breakthrough was to stop fighting that. A multimodal model reads the statements directly from the page images, the way a person would — no brittle OCR, no per-format parser. That single capability is what let us cover around 1,700 Vietnamese public companies without an army of analysts.</span>
+        <span class="lang-vi"><strong class="lead">Đọc tài liệu như con người, không như một cỗ máy phân tích.</strong> Phần khó nhất của lĩnh vực này là tín hiệu nằm trong các file PDF — báo cáo tài chính trình bày dưới dạng bảng biểu và bản scan, không phải dữ liệu sạch. Bước đột phá của chúng tôi là ngừng chống lại điều đó. Một mô hình đa phương thức đọc thẳng báo cáo từ hình ảnh trang giấy, theo cách một con người vẫn đọc — không OCR mong manh, không cần bộ phân tích riêng cho từng định dạng. Chính năng lực đó cho phép chúng tôi bao phủ khoảng 1.700 doanh nghiệp đại chúng Việt Nam mà không cần tới một đạo quân chuyên viên.</span>
+      </p>
+      <p>
+        <span class="lang-en"><strong class="lead">A foundation that remembers.</strong> Underneath sits our canonical data layer — Postgres holding point-in-time financials with full lineage, raw filings in S3, and a semantic catalog (built with Claude Opus and its million-token context) that maps messy Vietnamese accounting line items into one consistent structure. Every product we build draws on this layer, so every answer is consistent at the root.</span>
+        <span class="lang-vi"><strong class="lead">Một nền tảng biết ghi nhớ.</strong> Bên dưới là tầng dữ liệu chuẩn hóa của chúng tôi — Postgres lưu dữ liệu tài chính theo thời điểm với đầy đủ nguồn gốc, các báo cáo gốc nằm trong S3, và một danh mục ngữ nghĩa (xây bằng Claude Opus với ngữ cảnh một triệu token) ánh xạ những khoản mục kế toán Việt Nam lộn xộn về một cấu trúc nhất quán. Mọi sản phẩm chúng tôi xây đều dựa trên tầng này, nên mọi câu trả lời đều nhất quán từ gốc.</span>
+      </p>
+      <p>
+        <span class="lang-en"><strong class="lead">Serverless, so the team stays small.</strong> The whole platform runs serverless on AWS Graviton — Lambda for the API, Fargate for containers, and managed Airflow (MWAA) to orchestrate the analyst pipelines. It scales to zero when idle and up under load, so we pay for what we use and no one spends their week babysitting servers. Partners integrate over plain REST with machine-to-machine auth — no database access, no VPN, encrypted with customer-managed keys.</span>
+        <span class="lang-vi"><strong class="lead">Serverless, để đội ngũ luôn gọn nhẹ.</strong> Toàn bộ nền tảng chạy serverless trên AWS Graviton — Lambda cho API, Fargate cho container, và Airflow được quản lý (MWAA) để điều phối các pipeline phân tích. Nó co về không khi nhàn rỗi và giãn ra khi tải cao, nên chúng tôi chỉ trả cho phần mình dùng và không ai phải mất cả tuần trông coi máy chủ. Đối tác kết nối qua REST thuần với xác thực máy-với-máy — không truy cập cơ sở dữ liệu, không VPN, mã hóa bằng khóa do khách hàng quản lý.</span>
+      </p>
+
+      <div class="stack-note">
+        <div class="label"><span class="lang-en">The stack · on Amazon Bedrock, one API, many models</span><span class="lang-vi">Công nghệ · trên Amazon Bedrock, một API, nhiều mô hình</span></div>
+        <div class="chips">
+          <span class="chip"><b>Qwen3-VL</b> · vision extraction</span>
+          <span class="chip"><b>GPT-OSS-120B</b> · default</span>
+          <span class="chip"><b>DeepSeek V3.2</b> · pro mode</span>
+          <span class="chip"><b>Claude</b> Opus · Sonnet · Haiku</span>
+          <span class="chip"><b>RDS</b> Postgres</span>
+          <span class="chip"><b>Amazon</b> S3</span>
+          <span class="chip"><b>Lambda</b> · Fargate · MWAA</span>
+          <span class="chip"><b>Cognito</b> · KMS · VPC</span>
+        </div>
+      </div>
+
+      <p>
+        <span class="lang-en">None of these are exotic on their own. The point is what they add up to: a two-person team's worth of operational overhead, delivering an incumbent's worth of capability.</span>
+        <span class="lang-vi">Không có thành phần nào trong số này là kỳ lạ nếu đứng riêng. Điều đáng nói là tổng của chúng: chi phí vận hành chỉ bằng một đội hai người, nhưng năng lực thì ngang một ông lớn.</span>
+      </p>
+      <p>
+        <span class="lang-en">This is the quiet story of the current moment in software. AI doesn't just make engineers faster at writing code — it collapses the cost of entire categories of work: reading, structuring, and reasoning over messy real-world information. Work that used to define how big a company had to be. A small team that picks the right tools can now build what once took a hundred people and a decade.</span>
+        <span class="lang-vi">Đây là câu chuyện thầm lặng của thời điểm hiện tại trong ngành phần mềm. AI không chỉ giúp kỹ sư viết code nhanh hơn — nó kéo sập chi phí của cả những mảng công việc: đọc, cấu trúc hóa, và suy luận trên thông tin thực tế lộn xộn. Những công việc từng quyết định một công ty phải lớn đến đâu. Một đội ngũ nhỏ biết chọn đúng công cụ giờ có thể xây được thứ từng cần tới hàng trăm con người và cả một thập kỷ.</span>
+      </p>
+      <p>
+        <span class="lang-en">We're not done. But Oracle is live, our first customer is on it, and we got here in months. That's the part still worth being amazed by.</span>
+        <span class="lang-vi">Chúng tôi chưa xong. Nhưng Oracle đã vận hành, khách hàng đầu tiên đã dùng, và chúng tôi đến được đây chỉ trong vài tháng. Đó mới là điều vẫn đáng để kinh ngạc.</span>
+      </p>
+
+      <div class="signature">
+        <span class="lang-en">— Hieu Tran, Lead Engineer</span>
+        <span class="lang-vi">— Hiếu Trần, Trưởng nhóm Kỹ thuật</span>
+      </div>
+    </div>
+
+    <div class="article-foot">
+      <a class="back-link" href="/blog.html"><span class="lang-en">← All posts</span><span class="lang-vi">← Tất cả bài viết</span></a>
+      <a class="btn-oracle" href="https://oracle.promvis.io"><span class="lang-en">Talk to the Oracle</span><span class="lang-vi">Nói chuyện với Oracle</span> →</a>
+    </div>
+
+  </article>
+
+  <footer class="site-foot">
+    <span>© 2026 PROMVIS</span>
+    <span><span class="lang-en">Built by the people at </span><span class="lang-vi">Được xây dựng bởi đội ngũ </span><a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer">CoderPush</a></span>
+  </footer>
+</div>
+
+<script src="/blog/blog.js" defer></script>
+</body>
+</html>

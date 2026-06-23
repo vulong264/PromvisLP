@@ -112,6 +112,7 @@ function Nav({ mobile }) {
               <a href="#oracle" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>{t('Oracle')}</a>
               <a href="#forge" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Forge')}</a>
               <a href="#trusted" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Trusted by')}</a>
+              <a href="/blog.html" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Blog')}</a>
             </div>
             
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -176,6 +177,7 @@ function Nav({ mobile }) {
         <a href="#oracle" className="amber">{t('Oracle')}</a>
         <a href="#forge">{t('Forge')}</a>
         <a href="#trusted">{t('Trusted by')}</a>
+        <a href="/blog.html">{t('Blog')}</a>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <LangSwitch />
