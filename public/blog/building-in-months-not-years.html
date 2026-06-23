@@ -91,19 +91,96 @@
         <span class="lang-vi"><strong class="lead">Serverless, để đội ngũ luôn gọn nhẹ.</strong> Toàn bộ nền tảng chạy serverless trên AWS Graviton — Lambda cho API, Fargate cho container, và Airflow được quản lý (MWAA) để điều phối các pipeline phân tích. Nó co về không khi nhàn rỗi và giãn ra khi tải cao, nên chúng tôi chỉ trả cho phần mình dùng và không ai phải mất cả tuần trông coi máy chủ. Đối tác kết nối qua REST thuần với xác thực máy-với-máy — không truy cập cơ sở dữ liệu, không VPN, mã hóa bằng khóa do khách hàng quản lý.</span>
       </p>
 
-      <div class="stack-note">
-        <div class="label"><span class="lang-en">The stack · on Amazon Bedrock, one API, many models</span><span class="lang-vi">Công nghệ · trên Amazon Bedrock, một API, nhiều mô hình</span></div>
-        <div class="chips">
-          <span class="chip"><b>Qwen3-VL</b> · vision extraction</span>
-          <span class="chip"><b>GPT-OSS-120B</b> · default</span>
-          <span class="chip"><b>DeepSeek V3.2</b> · pro mode</span>
-          <span class="chip"><b>Claude</b> Opus · Sonnet · Haiku</span>
-          <span class="chip"><b>RDS</b> Postgres</span>
-          <span class="chip"><b>Amazon</b> S3</span>
-          <span class="chip"><b>Lambda</b> · Fargate · MWAA</span>
-          <span class="chip"><b>Cognito</b> · KMS · VPC</span>
+      <figure class="arch">
+        <figcaption class="p-eyebrow"><span class="dot"></span><span class="lang-en">The architecture · source to answer</span><span class="lang-vi">Kiến trúc · từ nguồn đến câu trả lời</span></figcaption>
+        <div class="arch-flow">
+
+          <div class="arch-layer">
+            <span class="arch-tag"><span class="n">1</span><span class="lang-en">Ingest</span><span class="lang-vi">Thu nhận</span></span>
+            <div class="arch-nodes">
+              <div class="node">
+                <div class="nt">Raw filings · PDF</div>
+                <div class="nd"><span class="lang-en">~1,700 VN public companies</span><span class="lang-vi">~1.700 DN đại chúng VN</span></div>
+              </div>
+              <div class="node">
+                <div class="nt">Amazon EventBridge</div>
+                <div class="nd"><span class="lang-en">Scheduled ingest jobs</span><span class="lang-vi">Lập lịch thu thập</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-conn"></div>
+
+          <div class="arch-layer ai-band">
+            <span class="arch-tag"><span class="n">2</span><span class="lang-en">The Foundation · read &amp; structure</span><span class="lang-vi">Nền tảng · đọc &amp; cấu trúc</span></span>
+            <div class="arch-nodes">
+              <div class="node ai">
+                <div class="nt">Bedrock · Qwen3-VL</div>
+                <div class="nd"><span class="lang-en">Multimodal extraction — reads PDFs as images</span><span class="lang-vi">Trích xuất đa phương thức — đọc PDF như ảnh</span></div>
+              </div>
+              <div class="node">
+                <div class="nt">RDS PostgreSQL</div>
+                <div class="nd"><span class="lang-en">Canonical, point-in-time</span><span class="lang-vi">Chuẩn hóa, theo thời điểm</span></div>
+              </div>
+              <div class="node">
+                <div class="nt">Amazon S3</div>
+                <div class="nd"><span class="lang-en">Raw filings + data lake</span><span class="lang-vi">Báo cáo gốc + data lake</span></div>
+              </div>
+              <div class="node ai">
+                <div class="nt">Bedrock · Claude Opus</div>
+                <div class="nd"><span class="lang-en">Semantic catalog · 1M context</span><span class="lang-vi">Danh mục ngữ nghĩa · 1M token</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-conn"></div>
+
+          <div class="arch-layer ai-band">
+            <span class="arch-tag"><span class="n">3</span>Oracle · <span class="lang-en">analyze</span><span class="lang-vi">phân tích</span></span>
+            <div class="arch-nodes">
+              <div class="node">
+                <div class="nt">MWAA · Airflow</div>
+                <div class="nd"><span class="lang-en">Orchestrates analyst pipelines</span><span class="lang-vi">Điều phối pipeline phân tích</span></div>
+              </div>
+              <div class="node ai">
+                <div class="nt">Bedrock · GPT-OSS / DeepSeek / Claude</div>
+                <div class="nd"><span class="lang-en">Analysis + conversation</span><span class="lang-vi">Phân tích + hội thoại</span></div>
+              </div>
+              <div class="node">
+                <div class="nt">Amazon DynamoDB</div>
+                <div class="nd"><span class="lang-en">Context store</span><span class="lang-vi">Kho ngữ cảnh</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-conn"></div>
+
+          <div class="arch-layer">
+            <span class="arch-tag"><span class="n">4</span><span class="lang-en">Serve</span><span class="lang-vi">Phân phối</span></span>
+            <div class="arch-nodes">
+              <div class="node">
+                <div class="nt">API Gateway + Cognito</div>
+                <div class="nd"><span class="lang-en">Partners · REST + JWT, machine-to-machine</span><span class="lang-vi">Đối tác · REST + JWT, máy-với-máy</span></div>
+              </div>
+              <div class="node">
+                <div class="nt">ECS Fargate</div>
+                <div class="nd"><span class="lang-en">Oracle backend → in-app analyst</span><span class="lang-vi">Backend Oracle → trợ lý trong ứng dụng</span></div>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </div>
+
+        <div class="arch-base">
+          <span class="arch-tag"><span class="lang-en">Across everything</span><span class="lang-vi">Xuyên suốt</span></span>
+          <div class="rows">
+            <span class="row"><b>Amazon Bedrock</b> — <span class="lang-en">one model-agnostic API</span><span class="lang-vi">một API không phụ thuộc mô hình</span></span>
+            <span class="row"><span class="lang-en">Serverless on</span><span class="lang-vi">Serverless trên</span> <b>Graviton</b> · Lambda · Fargate · MWAA</span>
+            <span class="row"><span class="lang-en">Secured</span><span class="lang-vi">Bảo mật</span> · <b>IAM</b> · VPC · KMS · Secrets Manager</span>
+            <span class="row"><span class="lang-en">Observed</span><span class="lang-vi">Giám sát</span> · <b>CloudWatch</b> · Grafana · SNS</span>
+          </div>
+        </div>
+      </figure>
 
       <p>
         <span class="lang-en">None of these are exotic on their own. The point is what they add up to: a two-person team's worth of operational overhead, delivering an incumbent's worth of capability.</span>
@@ -123,6 +200,18 @@
         <span class="lang-vi">— Hiếu Trần, Trưởng nhóm Kỹ thuật</span>
       </div>
     </div>
+
+    <aside class="read-next">
+      <div class="p-eyebrow"><span class="dot"></span><span class="lang-en">Read next</span><span class="lang-vi">Đọc tiếp</span></div>
+      <a class="read-next-card" href="/blog/why-we-exist.html">
+        <div>
+          <div class="cat p-eyebrow"><span class="lang-en">Letter from the founder</span><span class="lang-vi">Thư từ nhà sáng lập</span></div>
+          <h3><span class="lang-en">Why we exist</span><span class="lang-vi">Vì sao chúng tôi tồn tại</span></h3>
+          <div class="rn-by">LV · <span class="lang-en">Founder</span><span class="lang-vi">Nhà sáng lập</span></div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </aside>
 
     <div class="article-foot">
       <a class="back-link" href="/blog.html"><span class="lang-en">← All posts</span><span class="lang-vi">← Tất cả bài viết</span></a>

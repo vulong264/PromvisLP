@@ -227,6 +227,79 @@ html[data-lang="en"] .lang-vi { display: none !important; }
 .site-foot a { color: var(--fg-mute); text-decoration: none; border-bottom: 1px dotted currentColor; }
 .site-foot a:hover { color: var(--amber); }
 
+/* ── Architecture diagram (Post 2) ── */
+.arch { max-width: var(--measure); margin: 48px auto; }
+.arch figcaption { margin-bottom: 18px; }
+.arch-flow { display: flex; flex-direction: column; }
+.arch-layer {
+  background: color-mix(in oklab, var(--bg-elev) 55%, var(--bg));
+  border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+}
+.arch-layer.ai-band { border-left: 3px solid color-mix(in oklab, var(--amber) 55%, var(--border)); }
+.arch-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 14px;
+}
+.arch-tag .n {
+  font-size: 9px; width: 16px; height: 16px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--amber);
+  border: 1px solid color-mix(in oklab, var(--amber) 50%, var(--border));
+}
+.arch-nodes { display: flex; flex-wrap: wrap; gap: 10px; }
+.node {
+  flex: 1 1 160px; min-width: 148px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+}
+.node .nt { font-family: var(--font-sans); font-size: 13.5px; font-weight: 500; color: var(--fg); line-height: 1.25; }
+.node .nd { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-soft); margin-top: 5px; line-height: 1.45; }
+.node.ai { border-color: color-mix(in oklab, var(--amber) 45%, var(--border)); background: color-mix(in oklab, var(--amber) 7%, var(--bg-card)); }
+.node.ai .nt { color: var(--amber); }
+
+/* connector between layers */
+.arch-conn { height: 26px; position: relative; }
+.arch-conn::before {
+  content: ""; position: absolute; left: 50%; top: 1px; transform: translateX(-50%);
+  width: 2px; height: 18px; background: linear-gradient(var(--border-strong), color-mix(in oklab, var(--amber) 75%, transparent));
+}
+.arch-conn::after {
+  content: ""; position: absolute; left: 50%; top: 17px; transform: translateX(-50%);
+  border-left: 5px solid transparent; border-right: 5px solid transparent;
+  border-top: 6px solid color-mix(in oklab, var(--amber) 75%, transparent);
+}
+
+/* base spine — runs across everything */
+.arch-base {
+  margin-top: 12px; padding: 16px 20px; border-radius: 12px;
+  background: color-mix(in oklab, var(--amber) 5%, var(--bg-elev)); border: 1px solid var(--border);
+}
+.arch-base .arch-tag { color: var(--fg-soft); }
+.arch-base .arch-tag .n { display: none; }
+.arch-base .rows { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.arch-base .row { font-family: var(--font-mono); font-size: 11px; color: var(--fg-soft); line-height: 1.5; }
+.arch-base .row b { color: var(--amber); font-weight: 600; }
+
+/* ── Read-next (post-to-post navigation) ── */
+.read-next { max-width: var(--measure); margin: 60px auto 0; }
+.read-next > .p-eyebrow { margin-bottom: 14px; }
+.read-next-card {
+  display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 22px;
+  text-decoration: none; color: inherit;
+  border: 1px solid var(--border); border-radius: 12px; padding: 24px 26px;
+  background: color-mix(in oklab, var(--bg-elev) 50%, var(--bg));
+  transition: border-color .15s, transform .15s, padding-left .2s ease;
+}
+.read-next-card:hover { border-color: color-mix(in oklab, var(--amber) 50%, var(--border)); }
+.read-next-card .cat { margin-bottom: 10px; }
+.read-next-card h3 {
+  font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; line-height: 1.15;
+  font-size: clamp(20px, 2.6vw, 26px); transition: color .15s;
+}
+.read-next-card:hover h3 { color: var(--amber); }
+.read-next-card .rn-by { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--fg-soft); margin-top: 10px; }
+.read-next-card .arrow { font-family: var(--font-serif); font-size: 30px; color: var(--fg-soft); transition: transform .2s ease, color .15s; }
+.read-next-card:hover .arrow { color: var(--amber); transform: translateX(4px); }
+
 @media (max-width: 720px) {
   .wrap { padding: 0 22px; }
   .blog-nav { padding: 14px 18px; }
@@ -237,4 +310,7 @@ html[data-lang="en"] .lang-vi { display: none !important; }
   .article { padding: 48px 0 32px; }
   .prose p { font-size: 17px; }
   .head-meta .dateline { text-align: left; }
+  .arch-layer { padding: 16px; }
+  .read-next-card { grid-template-columns: 1fr; gap: 12px; }
+  .read-next-card .arrow { display: none; }
 }
