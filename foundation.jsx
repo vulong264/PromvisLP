@@ -45,7 +45,7 @@ function FoundationOre({ accent }) {
       <div style={{ padding: '40px 28px', display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'space-between' }}>
         <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>STAGE 03 · PRODUCT</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <ProductChip name="Oracle" status="Available" accent />
+          <ProductChip name="Analyst" status="Available" accent />
           <ProductChip name="Forge" status="Coming soon" />
           <ProductChip name="…" status="In the forge" muted />
         </div>
@@ -132,7 +132,7 @@ function FoundationColumns() {
         sub="Every product. One layer."
         body={(
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <ProductChip name="Oracle" status="Available" accent />
+            <ProductChip name="Analyst" status="Available" accent />
             <ProductChip name="Forge" status="Coming" />
             <ProductChip name="-" status="In the forge" muted />
           </div>
@@ -216,7 +216,7 @@ function FoundationLine() {
         <StateCol
           eyebrow="03 · OUTPUT"
           title="Product family"
-          body="Oracle answers. Forge ships datasets. Both stand on the same foundation, so insight compounds."
+          body="Analyst answers. Forge ships datasets. Both stand on the same foundation, so insight compounds."
         />
       </div>
     </div>
@@ -257,7 +257,7 @@ function FoundationMobile() {
       <ColumnCard idx="03" label="PRODUCTS" title="Built on the foundation" sub="Every product. One layer."
         body={(
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <ProductChip name="Oracle" status="Available" accent />
+            <ProductChip name="Analyst" status="Available" accent />
             <ProductChip name="Forge" status="Coming" />
           </div>
         )} />

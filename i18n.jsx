@@ -3,10 +3,9 @@ import React from 'react';
 const en = {
   // Nav
   'SIGN IN ↗': 'SIGN IN ↗',
-  'Talk to the Oracle': 'Talk to the Oracle',
+  'Talk to the Analyst': 'Talk to the Analyst',
   'Manifesto': 'Manifesto',
   'The Foundation': 'The Foundation',
-  'Oracle': 'Oracle',
   'Forge': 'Forge',
   'Trusted by': 'Trusted by',
   'Blog': 'Blog',
@@ -20,7 +19,7 @@ const en = {
   'The AI-native financial data platform for Vietnam’s capital markets - reading footnotes, filings, and disclosures the pre-LLM stacks could never hold.': 'The AI-native financial data platform for Vietnam’s capital markets - reading footnotes, filings, and disclosures the pre-LLM stacks could never hold.',
   'Read our manifesto': 'Read our manifesto',
   '· LIVE WITH': '· LIVE WITH',
-  'Vietnam’s first AI-native securities firm is already on Oracle.': 'Vietnam’s first AI-native securities firm is already on Oracle.',
+  'Vietnam’s first AI-native securities firm is already on Promvis Analyst.': 'Vietnam’s first AI-native securities firm is already on Promvis Analyst.',
   'SCROLL': 'SCROLL',
 
   // Etymology
@@ -61,10 +60,10 @@ const en = {
   'A family.': 'A family.',
   'Each product is a different shape of the same answer: take the foundation, and put it where the work happens.': 'Each product is a different shape of the same answer: take the foundation, and put it where the work happens.',
   'The AI analyst on your desk.': 'The AI analyst on your desk.',
-  'Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst - grounded in the foundation, citing the filing, never guessing.': 'Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst - grounded in the foundation, citing the filing, never guessing.',
+  'Ask anything about a listed Vietnamese company. You get the answer your sharpest in-house analyst would give - grounded in the foundation, citing the filing, never guessing.': 'Ask anything about a listed Vietnamese company. You get the answer your sharpest in-house analyst would give - grounded in the foundation, citing the filing, never guessing.',
   'Built for securities firms.': 'Built for securities firms.',
   'Request access': 'Request access',
-  'Explore Oracle': 'Explore Oracle',
+  'Explore Promvis Analyst': 'Explore Promvis Analyst',
   'AVAILABLE · EARLY ACCESS': 'AVAILABLE · EARLY ACCESS',
   'COMING SOON': 'COMING SOON',
   'IN THE FORGE': 'IN THE FORGE',
@@ -87,9 +86,9 @@ const en = {
   // Trusted By
   'TRUSTED BY': 'TRUSTED BY',
   'Vietnam’s most forward-looking institutions.': 'Vietnam’s most forward-looking institutions.',
-  '· LIVE ON ORACLE': '· LIVE ON ORACLE',
+  '· LIVE ON PROMVIS ANALYST': '· LIVE ON PROMVIS ANALYST',
   'Coming soon': 'Coming soon',
-  'TPBank Securities - Vietnam’s first AI-native securities firm - is live on Oracle.': 'TPBank Securities - Vietnam’s first AI-native securities firm - is live on Oracle.',
+  'TPBank Securities - Vietnam’s first AI-native securities firm - is live on Promvis Analyst.': 'TPBank Securities - Vietnam’s first AI-native securities firm - is live on Promvis Analyst.',
 
   // Why Us
   'WHY NOW · WHY US': 'WHY NOW · WHY US',
@@ -99,16 +98,16 @@ const en = {
   'Vietnam-native': 'Vietnam-native',
   'Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively - diacritics, conventions, regulatory dialect.': 'Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively - diacritics, conventions, regulatory dialect.',
   'Foundation-driven': 'Foundation-driven',
-  'Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.': 'Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.',
+  'Every product sits on the same refined data layer. Insight compounds across Analyst, Forge, and whatever we forge next.': 'Every product sits on the same refined data layer. Insight compounds across Analyst, Forge, and whatever we forge next.',
 
   // CTA
   'Put the foundation on your desk.': 'Put the foundation on your desk.',
-  'Oracle is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.': 'Oracle is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.',
-  'Email oracle@promvis.io': 'Email oracle@promvis.io',
+  'Promvis Analyst is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.': 'Promvis Analyst is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.',
+  'Email analyst@promvis.io': 'Email analyst@promvis.io',
 
   // Footer
   'Products': 'Products',
-  'Oracle (Early access)': 'Oracle (Early access)',
+  'Analyst (Early access)': 'Analyst (Early access)',
   'Forge (Coming soon)': 'Forge (Coming soon)',
   'Roadmap': 'Roadmap',
   'Company': 'Company',
@@ -144,10 +143,9 @@ const en = {
 const vi = {
   // Nav
   'SIGN IN ↗': 'ĐĂNG NHẬP ↗',
-  'Talk to the Oracle': 'Nói chuyện với Oracle',
+  'Talk to the Analyst': 'Nói chuyện với Analyst',
   'Manifesto': 'Tuyên ngôn',
   'The Foundation': 'Nền tảng',
-  'Oracle': 'Oracle',
   'Forge': 'Forge',
   'Trusted by': 'Đối tác',
   'Blog': 'Blog',
@@ -161,7 +159,7 @@ const vi = {
   'The AI-native financial data platform for Vietnam’s capital markets - reading footnotes, filings, and disclosures the pre-LLM stacks could never hold.': 'Nền tảng dữ liệu tài chính AI-native cho thị trường vốn Việt Nam - phân tích các bản thuyết minh, báo cáo và công bố thông tin mà các hệ thống trước LLM không làm được.',
   'Read our manifesto': 'Đọc tuyên ngôn',
   '· LIVE WITH': '· ĐANG TRIỂN KHAI VỚI',
-  'Vietnam’s first AI-native securities firm is already on Oracle.': 'Công ty chứng khoán ứng dụng AI đầu tiên của Việt Nam đã sử dụng Oracle.',
+  'Vietnam’s first AI-native securities firm is already on Promvis Analyst.': 'Công ty chứng khoán ứng dụng AI đầu tiên của Việt Nam đã sử dụng Promvis Analyst.',
   'SCROLL': 'CUỘN XUỐNG',
 
   // Etymology
@@ -202,10 +200,10 @@ const vi = {
   'A family.': 'Một hệ sinh thái.',
   'Each product is a different shape of the same answer: take the foundation, and put it where the work happens.': 'Mỗi sản phẩm mang một hình thái khác biệt cho cùng một giải pháp: lấy nền tảng lõi và áp dụng nơi công việc diễn ra.',
   'The AI analyst on your desk.': 'Chuyên viên phân tích AI trên bàn làm việc.',
-  'Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst - grounded in the foundation, citing the filing, never guessing.': 'Hỏi bất kỳ điều gì về công ty niêm yết tại Việt Nam. Oracle trả lời như chuyên viên phân tích nhạy bén nhất của bạn - dựa trên nền tảng, trích dẫn tài liệu, không bao giờ đoán.',
+  'Ask anything about a listed Vietnamese company. You get the answer your sharpest in-house analyst would give - grounded in the foundation, citing the filing, never guessing.': 'Hỏi bất kỳ điều gì về công ty niêm yết tại Việt Nam. Bạn nhận được câu trả lời như từ chuyên viên phân tích nhạy bén nhất của mình - dựa trên nền tảng, trích dẫn tài liệu, không bao giờ đoán.',
   'Built for securities firms.': 'Dành cho các công ty chứng khoán.',
   'Request access': 'Yêu cầu truy cập',
-  'Explore Oracle': 'Khám phá Oracle',
+  'Explore Promvis Analyst': 'Khám phá Promvis Analyst',
   'AVAILABLE · EARLY ACCESS': 'ĐÃ CÓ · TRUY CẬP SỚM',
   'COMING SOON': 'SẮP RA MẮT',
   'IN THE FORGE': 'ĐANG PHÁT TRIỂN',
@@ -228,9 +226,9 @@ const vi = {
   // Trusted By
   'TRUSTED BY': 'ĐỐI TÁC',
   'Vietnam’s most forward-looking institutions.': 'Những tổ chức tiên phong tại Việt Nam.',
-  '· LIVE ON ORACLE': '· SỬ DỤNG ORACLE',
+  '· LIVE ON PROMVIS ANALYST': '· SỬ DỤNG PROMVIS ANALYST',
   'Coming soon': 'Sắp ra mắt',
-  'TPBank Securities - Vietnam’s first AI-native securities firm - is live on Oracle.': 'Chứng khoán Tiên Phong (TPS) - công ty chứng khoán ứng dụng AI đầu tiên của Việt Nam - đang triển khai Oracle.',
+  'TPBank Securities - Vietnam’s first AI-native securities firm - is live on Promvis Analyst.': 'Chứng khoán Tiên Phong (TPS) - công ty chứng khoán ứng dụng AI đầu tiên của Việt Nam - đang triển khai Promvis Analyst.',
 
   // Why Us
   'WHY NOW · WHY US': 'TẠI SAO BÂY GIỜ · TẠI SAO LÀ CHÚNG TÔI',
@@ -240,16 +238,16 @@ const vi = {
   'Vietnam-native': 'Thấu hiểu Bản địa',
   'Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively - diacritics, conventions, regulatory dialect.': 'Xây dựng tại Việt Nam, dành cho thị trường vốn Việt Nam. Chúng tôi đọc văn bản công bố dưới hiểu biết về bản địa - dấu thanh, tập quán, ngôn ngữ luật lệ.',
   'Foundation-driven': 'Định hướng Nền tảng',
-  'Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.': 'Mọi sản phẩm nằm trên cùng một lớp dữ liệu được tinh chế. Insight được tổng hợp xuyên suốt thông qua Oracle, Forge và những sản phẩm tiếp theo.',
+  'Every product sits on the same refined data layer. Insight compounds across Analyst, Forge, and whatever we forge next.': 'Mọi sản phẩm nằm trên cùng một lớp dữ liệu được tinh chế. Insight được tổng hợp xuyên suốt thông qua Analyst, Forge và những sản phẩm tiếp theo.',
 
   // CTA
   'Put the foundation on your desk.': 'Sử dụng Nền tảng lõi tại bàn làm việc.',
-  'Oracle is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.': 'Oracle đang trong giai đoạn truy cập sớm tại số ít công ty chứng khoán Việt Nam. Nếu công việc của bạn phải đọc công bố thông tin hàng ngày, bạn nên có Oracle.',
-  'Email oracle@promvis.io': 'Gửi Email tới oracle@promvis.io',
+  'Promvis Analyst is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.': 'Promvis Analyst đang trong giai đoạn truy cập sớm tại số ít công ty chứng khoán Việt Nam. Nếu công việc của bạn phải đọc công bố thông tin hàng ngày, bạn nên có Promvis Analyst.',
+  'Email analyst@promvis.io': 'Gửi Email tới analyst@promvis.io',
 
   // Footer
   'Products': 'Sản phẩm',
-  'Oracle (Early access)': 'Oracle (Truy cập sớm)',
+  'Analyst (Early access)': 'Analyst (Truy cập sớm)',
   'Forge (Coming soon)': 'Forge (Sắp ra mắt)',
   'Roadmap': 'Lộ trình',
   'Company': 'Công ty',

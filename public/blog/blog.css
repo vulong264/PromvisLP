@@ -213,7 +213,7 @@ html[data-lang="en"] .lang-vi { display: none !important; }
 .article-foot { max-width: var(--measure); margin: 56px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
 .back-link { font-family: var(--font-sans); font-size: 12px; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--fg-mute); text-decoration: none; transition: color .15s; }
 .back-link:hover { color: var(--amber); }
-.btn-oracle {
+.btn-analyst {
   display: inline-flex; align-items: center; gap: 9px;
   font-family: var(--font-sans); font-size: 13px; font-weight: var(--weight-bold);
   padding: 11px 18px; border-radius: 999px; text-decoration: none;
@@ -221,7 +221,7 @@ html[data-lang="en"] .lang-vi { display: none !important; }
   box-shadow: 0 6px 24px -8px var(--amber-glow), inset 0 1px 0 rgba(255,255,255,.25);
   transition: background .15s;
 }
-.btn-oracle:hover { background: color-mix(in oklab, var(--amber) 92%, white 8%); }
+.btn-analyst:hover { background: color-mix(in oklab, var(--amber) 92%, white 8%); }
 
 /* Footer */
 .site-foot {

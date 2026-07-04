@@ -78,7 +78,7 @@ function Nav({ mobile }) {
           <Wordmark size={12} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             { !isOpen && <LangSwitch /> }
-            <a href={window.ORACLE_URL || 'https://chatbot.promvis.io'}
+            <a href={window.ANALYST_URL || 'https://chatbot.promvis.io'}
                className="p-mono"
                style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)', textDecoration: 'none', display: isOpen ? 'none' : 'block' }}>
               {t('SIGN IN ↗')}
@@ -109,7 +109,7 @@ function Nav({ mobile }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, fontSize: 24, fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)' }}>
               <a href="#manifesto" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Manifesto')}</a>
               <a href="#foundation" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('The Foundation')}</a>
-              <a href="#oracle" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>{t('Oracle')}</a>
+              <a href="#analyst" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>Analyst</a>
               <a href="#forge" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Forge')}</a>
               <a href="#trusted" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Trusted by')}</a>
               <a href="/blog.html" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Blog')}</a>
@@ -155,12 +155,12 @@ function Nav({ mobile }) {
                 type="button"
                 onClick={() => {
                   setIsOpen(false);
-                  window.openAccess && window.openAccess('oracle');
+                  window.openAccess && window.openAccess('analyst');
                 }}
                 className="btn btn-ghost"
                 style={{ justifyContent: 'center', padding: '16px', fontSize: 16, border: '1px solid var(--amber)', color: 'var(--amber)' }}
               >
-                {t('Talk to the Oracle')} <span className="arr">→</span>
+                {t('Talk to the Analyst')} <span className="arr">→</span>
               </button>
             </div>
           </div>
@@ -174,7 +174,7 @@ function Nav({ mobile }) {
       <div className="nav-links">
         <a href="#manifesto">{t('Manifesto')}</a>
         <a href="#foundation">{t('The Foundation')}</a>
-        <a href="#oracle" className="amber">{t('Oracle')}</a>
+        <a href="#analyst" className="amber">Analyst</a>
         <a href="#forge">{t('Forge')}</a>
         <a href="#trusted">{t('Trusted by')}</a>
         <a href="/blog.html">{t('Blog')}</a>
@@ -182,7 +182,7 @@ function Nav({ mobile }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <LangSwitch />
         <a
-          href={window.ORACLE_URL || 'https://chatbot.promvis.io'}
+          href={window.ANALYST_URL || 'https://chatbot.promvis.io'}
           className="p-mono"
           style={{ fontSize: 11, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)', textDecoration: 'none' }}
         >
@@ -190,11 +190,11 @@ function Nav({ mobile }) {
         </a>
         <button
           type="button"
-          onClick={() => window.openAccess && window.openAccess('oracle')}
+          onClick={() => window.openAccess && window.openAccess('analyst')}
           className="btn btn-ghost"
           style={{ padding: '10px 18px', fontSize: 13 }}
         >
-          {t('Talk to the Oracle')} <span className="arr">→</span>
+          {t('Talk to the Analyst')} <span className="arr">→</span>
         </button>
       </div>
     </nav>
@@ -278,7 +278,7 @@ function Hero({ motif, mobile }) {
         </p>
 
         <div style={{ display: 'flex', gap: 14, marginTop: mobile ? 32 : 48, flexWrap: 'wrap' }}>
-          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">{t('Talk to the Oracle')} <span className="arr">→</span></button>
+          <button type="button" onClick={() => window.openAccess('analyst')} className="btn btn-primary">{t('Talk to the Analyst')} <span className="arr">→</span></button>
           <a href="#manifesto" className="btn btn-ghost">{t('Read our manifesto')}</a>
         </div>
         <AlreadyInvited mobile={mobile} />
@@ -294,7 +294,7 @@ function Hero({ motif, mobile }) {
               {t('· LIVE WITH')} <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TPS</a>
             </div>
             <div style={{ fontFamily: 'var(--font-sans)', fontSize: 18, lineHeight: 1.4, color: 'var(--fg-mute)' }}>
-              {t('Vietnam’s first AI-native securities firm is already on Oracle.')}
+              {t('Vietnam’s first AI-native securities firm is already on Promvis Analyst.')}
             </div>
           </div>
         )}
@@ -479,7 +479,7 @@ function FoundationStat({ n, label, foot }) {
 function ProductFamily({ mobile }) {
   const { t } = useTranslation();
   return (
-    <section id="oracle" className="section" style={{ borderTop: '1px solid var(--border)' }}>
+    <section id="analyst" className="section" style={{ borderTop: '1px solid var(--border)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, gap: 24, flexWrap: 'wrap' }}>
           <div>
@@ -500,15 +500,15 @@ function ProductFamily({ mobile }) {
 
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr 1fr', gap: mobile ? 16 : 20 }}>
           <ProductCard
-            name="Oracle"
+            name="Analyst"
             status={t('AVAILABLE · EARLY ACCESS')}
             statusKind="live"
             tagline={t('The AI analyst on your desk.')}
-            body={t('Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst - grounded in the foundation, citing the filing, never guessing.')}
+            body={t('Ask anything about a listed Vietnamese company. You get the answer your sharpest in-house analyst would give - grounded in the foundation, citing the filing, never guessing.')}
             audience={t('Built for securities firms.')}
             cta={t('Request access')}
-            learnMoreHref="/Oracle.html"
-            learnMoreLabel={t('Explore Oracle')}
+            learnMoreHref="/Analyst.html"
+            learnMoreLabel={t('Explore Promvis Analyst')}
             samples={[
               { q: t('What changed in HPG’s related-party disclosure this quarter?'), kind: 'live' },
               { q: t('Show every Vietnamese listco with a Scope 3 commitment by 2030.') },
@@ -602,7 +602,7 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, l
       <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <button
           type="button"
-          onClick={() => window.openAccess(name === 'Forge' ? 'forge' : 'oracle')}
+          onClick={() => window.openAccess(name === 'Forge' ? 'forge' : 'analyst')}
           disabled={ghost}
           className={highlight ? 'btn btn-primary' : 'btn btn-ghost'}
           style={{ width: '100%', justifyContent: 'space-between', padding: '14px 18px', opacity: ghost ? 0.6 : 1, cursor: ghost ? 'default' : 'pointer' }}
@@ -687,7 +687,7 @@ function TrustedBy({ mobile }) {
         </div>
 
         <div style={{ marginTop: 32, textAlign: 'center', fontSize: 13, color: 'var(--fg-soft)' }}>
-          {t('TPBank Securities - Vietnam’s first AI-native securities firm - is live on Oracle.')}
+          {t('TPBank Securities - Vietnam’s first AI-native securities firm - is live on Promvis Analyst.')}
         </div>
       </div>
     </section>
@@ -720,7 +720,7 @@ function TPSLot() {
         {/* Fallback text just in case the image hasn't been uploaded yet */}
         <span style={{ opacity: 0 }} className="p-mono">TPS LOGO</span>
       </div>
-      <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', position: 'relative' }}>{t('· LIVE ON ORACLE')}</div>
+      <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', position: 'relative' }}>{t('· LIVE ON PROMVIS ANALYST')}</div>
     </a>
   );
 }
@@ -755,7 +755,7 @@ function WhyUs({ mobile }) {
     },
     {
       num: '03', title: t('Foundation-driven'),
-      body: t('Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.'),
+      body: t('Every product sits on the same refined data layer. Insight compounds across Analyst, Forge, and whatever we forge next.'),
       glyph: 'forge',
     },
   ];
@@ -858,11 +858,11 @@ function CTAStrip({ mobile }) {
           {t('Put the foundation on your desk.')}
         </h2>
         <p style={{ fontSize: mobile ? 16 : 18, lineHeight: 1.5, color: 'var(--fg-mute)', maxWidth: '52ch', margin: '0 auto 36px' }}>
-          {t('Oracle is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.')}
+          {t('Promvis Analyst is in early access with a handful of Vietnamese securities firms. If you read disclosures for a living, you should be one of them.')}
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">{t('Talk to the Oracle')} <span className="arr">→</span></button>
-          <a href="mailto:oracle@promvis.io" className="btn btn-ghost">{t('Email oracle@promvis.io')}</a>
+          <button type="button" onClick={() => window.openAccess('analyst')} className="btn btn-primary">{t('Talk to the Analyst')} <span className="arr">→</span></button>
+          <a href="mailto:analyst@promvis.io" className="btn btn-ghost">{t('Email analyst@promvis.io')}</a>
         </div>
         <div style={{ marginTop: 22 }}><AlreadyInvited align="center" mobile={mobile} /></div>
       </div>
@@ -885,10 +885,10 @@ function Footer({ mobile }) {
               {t('The AI-native financial data platform for Vietnam’s capital markets.')}
             </div>
           </div>
-          <FooterCol title={t('Products')} links={[t('Oracle (Early access)'), t('Forge (Coming soon)'), t('Roadmap')]} />
+          <FooterCol title={t('Products')} links={[t('Analyst (Early access)'), t('Forge (Coming soon)'), t('Roadmap')]} />
           <FooterCol title={t('Company')} links={[t('Manifesto'), t('About'), t('Careers'), t('Contact')]} />
           {/* The Prometheus inception story lives at /origin - surfaced quietly only in the footer copyright row. */}
-          <FooterCol title={t('Reach us')} links={['oracle@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
+          <FooterCol title={t('Reach us')} links={['analyst@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
         </div>
         <hr className="rule" />
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24,
