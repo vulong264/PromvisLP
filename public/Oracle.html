@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oracle · PROMVIS — The AI-native broker assistant for Vietnam's securities firms</title>
+<title>Oracle · Promvis - The AI-native broker assistant for Vietnam's securities firms</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
 <style>
-/* PROMVIS — design tokens + base styles */
+/* Promvis - design tokens + base styles */
 
 :root {
   --bg: oklch(0.16 0.008 50);
@@ -26,9 +26,13 @@
   --amber-soft: oklch(0.755 0.13 70 / 0.18);
   --amber-glow: oklch(0.755 0.16 65 / 0.4);
 
-  --font-serif: "Noto Serif Display", "Instrument Serif", "Cormorant Garamond", "Source Serif Pro", Georgia, serif;
-  --font-sans: "Be Vietnam Pro", "Söhne", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  /* typography tokens - single family, two weights, named tracking */
+  --font-sans: "Inter", -apple-system, Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --track-tight: -0.01em;   /* headlines under ~32px */
+  --track-tighter: -0.02em; /* display sizes 32px and up */
+  --track-caps: 0.18em;     /* eyebrows, section labels, small descriptors */
 
   --eyebrow-size: 11px;
   --measure: 64ch;
@@ -50,7 +54,8 @@ html, body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "ss02", "cv01";
+  font-weight: var(--weight-regular);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -58,12 +63,12 @@ html, body {
 ::selection { background: var(--amber); color: #1a1410; }
 
 .p-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-family: var(--font-sans);
+  font-size: var(--eyebrow-size);
+  letter-spacing: var(--track-caps);
   text-transform: uppercase;
   color: var(--fg-soft);
-  font-weight: 500;
+  font-weight: var(--weight-regular);
   display: flex;
   align-items: center;
 }
@@ -72,8 +77,8 @@ html, body {
   background: var(--amber); margin-right: 10px; vertical-align: 1px;
   box-shadow: 0 0 12px var(--amber-glow); flex-shrink: 0;
 }
-.p-mono { font-family: var(--font-mono); font-feature-settings: "ss01"; }
-.p-serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.012em; }
+.p-mono { font-family: var(--font-sans); font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+.p-serif { font-family: var(--font-sans); font-weight: var(--weight-bold); letter-spacing: var(--track-tight); }
 .p-amber { color: var(--amber); }
 .p-mute  { color: var(--fg-mute); }
 .p-soft  { color: var(--fg-soft); }
@@ -88,12 +93,12 @@ html, body {
 
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+  font-family: var(--font-sans); font-size: 14px; font-weight: var(--weight-bold);
   padding: 14px 22px; border-radius: 999px;
   cursor: pointer; user-select: none; text-decoration: none;
   transition: transform .15s ease, background .15s, border-color .15s, color .15s;
   border: 1px solid transparent; line-height: 1;
-  letter-spacing: 0.005em;
+  letter-spacing: normal;
 }
 .btn .arr { transition: transform .2s ease; display: inline-block; }
 .btn:hover .arr { transform: translateX(3px); }
@@ -128,14 +133,14 @@ html, body {
 .nav-links { display: flex; gap: 32px; }
 .nav-links a {
   color: var(--fg-mute); text-decoration: none; font-size: 13px;
-  letter-spacing: 0.01em; transition: color .15s;
+  letter-spacing: normal; transition: color .15s;
 }
 .nav-links a:hover { color: var(--fg); }
 .nav-links a.amber:hover { color: var(--amber); }
 
 .wordmark {
-  font-family: var(--font-sans); font-weight: 600;
-  letter-spacing: 0.18em; font-size: 13px; color: var(--fg);
+  font-family: var(--font-sans); font-weight: var(--weight-bold);
+  letter-spacing: var(--track-caps); font-size: 13px; color: var(--fg);
   display: inline-flex; align-items: center; gap: 12px;
 }
 
@@ -162,7 +167,7 @@ html, body {
   50% { opacity: 1; }
 }
 
-.tnum { font-variant-numeric: tabular-nums; }
+.tnum { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
 .ic { stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (max-width: 768px) {
@@ -185,7 +190,7 @@ html, body {
 const ORACLE_URL = 'https://chatbot.promvis.io';
 
 // ─────────────────────────────────────────────────────────────
-// i18n — inline dictionaries + hook (mirrors the main-app pattern,
+// i18n - inline dictionaries + hook (mirrors the main-app pattern,
 // synced via localStorage 'promvis-lang')
 // ─────────────────────────────────────────────────────────────
 const LANG_KEY = 'promvis-lang';
@@ -204,7 +209,7 @@ const en = {
   'ALREADY INVITED?': 'ALREADY INVITED?',
   'Sign in at oracle.promvis.io →': 'Sign in at chatbot.promvis.io →',
 
-  // AccessModal — headings, ledes, badges
+  // AccessModal - headings, ledes, badges
   'Be among the first to read Forge.': 'Be among the first to read Forge.',
   'Talk to the Oracle.': 'Talk to the Oracle.',
   "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.": "Forge ships first to firms already on Oracle. Leave your details and we'll bring you in when the dataset is ready.",
@@ -213,7 +218,7 @@ const en = {
   'ORACLE · ACCESS REQUEST': 'ORACLE · ACCESS REQUEST',
   'WE REPLY FROM ORACLE@PROMVIS.IO': 'WE REPLY FROM ORACLE@PROMVIS.IO',
 
-  // AccessModal — fields
+  // AccessModal - fields
   'Name': 'Name',
   'Work email': 'Work email',
   'Firm': 'Firm',
@@ -221,7 +226,7 @@ const en = {
   'Choose…': 'Choose…',
   'Dataset of interest': 'Dataset of interest',
   'Why Oracle, why now?': 'Why Oracle, why now?',
-  'optional · 1–2 lines': 'optional · 1–2 lines',
+  'optional · 1-2 lines': 'optional · 1-2 lines',
   'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.': 'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.',
   'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.': 'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.',
   'e.g. ABC Securities JSC': 'e.g. ABC Securities JSC',
@@ -251,8 +256,8 @@ const en = {
   'FIRM': 'FIRM',
   'PRODUCT': 'PRODUCT',
   'REPLY-BY': 'REPLY-BY',
-  'Forge — Waitlist': 'Forge — Waitlist',
-  'Oracle — Early access': 'Oracle — Early access',
+  'Forge - Waitlist': 'Forge - Waitlist',
+  'Oracle - Early access': 'Oracle - Early access',
   '3 business days': '3 business days',
   'Close': 'Close',
 
@@ -277,7 +282,7 @@ const en = {
   'ORACLE · AVAILABLE · EARLY ACCESS': 'ORACLE · AVAILABLE · EARLY ACCESS',
   'Your sharpest analyst,': 'Your sharpest analyst,',
   'embedded in your app.': 'embedded in your app.',
-  "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.": "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.",
+  "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters - and ship the moat your competitors are still scoping.": "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters - and ship the moat your competitors are still scoping.",
   'See how it embeds': 'See how it embeds',
 
   // BrokerAppScreen
@@ -309,7 +314,7 @@ const en = {
   'ORACLE · §01': 'ORACLE · §01',
   'Launch in days.': 'Launch in days.',
   'Not quarters.': 'Not quarters.',
-  'Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.': 'Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.',
+  'Your customers are already in your app. Oracle slots into their existing journeys - Home, Stock Detail, Place Order - through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.': 'Your customers are already in your app. Oracle slots into their existing journeys - Home, Stock Detail, Place Order - through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.',
   'Prebuilt insight APIs': 'Prebuilt insight APIs',
   'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.': 'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.',
   'Drop-in web + mobile UI': 'Drop-in web + mobile UI',
@@ -325,7 +330,7 @@ const en = {
   'ORACLE · §02': 'ORACLE · §02',
   'Not a chatbot.': 'Not a chatbot.',
   'An analyst.': 'An analyst.',
-  'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.': 'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.',
+  'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses - and adapts its register to the user on the other end.': 'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses - and adapts its register to the user on the other end.',
 
   // MultiLensWidget
   'MULTI-LENS ANALYSIS': 'MULTI-LENS ANALYSIS',
@@ -345,7 +350,7 @@ const en = {
 
   // FivePillarSpec
   'THE 5-PILLAR FRAMEWORK': 'THE 5-PILLAR FRAMEWORK',
-  'How professionals evaluate companies — built in.': 'How professionals evaluate companies — built in.',
+  'How professionals evaluate companies - built in.': 'How professionals evaluate companies - built in.',
   'ADVANCED MODE · DEFAULT': 'ADVANCED MODE · DEFAULT',
   'Growth': 'Growth',
   'Revenue acceleration, segment mix, end-market exposure.': 'Revenue acceleration, segment mix, end-market exposure.',
@@ -353,9 +358,9 @@ const en = {
   'Operating margin, ROIC, contribution by line of business.': 'Operating margin, ROIC, contribution by line of business.',
   'Efficiency': 'Efficiency',
   'Working-capital cycles, asset turnover, days-on-hand.': 'Working-capital cycles, asset turnover, days-on-hand.',
-  'Leverage & Solvency': 'Leverage & Solvency',
+  'Leverage & solvency': 'Leverage & solvency',
   'Net debt, coverage, schedule, covenant headroom.': 'Net debt, coverage, schedule, covenant headroom.',
-  'Cash Quality': 'Cash Quality',
+  'Cash quality': 'Cash quality',
   'FCF conversion, accruals quality, NWC drift.': 'FCF conversion, accruals quality, NWC drift.',
 
   // QuickVsAdvanced + ModeToggle
@@ -368,7 +373,7 @@ const en = {
   'ADVANCED · EVIDENCE-BASED': 'ADVANCED · EVIDENCE-BASED',
   'Momentum is on your side, but earnings volatility is real.': 'Momentum is on your side, but earnings volatility is real.',
   "Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.": "Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.",
-  'Not advice — your call.': 'Not advice — your call.',
+  'Not advice - your call.': 'Not advice - your call.',
   '· 2 sentences · plain language · 1 caveat': '· 2 sentences · plain language · 1 caveat',
   'FUNDAMENTAL': 'FUNDAMENTAL',
   'Guidance reiterated at the Q3 call': 'Guidance reiterated at the Q3 call',
@@ -382,7 +387,7 @@ const en = {
   'ORACLE · §03': 'ORACLE · §03',
   'Your house view.': 'Your house view.',
   "Your customer's portfolio.": "Your customer's portfolio.",
-  "Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.": "Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.",
+  "Generic AIs don't know who is asking. Oracle does - because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.": "Generic AIs don't know who is asking. Oracle does - because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.",
   'HOUSE VIEW · house.yml': 'HOUSE VIEW · house.yml',
   'EDITED 4h AGO': 'EDITED 4h AGO',
 
@@ -399,15 +404,15 @@ const en = {
   'dragged 0.3%.': 'dragged 0.3%.',
   "You're currently": "You're currently",
   '39% in industrials': '39% in industrials',
-  '— drifting above the 30% target in your house allocation.': '— drifting above the 30% target in your house allocation.',
+  '- drifting above the 30% target in your house allocation.': '- drifting above the 30% target in your house allocation.',
   'Should I be worried about VCB?': 'Should I be worried about VCB?',
-  "Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.": "Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.",
+  "Not at today's move. The headline is the new SBV circular on capital adequacy - still in consultation, no firm impact on Q4 capital.": "Not at today's move. The headline is the new SBV circular on capital adequacy - still in consultation, no firm impact on Q4 capital.",
   'ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT': 'ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT',
 
   // PushNotificationStrip
   'PROACTIVE PUSH': 'PROACTIVE PUSH',
-  'Oracle knows what each customer holds — and notifies them when something changes.': 'Oracle knows what each customer holds — and notifies them when something changes.',
-  "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.": "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.",
+  'Oracle knows what each customer holds - and notifies them when something changes.': 'Oracle knows what each customer holds - and notifies them when something changes.',
+  "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account - sent through your existing notification pipe.": "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account - sent through your existing notification pipe.",
   'YourBroker · powered by Oracle': 'YourBroker · powered by Oracle',
   'now': 'now',
   'HPG · Hòa Phát filed an update on Dung Quat 2.': 'HPG · Hòa Phát filed an update on Dung Quat 2.',
@@ -418,7 +423,7 @@ const en = {
   'ORACLE · §04': 'ORACLE · §04',
   'Compliance,': 'Compliance,',
   'by design.': 'by design.',
-  "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.": "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.",
+  "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers - all reviewed by compliance teams before a single retail user sees an answer.": "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers - all reviewed by compliance teams before a single retail user sees an answer.",
   'Dynamic disclaimers': 'Dynamic disclaimers',
   'Disclaimer language adapts to the question, the asset class, and the retail/professional mode.': 'Disclaimer language adapts to the question, the asset class, and the retail/professional mode.',
   'PII protection': 'PII protection',
@@ -446,7 +451,7 @@ const en = {
   'TPBank Securities': 'TPBank Securities',
   '· LIVE ON ORACLE': '· LIVE ON ORACLE',
   "VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM": "VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM",
-  'Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.': 'Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.',
+  'Oracle let us ship an AI analyst into our retail app without standing up an ML team - and without compromising compliance. The conversation our customers have inside our product is now ours to shape.': 'Oracle let us ship an AI analyst into our retail app without standing up an ML team - and without compromising compliance. The conversation our customers have inside our product is now ours to shape.',
   '· TPBS LEADERSHIP · PLACEHOLDER QUOTE': '· TPBS LEADERSHIP · PLACEHOLDER QUOTE',
   '< 30 days': '< 30 days',
   'From kickoff to live in-app': 'From kickoff to live in-app',
@@ -483,7 +488,7 @@ const vi = {
   'ORACLE · ACCESS REQUEST': 'ORACLE · YÊU CẦU TRUY CẬP',
   'WE REPLY FROM ORACLE@PROMVIS.IO': 'PHẢN HỒI TỪ ORACLE@PROMVIS.IO',
 
-  // AccessModal — fields
+  // AccessModal - fields
   'Name': 'Họ và tên',
   'Work email': 'Email công việc',
   'Firm': 'Công ty',
@@ -491,7 +496,7 @@ const vi = {
   'Choose…': 'Chọn…',
   'Dataset of interest': 'Bộ dữ liệu quan tâm',
   'Why Oracle, why now?': 'Vì sao chọn Oracle, vì sao bây giờ?',
-  'optional · 1–2 lines': 'không bắt buộc · 1–2 dòng',
+  'optional · 1-2 lines': 'không bắt buộc · 1-2 dòng',
   'e.g. VN-listco ESG narrative dataset for 2026 portfolio screening.': 'ví dụ: Dữ liệu ESG của công ty niêm yết VN phục vụ sàng lọc danh mục 2026.',
   'e.g. We cover VN listcos for a frontier-market fund and read filings every morning.': 'ví dụ: Chúng tôi theo dõi công ty niêm yết VN cho một quỹ thị trường biên và đọc công bố thông tin mỗi sáng.',
   'e.g. ABC Securities JSC': 'ví dụ: CTCP Chứng khoán ABC',
@@ -521,8 +526,8 @@ const vi = {
   'FIRM': 'CÔNG TY',
   'PRODUCT': 'SẢN PHẨM',
   'REPLY-BY': 'PHẢN HỒI TRONG',
-  'Forge — Waitlist': 'Forge — Danh sách chờ',
-  'Oracle — Early access': 'Oracle — Truy cập sớm',
+  'Forge - Waitlist': 'Forge - Danh sách chờ',
+  'Oracle - Early access': 'Oracle - Truy cập sớm',
   '3 business days': '3 ngày làm việc',
   'Close': 'Đóng',
 
@@ -547,7 +552,7 @@ const vi = {
   'ORACLE · AVAILABLE · EARLY ACCESS': 'ORACLE · ĐÃ CÓ · TRUY CẬP SỚM',
   'Your sharpest analyst,': 'Chuyên viên phân tích sắc sảo nhất,',
   'embedded in your app.': 'tích hợp ngay trong ứng dụng của bạn.',
-  "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.": 'Trợ lý môi giới AI-native dành cho các công ty chứng khoán Việt Nam. Tích hợp vào nền tảng của bạn trong vài ngày, thay vì hàng quý — và mở rộng lợi thế cạnh tranh khi đối thủ vẫn còn đang lên kế hoạch.',
+  "An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters - and ship the moat your competitors are still scoping.": 'Trợ lý môi giới AI-native dành cho các công ty chứng khoán Việt Nam. Tích hợp vào nền tảng của bạn trong vài ngày, thay vì hàng quý - và mở rộng lợi thế cạnh tranh khi đối thủ vẫn còn đang lên kế hoạch.',
   'See how it embeds': 'Xem cách tích hợp',
 
   // BrokerAppScreen
@@ -579,7 +584,7 @@ const vi = {
   'ORACLE · §01': 'ORACLE · §01',
   'Launch in days.': 'Triển khai trong vài ngày.',
   'Not quarters.': 'Không phải hàng quý.',
-  'Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.': 'Khách hàng của bạn đã ở trong ứng dụng của bạn. Oracle gắn vào trải nghiệm sẵn có — Trang chủ, Chi tiết Cổ phiếu, Đặt lệnh — qua API dựng sẵn và giao diện hội thoại tích hợp nhanh. Không cần đội MLOps. Không cần viết lại.',
+  'Your customers are already in your app. Oracle slots into their existing journeys - Home, Stock Detail, Place Order - through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.': 'Khách hàng của bạn đã ở trong ứng dụng của bạn. Oracle gắn vào trải nghiệm sẵn có - Trang chủ, Chi tiết Cổ phiếu, Đặt lệnh - qua API dựng sẵn và giao diện hội thoại tích hợp nhanh. Không cần đội MLOps. Không cần viết lại.',
   'Prebuilt insight APIs': 'API phân tích dựng sẵn',
   'Daily-refreshed insight payloads for 1,500+ Vietnamese tickers. Embed directly on Home, Stock Detail, and Place Order screens.': 'Gói phân tích cập nhật hàng ngày cho hơn 1.500 mã chứng khoán Việt Nam. Tích hợp trực tiếp trên màn hình Trang chủ, Chi tiết Cổ phiếu và Đặt lệnh.',
   'Drop-in web + mobile UI': 'Giao diện web + mobile tích hợp nhanh',
@@ -595,7 +600,7 @@ const vi = {
   'ORACLE · §02': 'ORACLE · §02',
   'Not a chatbot.': 'Không phải chatbot.',
   'An analyst.': 'Mà là một chuyên viên phân tích.',
-  'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.': 'Oracle được đồng thiết kế với các chuyên viên phân tích, môi giới và kỹ sư AI đang hành nghề. Oracle vận hành trên đúng các khung phân tích đội của bạn đang dùng — và điều chỉnh văn phong theo người dùng đầu cuối.',
+  'Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses - and adapts its register to the user on the other end.': 'Oracle được đồng thiết kế với các chuyên viên phân tích, môi giới và kỹ sư AI đang hành nghề. Oracle vận hành trên đúng các khung phân tích đội của bạn đang dùng - và điều chỉnh văn phong theo người dùng đầu cuối.',
 
   // MultiLensWidget
   'MULTI-LENS ANALYSIS': 'PHÂN TÍCH ĐA LĂNG KÍNH',
@@ -615,7 +620,7 @@ const vi = {
 
   // FivePillarSpec
   'THE 5-PILLAR FRAMEWORK': 'KHUNG 5 TRỤ CỘT',
-  'How professionals evaluate companies — built in.': 'Cách giới chuyên môn đánh giá doanh nghiệp — tích hợp sẵn.',
+  'How professionals evaluate companies - built in.': 'Cách giới chuyên môn đánh giá doanh nghiệp - tích hợp sẵn.',
   'ADVANCED MODE · DEFAULT': 'CHẾ ĐỘ NÂNG CAO · MẶC ĐỊNH',
   'Growth': 'Tăng trưởng',
   'Revenue acceleration, segment mix, end-market exposure.': 'Tăng tốc doanh thu, cơ cấu mảng kinh doanh, mức độ tiếp xúc thị trường cuối.',
@@ -623,9 +628,9 @@ const vi = {
   'Operating margin, ROIC, contribution by line of business.': 'Biên hoạt động, ROIC, đóng góp theo mảng kinh doanh.',
   'Efficiency': 'Hiệu quả',
   'Working-capital cycles, asset turnover, days-on-hand.': 'Chu kỳ vốn lưu động, vòng quay tài sản, số ngày tồn kho.',
-  'Leverage & Solvency': 'Đòn bẩy & Khả năng thanh toán',
+  'Leverage & solvency': 'Đòn bẩy & Khả năng thanh toán',
   'Net debt, coverage, schedule, covenant headroom.': 'Nợ ròng, hệ số bao phủ, lịch trả nợ, biên độ điều khoản tài chính.',
-  'Cash Quality': 'Chất lượng dòng tiền',
+  'Cash quality': 'Chất lượng dòng tiền',
   'FCF conversion, accruals quality, NWC drift.': 'Chuyển hóa FCF, chất lượng dồn tích, biến động vốn lưu động ròng.',
 
   // QuickVsAdvanced + ModeToggle
@@ -638,7 +643,7 @@ const vi = {
   'ADVANCED · EVIDENCE-BASED': 'NÂNG CAO · DỰA TRÊN BẰNG CHỨNG',
   'Momentum is on your side, but earnings volatility is real.': 'Đà giá đang ủng hộ bạn, nhưng biến động quanh kỳ công bố lợi nhuận là có thật.',
   "Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.": 'Khối lượng tăng, giọng điệu môi giới cải thiện. Nếu giữ với mục tiêu trading, hãy đặt cắt lỗ gần 27.000 và chốt dần khi tăng mạnh.',
-  'Not advice — your call.': 'Không phải khuyến nghị — quyết định là của bạn.',
+  'Not advice - your call.': 'Không phải khuyến nghị - quyết định là của bạn.',
   '· 2 sentences · plain language · 1 caveat': '· 2 câu · ngôn ngữ đơn giản · 1 lưu ý',
   'FUNDAMENTAL': 'CƠ BẢN',
   'Guidance reiterated at the Q3 call': 'Định hướng được tái khẳng định tại buổi họp Q3',
@@ -652,7 +657,7 @@ const vi = {
   'ORACLE · §03': 'ORACLE · §03',
   'Your house view.': 'Quan điểm nhà bạn.',
   "Your customer's portfolio.": 'Danh mục của khách hàng.',
-  "Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.": 'AI đại trà không biết ai đang hỏi. Oracle thì biết — bởi bạn kết nối Oracle với dữ liệu khách hàng và phân tích của chính công ty bạn. Quan điểm nhà bạn, trong túi của khách hàng.',
+  "Generic AIs don't know who is asking. Oracle does - because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.": 'AI đại trà không biết ai đang hỏi. Oracle thì biết - bởi bạn kết nối Oracle với dữ liệu khách hàng và phân tích của chính công ty bạn. Quan điểm nhà bạn, trong túi của khách hàng.',
   'HOUSE VIEW · house.yml': 'QUAN ĐIỂM NHÀ · house.yml',
   'EDITED 4h AGO': 'CHỈNH SỬA 4 GIỜ TRƯỚC',
 
@@ -669,15 +674,15 @@ const vi = {
   'dragged 0.3%.': 'kéo giảm 0,3%.',
   "You're currently": 'Hiện bạn đang nắm',
   '39% in industrials': '39% nhóm công nghiệp',
-  '— drifting above the 30% target in your house allocation.': '— vượt ngưỡng phân bổ mục tiêu 30% trong khung của công ty.',
+  '- drifting above the 30% target in your house allocation.': '- vượt ngưỡng phân bổ mục tiêu 30% trong khung của công ty.',
   'Should I be worried about VCB?': 'Tôi có nên lo về VCB không?',
-  "Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.": 'Không hẳn với mức biến động hôm nay. Trọng tâm là dự thảo thông tư mới của SBV về an toàn vốn — vẫn đang lấy ý kiến, chưa ảnh hưởng cụ thể tới vốn Q4.',
+  "Not at today's move. The headline is the new SBV circular on capital adequacy - still in consultation, no firm impact on Q4 capital.": 'Không hẳn với mức biến động hôm nay. Trọng tâm là dự thảo thông tư mới của SBV về an toàn vốn - vẫn đang lấy ý kiến, chưa ảnh hưởng cụ thể tới vốn Q4.',
   'ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT': 'ORACLE ĐỌC TÀI KHOẢN CỦA BẠN  ·  KHÔNG TRUY CẬP DỮ LIỆU CÁ NHÂN KHI CHƯA ĐỒNG Ý',
 
   // PushNotificationStrip
   'PROACTIVE PUSH': 'THÔNG BÁO CHỦ ĐỘNG',
-  'Oracle knows what each customer holds — and notifies them when something changes.': 'Oracle biết khách hàng đang nắm gì — và chủ động thông báo khi có biến động.',
-  "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.": 'Kết quả kinh doanh, xếp hạng, hồ sơ pháp lý, cập nhật công bố. Cá nhân hóa theo cổ phiếu trong tài khoản người dùng — gửi qua kênh thông báo sẵn có của bạn.',
+  'Oracle knows what each customer holds - and notifies them when something changes.': 'Oracle biết khách hàng đang nắm gì - và chủ động thông báo khi có biến động.',
+  "Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account - sent through your existing notification pipe.": 'Kết quả kinh doanh, xếp hạng, hồ sơ pháp lý, cập nhật công bố. Cá nhân hóa theo cổ phiếu trong tài khoản người dùng - gửi qua kênh thông báo sẵn có của bạn.',
   'YourBroker · powered by Oracle': 'YourBroker · vận hành bởi Oracle',
   'now': 'vừa xong',
   'HPG · Hòa Phát filed an update on Dung Quat 2.': 'HPG · Hòa Phát cập nhật về Dung Quất 2.',
@@ -688,7 +693,7 @@ const vi = {
   'ORACLE · §04': 'ORACLE · §04',
   'Compliance,': 'Tuân thủ,',
   'by design.': 'ngay từ thiết kế.',
-  "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.": 'Xây dựng quanh khung pháp lý của thị trường Việt Nam. Định tuyến phạm vi, bảo vệ dữ liệu cá nhân, tuyên bố miễn trừ động — tất cả được bộ phận tuân thủ rà soát trước khi nhà đầu tư cá nhân thấy câu trả lời đầu tiên.',
+  "Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers - all reviewed by compliance teams before a single retail user sees an answer.": 'Xây dựng quanh khung pháp lý của thị trường Việt Nam. Định tuyến phạm vi, bảo vệ dữ liệu cá nhân, tuyên bố miễn trừ động - tất cả được bộ phận tuân thủ rà soát trước khi nhà đầu tư cá nhân thấy câu trả lời đầu tiên.',
   'Dynamic disclaimers': 'Tuyên bố miễn trừ động',
   'Disclaimer language adapts to the question, the asset class, and the retail/professional mode.': 'Ngôn ngữ tuyên bố miễn trừ điều chỉnh theo câu hỏi, loại tài sản, và chế độ cá nhân/chuyên nghiệp.',
   'PII protection': 'Bảo vệ dữ liệu cá nhân',
@@ -716,7 +721,7 @@ const vi = {
   'TPBank Securities': 'Chứng khoán TPBank',
   '· LIVE ON ORACLE': '· ĐANG SỬ DỤNG ORACLE',
   "VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM": 'CÔNG TY CHỨNG KHOÁN AI-NATIVE ĐẦU TIÊN CỦA VIỆT NAM',
-  'Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.': 'Oracle cho phép chúng tôi đưa một chuyên viên phân tích AI vào ứng dụng bán lẻ mà không cần dựng đội ML — và không đánh đổi tuyên thủ. Cuộc trò chuyện của khách hàng bên trong sản phẩm của chúng tôi nay do chính chúng tôi định hình.',
+  'Oracle let us ship an AI analyst into our retail app without standing up an ML team - and without compromising compliance. The conversation our customers have inside our product is now ours to shape.': 'Oracle cho phép chúng tôi đưa một chuyên viên phân tích AI vào ứng dụng bán lẻ mà không cần dựng đội ML - và không đánh đổi tuyên thủ. Cuộc trò chuyện của khách hàng bên trong sản phẩm của chúng tôi nay do chính chúng tôi định hình.',
   '· TPBS LEADERSHIP · PLACEHOLDER QUOTE': '· LÃNH ĐẠO TPBS · TRÍCH DẪN TẠM',
   '< 30 days': '< 30 ngày',
   'From kickoff to live in-app': 'Từ khởi động đến chạy trong ứng dụng',
@@ -792,7 +797,7 @@ function AlreadyInvited({ align = 'left', mobile }) {
   return (
     <div className="p-mono" style={{
       display: 'flex', alignItems: 'center', gap: 8,
-      fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-soft)',
+      fontSize: 11, color: 'var(--fg-soft)',
       marginTop: mobile ? 18 : 22,
       justifyContent: align === 'center' ? 'center' : 'flex-start',
       flexWrap: 'wrap',
@@ -885,7 +890,7 @@ function AccessModal() {
         .am-field input::placeholder, .am-field textarea::placeholder { color: var(--fg-faint); }
         .am-field label {
           display: flex; justify-content: space-between; align-items: baseline;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+          font-family: var(--font-sans); font-size: 10px; letter-spacing: var(--track-caps);
           text-transform: uppercase; color: var(--fg-soft); margin-bottom: 8px;
         }
         .am-field { display: flex; flex-direction: column; }
@@ -930,12 +935,12 @@ function AccessModal() {
 
         {step !== 'done' ? (
           <form onSubmit={submit} style={{ padding: '36px 36px 32px', position: 'relative' }}>
-            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 14 }}>
+            <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginBottom: 14 }}>
               · {product === 'forge' ? t('FORGE · WAITLIST') : t('ORACLE · ACCESS REQUEST')}
             </div>
             <h3 style={{
-              fontFamily: 'var(--font-serif)', fontSize: 34, lineHeight: 1.08,
-              letterSpacing: '-0.018em', margin: 0, color: 'var(--fg)', fontWeight: 400, textWrap: 'balance',
+              fontFamily: 'var(--font-sans)', fontSize: 34, lineHeight: 1.08,
+              letterSpacing: 'var(--track-tighter)', margin: 0, color: 'var(--fg)', fontWeight: 'var(--weight-bold)', textWrap: 'balance',
             }}>{headline}</h3>
             <p style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--fg-mute)', margin: '14px 0 24px' }}>{lede}</p>
 
@@ -960,7 +965,7 @@ function AccessModal() {
             <div className="am-field" style={{ marginTop: 14 }}>
               <label>
                 <span>{product === 'forge' ? t('Dataset of interest') : t('Why Oracle, why now?')}</span>
-                <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1–2 lines')}</span>
+                <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1-2 lines')}</span>
               </label>
               <textarea
                 value={form.why}
@@ -973,7 +978,7 @@ function AccessModal() {
             </div>
 
             <div style={{ marginTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>
+              <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>
                 <span style={{ color: 'var(--amber)' }}>·</span> {t('WE REPLY FROM ORACLE@PROMVIS.IO')}
               </div>
               <button
@@ -1027,8 +1032,8 @@ function AMSuccessState({ email, firm, product }) {
       }}>
         <svg width="20" height="20" viewBox="0 0 20 20"><path className="ic" strokeWidth="1.6" d="M4 10.5l3.5 3.5L16 6" /></svg>
       </div>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 12 }}>· {t('REQUEST RECEIVED')}</div>
-      <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: 32, lineHeight: 1.08, letterSpacing: '-0.018em', margin: 0, color: 'var(--fg)', fontWeight: 400, textWrap: 'balance' }}>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginBottom: 12 }}>· {t('REQUEST RECEIVED')}</div>
+      <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 32, lineHeight: 1.08, letterSpacing: 'var(--track-tighter)', margin: 0, color: 'var(--fg)', fontWeight: 'var(--weight-bold)', textWrap: 'balance' }}>
         {t("We'll be in touch.")}
       </h3>
       <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)', margin: '14px 0 0' }}>
@@ -1041,13 +1046,13 @@ function AMSuccessState({ email, firm, product }) {
         border: '1px solid var(--border)', borderRadius: 3,
         background: 'color-mix(in oklab, var(--bg) 60%, var(--bg-elev))',
         display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 18, rowGap: 8,
-        fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', color: 'var(--fg-mute)',
+        fontFamily: 'var(--font-sans)', fontSize: 11, letterSpacing: 'normal', color: 'var(--fg-mute)',
       }}>
         <span style={{ color: 'var(--fg-soft)' }}>{t('REF')}</span>
         <span className="tnum">PV-{Math.random().toString(36).slice(2, 8).toUpperCase()}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('FIRM')}</span><span>{firm}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('PRODUCT')}</span>
-        <span>{product === 'forge' ? t('Forge — Waitlist') : t('Oracle — Early access')}</span>
+        <span>{product === 'forge' ? t('Forge - Waitlist') : t('Oracle - Early access')}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('REPLY-BY')}</span><span>{t('3 business days')}</span>
       </div>
       <div style={{ marginTop: 28, paddingTop: 22, borderTop: '1px solid var(--border)' }}>
@@ -1061,7 +1066,7 @@ function AMSuccessState({ email, firm, product }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// sections.jsx — shared brand components
+// sections.jsx - shared brand components
 // ─────────────────────────────────────────────────────────────
 
 function BrandSpark({ size = 14, animated = true }) {
@@ -1105,7 +1110,7 @@ function Nav({ mobile, page }) {
       borderRadius: '4px',
       fontSize: '10px',
       cursor: 'pointer',
-      letterSpacing: '0.1em'
+      letterSpacing: 'var(--track-caps)'
     }}>
       {lang.toUpperCase()}
     </button>
@@ -1117,7 +1122,7 @@ function Nav({ mobile, page }) {
         <a href={page === 'oracle' ? '/' : '#'} style={{ textDecoration: 'none' }}><Wordmark size={12} /></a>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <LangSwitch />
-          <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>{t('SIGN IN ↗')}</a>
+          <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)', textDecoration: 'none' }}>{t('SIGN IN ↗')}</a>
           <button aria-label="menu" onClick={() => setMenuOpen(v => !v)} style={{
             background: 'transparent', border: '1px solid var(--border-strong)',
             width: 36, height: 36, borderRadius: 999, color: 'var(--fg)', display: 'grid', placeItems: 'center', cursor: 'pointer',
@@ -1143,7 +1148,7 @@ function Nav({ mobile, page }) {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <LangSwitch />
-        <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}>{t('SIGN IN ↗')}</a>
+        <a href={ORACLE_URL} className="p-mono" style={{ fontSize: 11, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)', textDecoration: 'none' }}>{t('SIGN IN ↗')}</a>
         <button type="button" onClick={() => window.openAccess && window.openAccess('oracle')} className="btn btn-ghost" style={{ padding: '10px 18px', fontSize: 13 }}>
           {t('Talk to the Oracle')} <span className="arr">→</span>
         </button>
@@ -1160,7 +1165,7 @@ function Footer({ mobile }) {
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1.5fr 1fr 1fr 1fr', gap: 36, marginBottom: 56 }}>
           <div>
             <Wordmark />
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.3, color: 'var(--fg-mute)', marginTop: 18, maxWidth: '28ch' }}>
+            <div style={{ fontFamily: 'var(--font-sans)', fontSize: 22, lineHeight: 1.3, color: 'var(--fg-mute)', marginTop: 18, maxWidth: '28ch' }}>
               {t("The AI-native financial data platform for Vietnam's capital markets.")}
             </div>
           </div>
@@ -1169,15 +1174,15 @@ function Footer({ mobile }) {
           <FooterCol title={t('Reach us')} links={['oracle@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
         </div>
         <hr className="rule" />
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24, fontSize: 12, color: 'var(--fg-soft)', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24, fontSize: 12, color: 'var(--fg-soft)', fontFamily: 'var(--font-sans)', letterSpacing: 'normal' }}>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-            <span>© 2026 PROMVIS</span>
+            <span>© 2026 Promvis</span>
             <span>·</span>
             <span>{t('Built by the people at ')}<a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
             <span>·</span>
             <span>{t('MADE IN VIETNAM ★')}</span>
             <span>·</span>
-            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">{t('ORIGIN')}</a>
+            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="-">{t('ORIGIN')}</a>
           </div>
           <div>{t('EARLY ACCESS · 2026')}</div>
         </div>
@@ -1189,7 +1194,7 @@ function Footer({ mobile }) {
 function FooterCol({ title, links }) {
   return (
     <div>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--fg-soft)', textTransform: 'uppercase', marginBottom: 14 }}>{title}</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)', textTransform: 'uppercase', marginBottom: 14 }}>{title}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {links.map(l => <a key={l} href="#" style={{ fontSize: 13.5, color: 'var(--fg-mute)', textDecoration: 'none' }}>{l}</a>)}
       </div>
@@ -1256,11 +1261,11 @@ function OracleHero({ mobile }) {
             <span className="dot" />{t('ORACLE · AVAILABLE · EARLY ACCESS')}
           </div>
           <h1 style={{
-            fontFamily: 'var(--font-serif)',
+            fontFamily: 'var(--font-sans)',
             fontSize: mobile ? 'clamp(38px, 9.5vw, 52px)' : 'clamp(56px, 6.4vw, 92px)',
             lineHeight: mobile ? 1.02 : 0.98,
-            letterSpacing: '-0.022em',
-            margin: 0, fontWeight: 400, color: 'var(--fg)', textWrap: 'balance',
+            letterSpacing: 'var(--track-tighter)',
+            margin: 0, fontWeight: 'var(--weight-bold)', color: 'var(--fg)', textWrap: 'balance',
           }}>
             {t('Your sharpest analyst,')}<br />
             <span className="p-amber" style={{ fontStyle: 'italic' }}>{t('embedded in your app.')}</span>
@@ -1271,7 +1276,7 @@ function OracleHero({ mobile }) {
             color: 'var(--fg-mute)', maxWidth: '54ch',
             margin: mobile ? '24px 0 0' : '32px 0 0',
           }}>
-            {t("An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters — and ship the moat your competitors are still scoping.")}
+            {t("An AI-native broker assistant for Vietnam's securities firms. Drop it into your platform in days, not quarters - and ship the moat your competitors are still scoping.")}
           </p>
           <div style={{ display: 'flex', gap: 14, marginTop: mobile ? 28 : 40, flexWrap: 'wrap' }}>
             <button type="button" onClick={() => window.openAccess('oracle')} className="btn btn-primary">
@@ -1320,7 +1325,7 @@ function PhoneShell({ children, width = 320 }) {
       <div style={{ position: 'absolute', top: 14, left: '50%', transform: 'translateX(-50%)', width: 100, height: 26, borderRadius: 16, background: '#000', zIndex: 30 }} />
       <div style={{ width, borderRadius: 34, overflow: 'hidden', background: '#f6f4f0', position: 'relative', height: 600 }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 44, zIndex: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 24px 0', pointerEvents: 'none' }}>
-          <span style={{ fontFamily: '-apple-system, system-ui', fontSize: 12, fontWeight: 600, color: '#0c0a08' }}>9:41</span>
+          <span style={{ fontFamily: '-apple-system, system-ui', fontSize: 12, fontWeight: 'var(--weight-bold)', color: '#0c0a08' }}>9:41</span>
           <span style={{ fontFamily: '-apple-system, system-ui', fontSize: 11, color: '#0c0a08', opacity: 0.7 }}>5G</span>
         </div>
         <div style={{ paddingTop: 44, height: '100%', overflow: 'hidden' }}>{children}</div>
@@ -1336,21 +1341,21 @@ function BrokerAppScreen({ oracleHighlight }) {
     <div style={{ height: '100%', background: '#f6f4f0', color: '#0c0a08', fontFamily: 'var(--font-sans)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '6px 16px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 22, height: 22, borderRadius: 4, background: brand.accent, color: '#fff', fontSize: 11, fontWeight: 700, display: 'grid', placeItems: 'center', letterSpacing: '0.05em' }}>YB</div>
-          <span style={{ fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>{brand.name}</span>
+          <div style={{ width: 22, height: 22, borderRadius: 4, background: brand.accent, color: '#fff', fontSize: 11, fontWeight: 'var(--weight-bold)', display: 'grid', placeItems: 'center', letterSpacing: 'normal' }}>YB</div>
+          <span style={{ fontWeight: 'var(--weight-bold)', fontSize: 13, letterSpacing: 'normal' }}>{brand.name}</span>
         </div>
         <div style={{ display: 'flex', gap: 12, fontSize: 11, color: '#666' }}>
-          <span>{t('Markets')}</span><span style={{ color: '#0c0a08', fontWeight: 600 }}>{t('Detail')}</span><span>{t('Portfolio')}</span>
+          <span>{t('Markets')}</span><span style={{ color: '#0c0a08', fontWeight: 'var(--weight-bold)' }}>{t('Detail')}</span><span>{t('Portfolio')}</span>
         </div>
       </div>
       <div style={{ padding: '4px 16px 12px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em' }}>HPG</div>
+            <div style={{ fontSize: 22, fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)' }}>HPG</div>
             <div style={{ fontSize: 10.5, color: '#666' }}>Tập đoàn Hòa Phát · HOSE</div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 18, fontWeight: 600, color: '#168745' }}>28,450</div>
+            <div style={{ fontSize: 18, fontWeight: 'var(--weight-bold)', color: '#168745' }}>28,450</div>
             <div style={{ fontSize: 10.5, color: '#168745' }}>+1.25 (+4.6%)</div>
           </div>
         </div>
@@ -1372,30 +1377,30 @@ function BrokerAppScreen({ oracleHighlight }) {
         display: 'flex', flexDirection: 'column', gap: 8,
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.14em', color: 'var(--amber)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-sans)', fontSize: 8.5, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>
             <span style={{ width: 4, height: 4, borderRadius: 99, background: 'var(--amber)', boxShadow: '0 0 6px var(--amber)' }} />
             {t('ORACLE INSIGHT')}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: '#9d958a', letterSpacing: '0.06em' }}>{t('UPDATED 07:15 ICT')}</div>
+          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 8.5, color: '#9d958a', letterSpacing: 'var(--track-caps)' }}>{t('UPDATED 07:15 ICT')}</div>
         </div>
-        <div style={{ fontFamily: 'var(--font-serif)', fontSize: 14.5, lineHeight: 1.25 }}>
+        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.25 }}>
           {t('Q4 momentum on capacity utilisation;')} <span style={{ color: 'var(--amber)', fontStyle: 'italic' }}>{t('watch Dung Quat 2 commissioning.')}</span>
         </div>
         <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
           {['Fundamental', 'Technical', 'Sentiment'].map(tag => (
-            <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.06em', padding: '2px 6px', borderRadius: 99, background: 'rgba(232,160,74,0.14)', color: 'var(--amber)' }}>{t(tag)}</span>
+            <span key={tag} style={{ fontFamily: 'var(--font-sans)', fontSize: 8, padding: '2px 6px', borderRadius: 99, background: 'rgba(232,160,74,0.14)', color: 'var(--amber)' }}>{t(tag)}</span>
           ))}
         </div>
         <div style={{ fontSize: 10.5, lineHeight: 1.4, color: '#c8c1b3', marginTop: 2 }}>
           {t('Steel volume guidance unchanged; iron-ore cost roll-off should expand Q1 margin by ~80bps if the price band holds.')}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: '#8a8276', letterSpacing: '0.06em' }}>{t('4 cited filings · ask follow-up →')}</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: 8, color: '#8a8276' }}>{t('4 cited filings · ask follow-up →')}</span>
         </div>
       </div>
       <div style={{ marginTop: 'auto', padding: '10px 16px 16px', borderTop: '1px solid #e9e5dc', display: 'flex', gap: 10 }}>
-        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#168745', color: '#fff', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t('Buy')}</div>
-        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#d04848', color: '#fff', textAlign: 'center', fontWeight: 600, fontSize: 13 }}>{t('Sell')}</div>
+        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#168745', color: '#fff', textAlign: 'center', fontWeight: 'var(--weight-bold)', fontSize: 13 }}>{t('Buy')}</div>
+        <div style={{ flex: 1, padding: '10px 12px', borderRadius: 6, background: '#d04848', color: '#fff', textAlign: 'center', fontWeight: 'var(--weight-bold)', fontSize: 13 }}>{t('Sell')}</div>
       </div>
     </div>
   );
@@ -1422,7 +1427,7 @@ function AudienceStrip({ mobile }) {
 function AudiencePitch({ title, s }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{title}</div>
+      <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 22, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: 'var(--track-tight)' }}>{title}</div>
       <div style={{ fontSize: 13, color: 'var(--fg-mute)' }}>{s}</div>
     </div>
   );
@@ -1442,9 +1447,9 @@ function SectionHeader({ eyebrow, h2, lede, mobile }) {
           <span className="dot" />{eyebrow}
         </div>
         <h2 style={{
-          fontFamily: 'var(--font-serif)',
+          fontFamily: 'var(--font-sans)',
           fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
-          lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400, textWrap: 'balance',
+          lineHeight: 1.05, letterSpacing: 'var(--track-tighter)', margin: 0, fontWeight: 'var(--weight-bold)', textWrap: 'balance',
           maxWidth: '20ch',
         }}>{h2}</h2>
       </div>
@@ -1461,7 +1466,7 @@ function IntegrationSection({ mobile }) {
         <SectionHeader
           eyebrow={t('ORACLE · §01')}
           h2={<>{t('Launch in days.')} <i className="p-amber">{t('Not quarters.')}</i></>}
-          lede={t('Your customers are already in your app. Oracle slots into their existing journeys — Home, Stock Detail, Place Order — through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.')}
+          lede={t('Your customers are already in your app. Oracle slots into their existing journeys - Home, Stock Detail, Place Order - through prebuilt APIs and a drop-in chat shell. No MLOps team. No rewrite.')}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 24 : 48, alignItems: 'flex-start' }}>
@@ -1488,10 +1493,10 @@ function ApiCodeBlock() {
     <div style={{
       background: 'color-mix(in oklab, var(--bg) 70%, var(--bg-elev))',
       border: '1px solid var(--border)', borderRadius: 4,
-      fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.6, color: 'var(--fg-mute)',
+      fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.6, color: 'var(--fg-mute)',
       overflow: 'hidden',
     }}>
-      <div style={{ padding: '10px 16px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', color: 'var(--fg-soft)', fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+      <div style={{ padding: '10px 16px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', color: 'var(--fg-soft)', fontSize: 10.5, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase' }}>
         <span>GET · /v1/insights/HPG</span>
         <span style={{ color: 'var(--amber)' }}>200 · 38 KB · 14 ms</span>
       </div>
@@ -1522,8 +1527,8 @@ function IntegrationStats() {
 function StatItem({ n, l }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 28, lineHeight: 1, color: 'var(--amber)', letterSpacing: '-0.02em' }}>{n}</div>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg-soft)' }}>{l}</div>
+      <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 28, lineHeight: 1, color: 'var(--amber)', letterSpacing: 'var(--track-tighter)', fontFeatureSettings: '"tnum"' }}>{n}</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase', color: 'var(--fg-soft)' }}>{l}</div>
     </div>
   );
 }
@@ -1533,9 +1538,9 @@ function BulletList({ items }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       {items.map((it, i) => (
         <div key={i} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 16, rowGap: 4 }}>
-          <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)', letterSpacing: '0.1em', paddingTop: 3 }}>0{i + 1}</span>
+          <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)', letterSpacing: 'var(--track-caps)', paddingTop: 3 }}>0{i + 1}</span>
           <div>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{it.t}</div>
+            <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 20, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: 'var(--track-tight)' }}>{it.t}</div>
             <div style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--fg-mute)', marginTop: 4 }}>{it.s}</div>
           </div>
         </div>
@@ -1552,7 +1557,7 @@ function AnalystSection({ mobile }) {
         <SectionHeader
           eyebrow={t('ORACLE · §02')}
           h2={<>{t('Not a chatbot.')} <i className="p-amber">{t('An analyst.')}</i></>}
-          lede={t('Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses — and adapts its register to the user on the other end.')}
+          lede={t('Oracle was co-designed with practising analysts, brokers, and AI engineers. It works through the same frameworks your team already uses - and adapts its register to the user on the other end.')}
           mobile={mobile}
         />
         <MultiLensWidget mobile={mobile} />
@@ -1587,10 +1592,10 @@ function MultiLensWidget({ mobile }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· {t('MULTI-LENS ANALYSIS')}</div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('Four lenses on the same question.')}</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· {t('MULTI-LENS ANALYSIS')}</div>
+          <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('Four lenses on the same question.')}</div>
         </div>
-        <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)', letterSpacing: '0.08em' }}>
+        <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)' }}>
           {t('QUERY')} · <span style={{ color: 'var(--amber)' }}>{t('"How is HPG positioned for Q1?"')}</span>
         </div>
       </div>
@@ -1609,8 +1614,8 @@ function MultiLensWidget({ mobile }) {
               position: 'relative', transition: 'background .15s',
             }}>
               {on && <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2, background: 'var(--amber)' }} />}
-              <span className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: on ? 'var(--amber)' : 'var(--fg-soft)', textTransform: 'uppercase' }}>0{i + 1}</span>
-              <span style={{ fontFamily: 'var(--font-serif)', fontSize: 20, lineHeight: 1.1, letterSpacing: '-0.012em' }}>{l.label}</span>
+              <span className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: on ? 'var(--amber)' : 'var(--fg-soft)', textTransform: 'uppercase' }}>0{i + 1}</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 20, lineHeight: 1.1, letterSpacing: 'var(--track-tight)' }}>{l.label}</span>
               <span style={{ fontSize: 11, color: 'var(--fg-soft)', lineHeight: 1.4 }}>{l.tag}</span>
             </button>
           );
@@ -1624,7 +1629,7 @@ function MultiLensWidget({ mobile }) {
       }}>
         <div style={{ fontSize: mobile ? 15.5 : 16.5, lineHeight: 1.6, color: 'var(--fg)' }}>{A.body}</div>
         <div style={{ minWidth: 200, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: 'var(--fg-soft)', textTransform: 'uppercase' }}>{t('CITED')}</div>
+          <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)', textTransform: 'uppercase' }}>{t('CITED')}</div>
           {A.cites.map(c => (
             <div key={c} className="p-mono" style={{ fontSize: 11, color: 'var(--amber)', borderLeft: '1px solid color-mix(in oklab, var(--amber) 40%, var(--border))', paddingLeft: 10, lineHeight: 1.5 }}>{c}</div>
           ))}
@@ -1640,17 +1645,17 @@ function FivePillarSpec({ mobile }) {
     { k: 'GROWTH', t: t('Growth'), d: t('Revenue acceleration, segment mix, end-market exposure.') },
     { k: 'PROFITABILITY', t: t('Profitability'), d: t('Operating margin, ROIC, contribution by line of business.') },
     { k: 'EFFICIENCY', t: t('Efficiency'), d: t('Working-capital cycles, asset turnover, days-on-hand.') },
-    { k: 'LEVERAGE', t: t('Leverage & Solvency'), d: t('Net debt, coverage, schedule, covenant headroom.') },
-    { k: 'CASH', t: t('Cash Quality'), d: t('FCF conversion, accruals quality, NWC drift.') },
+    { k: 'LEVERAGE', t: t('Leverage & solvency'), d: t('Net debt, coverage, schedule, covenant headroom.') },
+    { k: 'CASH', t: t('Cash quality'), d: t('FCF conversion, accruals quality, NWC drift.') },
   ];
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· {t('THE 5-PILLAR FRAMEWORK')}</div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('How professionals evaluate companies — built in.')}</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· {t('THE 5-PILLAR FRAMEWORK')}</div>
+          <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('How professionals evaluate companies - built in.')}</div>
         </div>
-        <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)', letterSpacing: '0.08em' }}>{t('ADVANCED MODE · DEFAULT')}</div>
+        <div className="p-mono" style={{ fontSize: 10.5, color: 'var(--fg-soft)', letterSpacing: 'var(--track-caps)' }}>{t('ADVANCED MODE · DEFAULT')}</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr 1fr' : 'repeat(5, 1fr)', gap: 0, border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden' }}>
         {pillars.map((p, i) => (
@@ -1661,8 +1666,8 @@ function FivePillarSpec({ mobile }) {
             background: 'var(--bg-elev)',
             display: 'flex', flexDirection: 'column', gap: 10, position: 'relative',
           }}>
-            <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.16em', color: 'var(--fg-soft)' }}>· 0{i + 1}</div>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.1, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{p.t}</div>
+            <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>· 0{i + 1}</div>
+            <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 22, lineHeight: 1.1, color: 'var(--fg)', letterSpacing: 'var(--track-tight)' }}>{p.t}</div>
             <div style={{ fontSize: 12.5, lineHeight: 1.55, color: 'var(--fg-mute)' }}>{p.d}</div>
             <div style={{ marginTop: 'auto', display: 'flex', gap: 3 }}>
               {[1,2,3,4,5,6,7].map(j => (
@@ -1685,7 +1690,7 @@ function ModeToggle({ mode, setMode }) {
           padding: '7px 16px', borderRadius: 999, border: 'none', cursor: 'pointer',
           background: mode === o.v ? 'var(--amber)' : 'transparent',
           color: mode === o.v ? '#1a1208' : 'var(--fg-mute)',
-          fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 500, letterSpacing: '0.02em',
+          fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--weight-regular)', letterSpacing: 'normal',
           transition: 'all .15s',
         }}>{o.l}</button>
       ))}
@@ -1700,49 +1705,49 @@ function QuickVsAdvanced({ mobile }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>· {t('ONE PRODUCT, TWO AUDIENCES')}</div>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('Quick for retail. Evidence-based for the desk.')}</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· {t('ONE PRODUCT, TWO AUDIENCES')}</div>
+          <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)', fontSize: mobile ? 24 : 30, lineHeight: 1.1, color: 'var(--fg)', marginTop: 6 }}>{t('Quick for retail. Evidence-based for the desk.')}</div>
         </div>
         <ModeToggle mode={mode} setMode={setMode} />
       </div>
       <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', background: 'var(--bg-elev)' }}>
         <div style={{ padding: '14px 22px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div className="p-mono" style={{ fontSize: 11, color: 'var(--fg-soft)', letterSpacing: '0.06em' }}>
+          <div className="p-mono" style={{ fontSize: 11, color: 'var(--fg-soft)' }}>
             ›_ <span style={{ color: 'var(--fg)' }}>{t('Should I hold HPG into earnings next week?')}</span>
           </div>
-          <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.14em', color: mode === 'quick' ? '#7cc1a0' : 'var(--amber)' }}>
+          <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: mode === 'quick' ? '#7cc1a0' : 'var(--amber)' }}>
             {mode === 'quick' ? t('QUICK · CONCISE') : t('ADVANCED · EVIDENCE-BASED')}
           </div>
         </div>
         {mode === 'quick' ? (
           <div style={{ padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 20 : 24, lineHeight: 1.25, color: 'var(--fg)' }}>{t('Momentum is on your side, but earnings volatility is real.')}</div>
+            <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)', fontSize: mobile ? 20 : 24, lineHeight: 1.25, color: 'var(--fg)' }}>{t('Momentum is on your side, but earnings volatility is real.')}</div>
             <div style={{ fontSize: 14.5, color: 'var(--fg-mute)', lineHeight: 1.55 }}>
-              {t("Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.")} <span className="p-amber">{t('Not advice — your call.')}</span>
+              {t("Volume is up, broker tone has improved. If you're holding for the trade, set a stop near 27,000 and trim into strength.")} <span className="p-amber">{t('Not advice - your call.')}</span>
             </div>
-            <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.06em', marginTop: 6 }}>{t('· 2 sentences · plain language · 1 caveat')}</div>
+            <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', marginTop: 6 }}>{t('· 2 sentences · plain language · 1 caveat')}</div>
           </div>
         ) : (
           <div style={{ padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 18 }}>
             <div>
-              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>{t('FUNDAMENTAL')}</div>
+              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: 'var(--track-caps)', marginBottom: 6 }}>{t('FUNDAMENTAL')}</div>
               <div style={{ fontSize: 14.5, color: 'var(--fg)', lineHeight: 1.6 }}>
                 {t('Guidance reiterated at the Q3 call')} <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[¹]</span>{t('. Iron-ore cost roll-off should expand Q1 margin by ~80bps if the input band holds')} <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[²]</span>.
               </div>
             </div>
             <div>
-              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>{t('TECHNICAL')}</div>
+              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: 'var(--track-caps)', marginBottom: 6 }}>{t('TECHNICAL')}</div>
               <div style={{ fontSize: 14.5, color: 'var(--fg)', lineHeight: 1.6 }}>
                 {t('9-session breakout on rising volume; RSI 64. Resistance cluster at 29,500 from January consolidation')} <span className="p-mono" style={{ fontSize: 11, color: 'var(--amber)' }}>[³]</span>.
               </div>
             </div>
             <div>
-              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.14em', marginBottom: 6 }}>{t('RISKS')}</div>
+              <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: 'var(--track-caps)', marginBottom: 6 }}>{t('RISKS')}</div>
               <div style={{ fontSize: 14.5, color: 'var(--fg-mute)', lineHeight: 1.6 }}>{t('Coil-spread compression in Q4; one near-term covenant test on the related-party financing schedule.')}</div>
             </div>
             <div style={{ paddingTop: 14, borderTop: '1px solid var(--border)', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
               {['[¹] Q3 MD&A · §3', '[²] Iron-ore cost band · 60d', '[³] Daily bars · 6m'].map(c => (
-                <span key={c} className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)', letterSpacing: '0.04em' }}>{c}</span>
+                <span key={c} className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)', letterSpacing: 'normal' }}>{c}</span>
               ))}
             </div>
           </div>
@@ -1760,7 +1765,7 @@ function PersonalizationSection({ mobile }) {
         <SectionHeader
           eyebrow={t('ORACLE · §03')}
           h2={<>{t('Your house view.')} <i className="p-amber">{t("Your customer's portfolio.")}</i></>}
-          lede={t("Generic AIs don't know who is asking. Oracle does — because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.")}
+          lede={t("Generic AIs don't know who is asking. Oracle does - because you connect it to your customer data and your firm's own analysis. Your house view, in your customer's pocket.")}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 24 : 36 }}>
@@ -1780,11 +1785,11 @@ function HouseViewConfig() {
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', background: 'var(--bg-elev)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· {t('HOUSE VIEW · house.yml')}</div>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>{t('EDITED 4h AGO')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· {t('HOUSE VIEW · house.yml')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>{t('EDITED 4h AGO')}</div>
       </div>
-      <pre style={{ margin: 0, padding: '18px 20px', flex: 1, overflow: 'auto', fontFamily: 'var(--font-mono)', fontSize: 11.5, lineHeight: 1.65, color: 'var(--fg-mute)', background: 'color-mix(in oklab, var(--bg) 60%, var(--bg-elev))' }}>
-        <span style={{ color: 'var(--fg-faint)' }}>{`# YourBroker — house investment policy\n# Plugged into Oracle.  No model retrain required.\n`}</span>
+      <pre style={{ margin: 0, padding: '18px 20px', flex: 1, overflow: 'auto', fontFamily: 'var(--font-sans)', fontSize: 11.5, lineHeight: 1.65, color: 'var(--fg-mute)', background: 'color-mix(in oklab, var(--bg) 60%, var(--bg-elev))' }}>
+        <span style={{ color: 'var(--fg-faint)' }}>{`# YourBroker - house investment policy\n# Plugged into Oracle.  No model retrain required.\n`}</span>
         <span style={{ color: 'var(--amber)' }}>house</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{`\n  `}<span style={{ color: 'var(--amber)' }}>tone</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{` `}<span style={{ color: 'var(--fg)' }}>"measured · evidence-first"</span>{`\n  `}<span style={{ color: 'var(--amber)' }}>theses</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{`\n    `}<span style={{ color: 'var(--fg-faint)' }}>-</span>{` `}<span style={{ color: 'var(--fg)' }}>"vn-industrial-capex-2026"</span>{`\n    `}<span style={{ color: 'var(--fg-faint)' }}>-</span>{` `}<span style={{ color: 'var(--fg)' }}>"banking-net-interest-cycle"</span>{`\n  `}<span style={{ color: 'var(--amber)' }}>overrides</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{`\n    `}<span style={{ color: 'var(--fg)' }}>HPG</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{` `}<span style={{ color: 'var(--fg)' }}>"overweight · cycle"</span>{`\n    `}<span style={{ color: 'var(--fg)' }}>VCB</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{` `}<span style={{ color: 'var(--fg)' }}>"neutral · pending circular"</span>{`\n  `}<span style={{ color: 'var(--amber)' }}>compliance</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{`\n    `}<span style={{ color: 'var(--amber)' }}>retail_disclaimer</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{` `}<span style={{ color: 'var(--fg)' }}>true</span>{`\n    `}<span style={{ color: 'var(--amber)' }}>off_scope</span><span style={{ color: 'var(--fg-faint)' }}>:</span>{` `}<span style={{ color: 'var(--fg)' }}>"route_to_human"</span>
       </pre>
     </div>
@@ -1796,14 +1801,14 @@ function ChatBubble({ role = 'oracle', children }) {
   if (role === 'user') {
     return (
       <div style={{ alignSelf: 'flex-end', maxWidth: '80%' }}>
-        <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.06em', textAlign: 'right', marginBottom: 4 }}>{t('YOU')}</div>
+        <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: 'var(--track-caps)', textAlign: 'right', marginBottom: 4 }}>{t('YOU')}</div>
         <div style={{ padding: '10px 14px', borderRadius: 8, background: 'color-mix(in oklab, var(--fg) 5%, var(--bg-elev))', border: '1px solid var(--border)', fontSize: 13.5, color: 'var(--fg)', lineHeight: 1.5 }}>{children}</div>
       </div>
     );
   }
   return (
     <div style={{ maxWidth: '88%' }}>
-      <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: '0.06em', marginBottom: 4 }}>{t('· ORACLE')}</div>
+      <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--amber)', letterSpacing: 'var(--track-caps)', marginBottom: 4 }}>{t('· ORACLE')}</div>
       <div style={{ padding: '12px 16px', borderRadius: 8, background: 'color-mix(in oklab, var(--amber) 4%, var(--bg))', border: '1px solid color-mix(in oklab, var(--amber) 22%, var(--border))', fontSize: 13.5, color: 'var(--fg-mute)', lineHeight: 1.55 }}>{children}</div>
     </div>
   );
@@ -1814,21 +1819,21 @@ function PortfolioChat() {
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, background: 'var(--bg-elev)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· {t('ORACLE · CHAT (PERSONALISED)')}</div>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>{t('USER · A.NGUYEN · ACCT 9241')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· {t('ORACLE · CHAT (PERSONALISED)')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>{t('USER · A.NGUYEN · ACCT 9241')}</div>
       </div>
       <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         <ChatBubble role="user">{t('How is my portfolio doing today?')}</ChatBubble>
         <ChatBubble>
           {t('Your account is')} <span className="p-amber">{t('+0.42% on the day')}</span>{t(', +3.1% MTD. The move came from')} <span style={{ color: 'var(--fg)' }}>HPG (+4.6%)</span> {t('and')} <span style={{ color: 'var(--fg)' }}>FPT (+1.2%)</span>; <span style={{ color: 'var(--fg)' }}>VCB</span> {t('dragged 0.3%.')}
           <br /><br />
-          {t("You're currently")} <span className="p-amber">{t('39% in industrials')}</span> {t('— drifting above the 30% target in your house allocation.')}
+          {t("You're currently")} <span className="p-amber">{t('39% in industrials')}</span> {t('- drifting above the 30% target in your house allocation.')}
         </ChatBubble>
         <ChatBubble role="user">{t('Should I be worried about VCB?')}</ChatBubble>
         <ChatBubble>
-          {t("Not at today's move. The headline is the new SBV circular on capital adequacy — still in consultation, no firm impact on Q4 capital.")} <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[¹ SBV draft circular]</span> <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[² VCB Q3 MD&A]</span>
+          {t("Not at today's move. The headline is the new SBV circular on capital adequacy - still in consultation, no firm impact on Q4 capital.")} <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[¹ SBV draft circular]</span> <span className="p-mono" style={{ fontSize: 10.5, color: 'var(--amber)' }}>[² VCB Q3 MD&A]</span>
         </ChatBubble>
-        <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: '0.08em', textAlign: 'center', paddingTop: 4 }}>
+        <div className="p-mono" style={{ fontSize: 9.5, color: 'var(--fg-faint)', letterSpacing: 'var(--track-caps)', textAlign: 'center', paddingTop: 4 }}>
           {t('ORACLE READS YOUR ACCOUNT  ·  NEVER YOUR PII WITHOUT CONSENT')}
         </div>
       </div>
@@ -1845,12 +1850,12 @@ function PushNotificationStrip({ mobile }) {
       display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr auto', gap: mobile ? 24 : 36, alignItems: 'center',
     }}>
       <div>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)', marginBottom: 8 }}>· {t('PROACTIVE PUSH')}</div>
-        <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 22 : 26, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.012em', marginBottom: 8 }}>
-          {t('Oracle knows what each customer holds — and notifies them when something changes.')}
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginBottom: 8 }}>· {t('PROACTIVE PUSH')}</div>
+        <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: mobile ? 22 : 26, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: 'var(--track-tight)', marginBottom: 8 }}>
+          {t('Oracle knows what each customer holds - and notifies them when something changes.')}
         </div>
         <div style={{ fontSize: 14, color: 'var(--fg-mute)', lineHeight: 1.55, maxWidth: '48ch' }}>
-          {t("Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account — sent through your existing notification pipe.")}
+          {t("Earnings, ratings, regulatory filings, disclosure updates. Personalised to the holdings on the user's account - sent through your existing notification pipe.")}
         </div>
       </div>
       <div style={{
@@ -1860,11 +1865,11 @@ function PushNotificationStrip({ mobile }) {
         boxShadow: '0 18px 40px rgba(0,0,0,0.45)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 22, height: 22, borderRadius: 5, background: '#2a6acc', color: '#fff', fontSize: 10, fontWeight: 700, display: 'grid', placeItems: 'center' }}>YB</div>
-          <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em' }}>{t('YourBroker · powered by Oracle')}</div>
+          <div style={{ width: 22, height: 22, borderRadius: 5, background: '#2a6acc', color: '#fff', fontSize: 10, fontWeight: 'var(--weight-bold)', display: 'grid', placeItems: 'center' }}>YB</div>
+          <div style={{ fontSize: 11, fontWeight: 'var(--weight-bold)', letterSpacing: 'normal' }}>{t('YourBroker · powered by Oracle')}</div>
           <div style={{ marginLeft: 'auto', fontSize: 10, color: '#9d958a' }}>{t('now')}</div>
         </div>
-        <div style={{ fontFamily: 'var(--font-serif)', fontSize: 14.5, lineHeight: 1.25 }}>{t('HPG · Hòa Phát filed an update on Dung Quat 2.')}</div>
+        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 14.5, lineHeight: 1.25 }}>{t('HPG · Hòa Phát filed an update on Dung Quat 2.')}</div>
         <div style={{ fontSize: 11, lineHeight: 1.4, color: '#c8c1b3' }}>{t('Capex schedule revised down by ~3%.')} <span style={{ color: 'var(--amber)' }}>{t('Open the analysis →')}</span></div>
       </div>
     </div>
@@ -1880,7 +1885,7 @@ function ComplianceSection({ mobile }) {
         <SectionHeader
           eyebrow={t('ORACLE · §04')}
           h2={<>{t('Compliance,')} <i className="p-amber">{t('by design.')}</i></>}
-          lede={t("Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers — all reviewed by compliance teams before a single retail user sees an answer.")}
+          lede={t("Built around the regulatory contour of Vietnam's market. Scope routing, PII protection, dynamic disclaimers - all reviewed by compliance teams before a single retail user sees an answer.")}
           mobile={mobile}
         />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1.1fr 1fr', gap: mobile ? 24 : 36 }}>
@@ -1911,14 +1916,14 @@ function BilingualSample({ lang, setLang }) {
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', background: 'var(--bg-elev)' }}>
       <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· BILINGUAL · VI ⇄ EN</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· BILINGUAL · VI ⇄ EN</div>
         <div style={{ display: 'inline-flex', padding: 2, borderRadius: 999, border: '1px solid var(--border-strong)' }}>
           {['vi','en'].map(L => (
             <button key={L} type="button" onClick={() => setLang(L)} style={{
               padding: '4px 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
               background: lang === L ? 'var(--amber)' : 'transparent',
               color: lang === L ? '#1a1208' : 'var(--fg-mute)',
-              fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase',
+              fontFamily: 'var(--font-sans)', fontSize: 10.5, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase',
             }}>{L}</button>
           ))}
         </div>
@@ -1927,10 +1932,10 @@ function BilingualSample({ lang, setLang }) {
         <ChatBubble role="user">{text.q}</ChatBubble>
         <ChatBubble>
           {text.a}
-          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 3, background: 'color-mix(in oklab, var(--amber) 6%, transparent)', border: '1px dashed color-mix(in oklab, var(--amber) 40%, var(--border))', fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--amber)', letterSpacing: '0.04em', lineHeight: 1.5 }}>
+          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 3, background: 'color-mix(in oklab, var(--amber) 6%, transparent)', border: '1px dashed color-mix(in oklab, var(--amber) 40%, var(--border))', fontFamily: 'var(--font-sans)', fontSize: 10.5, color: 'var(--amber)', letterSpacing: 'normal', lineHeight: 1.5 }}>
             {lang === 'vi'
-              ? '·  TUYÊN BỐ MIỄN TRỪ — RETAIL MODE — Nội dung mang tính phân tích, không phải khuyến nghị đầu tư.'
-              : '·  RETAIL DISCLAIMER — This is analysis, not investment advice. Past performance does not guarantee future results.'}
+              ? '·  TUYÊN BỐ MIỄN TRỪ - RETAIL MODE - Nội dung mang tính phân tích, không phải khuyến nghị đầu tư.'
+              : '·  RETAIL DISCLAIMER - This is analysis, not investment advice. Past performance does not guarantee future results.'}
           </div>
         </ChatBubble>
       </div>
@@ -1955,10 +1960,10 @@ function ScopeRoutingDiagram() {
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 4, padding: '20px 22px', background: 'var(--bg-elev)', display: 'flex', flexDirection: 'column', gap: 14 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--amber)' }}>· {t('SCOPE ROUTING')}</div>
-        <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>{t('BEHAVIOUR · BY POLICY')}</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>· {t('SCOPE ROUTING')}</div>
+        <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>{t('BEHAVIOUR · BY POLICY')}</div>
       </div>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{t('Every question lands in the right place.')}</div>
+      <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 22, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: 'var(--track-tight)' }}>{t('Every question lands in the right place.')}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
         {cases.map((c, i) => (
           <div key={i} style={{
@@ -1967,7 +1972,7 @@ function ScopeRoutingDiagram() {
             background: 'color-mix(in oklab, var(--bg) 60%, var(--bg-elev))',
           }}>
             <span className="p-mono" style={{ fontSize: 12, color: 'var(--fg-mute)' }}>›_ {c.q}</span>
-            <span className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.08em', color: routeColor(c.kind), padding: '2px 8px', borderRadius: 999, border: '1px solid ' + routeColor(c.kind, 0.4), whiteSpace: 'nowrap' }}>{c.r}</span>
+            <span className="p-mono" style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', color: routeColor(c.kind), padding: '2px 8px', borderRadius: 999, border: '1px solid ' + routeColor(c.kind, 0.4), whiteSpace: 'nowrap' }}>{c.r}</span>
           </div>
         ))}
       </div>
@@ -1982,8 +1987,8 @@ function ComplianceCell({ n, t, s, last }) {
       borderRight: last ? 'none' : '1px solid var(--border)',
       background: 'var(--bg-elev)',
     }}>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--fg-soft)' }}>· {n}</div>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{t}</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>· {n}</div>
+      <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 22, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: 'var(--track-tight)' }}>{t}</div>
       <div style={{ fontSize: 13.5, lineHeight: 1.55, color: 'var(--fg-mute)' }}>{s}</div>
     </div>
   );
@@ -2004,7 +2009,7 @@ function TPBSCaseStudy({ mobile }) {
             <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 0%, var(--amber-soft), transparent 60%)', pointerEvents: 'none' }} />
             <div style={{ position: 'relative' }}>
               <div style={{ position: 'relative', width: 170, height: 72 }}>
-                {/* TPBank Securities logo — original art painted with the site's amber gradient, matching the home-page ĐỐI TÁC treatment */}
+                {/* TPBank Securities logo - original art painted with the site's amber gradient, matching the home-page ĐỐI TÁC treatment */}
                 <div style={{
                   position: 'absolute', inset: 0,
                   WebkitMaskImage: 'url(/tps-logo.png)',
@@ -2021,23 +2026,23 @@ function TPBSCaseStudy({ mobile }) {
                 <span style={{ opacity: 0 }} className="p-mono">TPBS LOGO</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--fg-mute)', marginTop: 8 }}>{t('TPBank Securities')}</div>
-              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginTop: 18 }}>{t('· LIVE ON ORACLE')}</div>
-              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-soft)', marginTop: 4 }}>{t("VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM")}</div>
+              <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginTop: 18 }}>{t('· LIVE ON ORACLE')}</div>
+              <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)', marginTop: 4 }}>{t("VIETNAM'S FIRST AI-NATIVE SECURITIES FIRM")}</div>
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 30, lineHeight: 1.3, color: 'var(--fg)', letterSpacing: '-0.012em', textWrap: 'balance' }}>
+            <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: mobile ? 24 : 30, lineHeight: 1.3, color: 'var(--fg)', letterSpacing: 'var(--track-tight)', textWrap: 'balance' }}>
               <span className="p-amber" style={{ fontStyle: 'italic' }}>"</span>
-              {t('Oracle let us ship an AI analyst into our retail app without standing up an ML team — and without compromising compliance. The conversation our customers have inside our product is now ours to shape.')}
+              {t('Oracle let us ship an AI analyst into our retail app without standing up an ML team - and without compromising compliance. The conversation our customers have inside our product is now ours to shape.')}
               <span className="p-amber" style={{ fontStyle: 'italic' }}>"</span>
             </div>
-            <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.14em', color: 'var(--fg-soft)' }}>{t('· TPBS LEADERSHIP · PLACEHOLDER QUOTE')}</div>
+            <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>{t('· TPBS LEADERSHIP · PLACEHOLDER QUOTE')}</div>
             <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: 0, border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginTop: 8 }}>
               <CaseStat n={t('< 30 days')} l={t('From kickoff to live in-app')} />
               <CaseStat n="0" l={t('ML engineers hired')} last={mobile} />
               <CaseStat n="100%" l={t('Retail flows in scope')} last />
             </div>
-            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--fg-faint)' }}>{t('· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS')}</div>
+            <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>{t('· METRICS DIRECTIONAL · WAITING ON FINAL NUMBERS FROM TPBS')}</div>
           </div>
         </div>
       </div>
@@ -2048,8 +2053,8 @@ function TPBSCaseStudy({ mobile }) {
 function CaseStat({ n, l, last }) {
   return (
     <div style={{ padding: '22px 22px', borderRight: last ? 'none' : '1px solid var(--border)', background: 'var(--bg-elev)' }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 28, lineHeight: 1, color: 'var(--amber)', letterSpacing: '-0.02em' }}>{n}</div>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg-soft)', marginTop: 6 }}>{l}</div>
+      <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 28, lineHeight: 1, color: 'var(--amber)', letterSpacing: 'var(--track-tighter)', fontFeatureSettings: '"tnum"' }}>{n}</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase', color: 'var(--fg-soft)', marginTop: 6 }}>{l}</div>
     </div>
   );
 }
@@ -2068,9 +2073,9 @@ function OracleCTAStrip({ mobile }) {
       <div style={{ maxWidth: 1020, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
         <BrandSpark size={20} />
         <h2 style={{
-          fontFamily: 'var(--font-serif)',
+          fontFamily: 'var(--font-sans)',
           fontSize: mobile ? 36 : 'clamp(40px, 5vw, 72px)',
-          lineHeight: 1.02, letterSpacing: '-0.02em', margin: '24px 0 16px', fontWeight: 400, textWrap: 'balance',
+          lineHeight: 1.02, letterSpacing: 'var(--track-tighter)', margin: '24px 0 16px', fontWeight: 'var(--weight-bold)', textWrap: 'balance',
         }}>
           {t('Bring Oracle into your platform.')}
         </h2>

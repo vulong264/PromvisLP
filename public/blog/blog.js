@@ -1,4 +1,4 @@
-/* PROMVIS blog — bilingual toggle. Shares localStorage 'promvis-lang' with the main site (default 'vi'). */
+/* Promvis blog - bilingual toggle. Shares localStorage 'promvis-lang' with the main site (default 'vi'). */
 (function () {
   var KEY = 'promvis-lang';
 

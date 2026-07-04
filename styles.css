@@ -17,9 +17,13 @@
   --amber-soft: oklch(0.755 0.13 70 / 0.18);
   --amber-glow: oklch(0.755 0.16 65 / 0.4);
 
-  --font-serif: "Noto Serif Display", "Instrument Serif", "Cormorant Garamond", "Source Serif Pro", Georgia, serif;
-  --font-sans: "Be Vietnam Pro", "Söhne", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  /* typography tokens — single family, two weights, named tracking */
+  --font-sans: "Inter", -apple-system, Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --track-tight: -0.01em;   /* headlines under ~32px */
+  --track-tighter: -0.02em; /* display sizes 32px and up */
+  --track-caps: 0.18em;     /* eyebrows, section labels, small descriptors */
 
   --eyebrow-size: 11px;
   --measure: 64ch;
@@ -57,7 +61,8 @@ html, body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "ss02", "cv01";
+  font-weight: var(--weight-regular);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -67,20 +72,23 @@ html, body {
 
 /* Typography primitives */
 .p-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-family: var(--font-sans);
+  font-size: var(--eyebrow-size);
+  letter-spacing: var(--track-caps);
   text-transform: uppercase;
   color: var(--fg-soft);
-  font-weight: 500;
+  font-weight: var(--weight-regular);
 }
 .p-eyebrow .dot {
   display: inline-block; width: 5px; height: 5px; border-radius: 50%;
   background: var(--amber); margin-right: 10px; vertical-align: 1px;
   box-shadow: 0 0 12px var(--amber-glow);
 }
-.p-mono { font-family: var(--font-mono); font-feature-settings: "ss01"; }
-.p-serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.012em; }
+/* legacy names kept to avoid touching every callsite:
+   .p-mono is now the data/label style (tabular figures),
+   .p-serif is now the display/headline style. */
+.p-mono { font-family: var(--font-sans); font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+.p-serif { font-family: var(--font-sans); font-weight: var(--weight-bold); letter-spacing: var(--track-tight); }
 .p-amber { color: var(--amber); }
 .p-mute  { color: var(--fg-mute); }
 .p-soft  { color: var(--fg-soft); }
@@ -98,12 +106,12 @@ html, body {
 /* Buttons */
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+  font-family: var(--font-sans); font-size: 14px; font-weight: var(--weight-bold);
   padding: 14px 22px; border-radius: 999px;
   cursor: pointer; user-select: none; text-decoration: none;
   transition: transform .15s ease, background .15s, border-color .15s, color .15s;
   border: 1px solid transparent; line-height: 1;
-  letter-spacing: 0.005em;
+  letter-spacing: normal;
 }
 .btn .arr { transition: transform .2s ease; display: inline-block; }
 .btn:hover .arr { transform: translateX(3px); }
@@ -139,15 +147,15 @@ html, body {
 .nav-links { display: flex; gap: 32px; }
 .nav-links a {
   color: var(--fg-mute); text-decoration: none; font-size: 13px;
-  letter-spacing: 0.01em; transition: color .15s;
+  letter-spacing: normal; transition: color .15s;
 }
 .nav-links a:hover { color: var(--fg); }
 .nav-links a.amber:hover { color: var(--amber); }
 
 /* Wordmark */
 .wordmark {
-  font-family: var(--font-sans); font-weight: 600;
-  letter-spacing: 0.18em; font-size: 13px; color: var(--fg);
+  font-family: var(--font-sans); font-weight: var(--weight-bold);
+  letter-spacing: var(--track-caps); font-size: 13px; color: var(--fg);
   display: inline-flex; align-items: center; gap: 12px;
 }
 .wordmark .spark {
@@ -186,8 +194,8 @@ html, body {
   50% { opacity: 1; }
 }
 
-/* Tabular numbers in mono blocks */
-.tnum { font-variant-numeric: tabular-nums; }
+/* Tabular numbers for financial data, tables, and metrics */
+.tnum { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
 
 /* Generic SVG icon stroke */
 .ic { stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
