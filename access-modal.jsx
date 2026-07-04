@@ -7,7 +7,7 @@
 // open it without prop drilling. The store is mounted by <AccessRoot/> in
 // app.jsx.
 
-const ORACLE_URL = 'https://chatbot.promvis.io';
+const ANALYST_URL = 'https://chatbot.promvis.io';
 
 function useTranslation() {
   return React.useContext(window.LanguageContext) || { lang: 'vi', setLang: () => {}, t: (k) => k };
@@ -18,12 +18,12 @@ function useTranslation() {
 // ─────────────────────────────────────────────────────────────
 const accessStore = (() => {
   let open = false;
-  let product = 'oracle';
+  let product = 'analyst';
   const subs = new Set();
   return {
     isOpen: () => open,
     product: () => product,
-    open(p = 'oracle') { open = true; product = p; subs.forEach(fn => fn()); },
+    open(p = 'analyst') { open = true; product = p; subs.forEach(fn => fn()); },
     close() { open = false; subs.forEach(fn => fn()); },
     subscribe(fn) { subs.add(fn); return () => subs.delete(fn); },
   };
@@ -50,7 +50,7 @@ function AlreadyInvited({ align = 'left', mobile }) {
     }}>
       <span style={{ letterSpacing: 'var(--track-caps)' }}>{t('ALREADY INVITED?')}</span>
       <a
-        href={ORACLE_URL}
+        href={ANALYST_URL}
         style={{ color: 'var(--amber)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklab, var(--amber) 50%, transparent)', paddingBottom: 1 }}
       >
         {t('Sign in at chatbot.promvis.io →')}
@@ -122,10 +122,10 @@ function AccessModal() {
 
   const headline = product === 'forge'
     ? t('Be among the first to read Forge.')
-    : t('Talk to the Oracle.');
+    : t('Talk to the Analyst.');
   const lede = product === 'forge'
-    ? t('Forge ships first to firms already on Oracle. Leave your details and we’ll bring you in when the dataset is ready.')
-    : t('Oracle is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.');
+    ? t('Forge ships first to firms already on Promvis Analyst. Leave your details and we’ll bring you in when the dataset is ready.')
+    : t('Promvis Analyst is invite-only. We onboard a small number of Vietnamese securities and investment firms each month, by hand. Tell us who you are.');
 
   return (
     <div
@@ -206,7 +206,7 @@ function AccessModal() {
         {step !== 'done' ? (
           <form onSubmit={submit} style={{ padding: '36px 36px 32px', position: 'relative' }}>
             <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginBottom: 14 }}>
-              · {product === 'forge' ? t('FORGE · WAITLIST') : t('ORACLE · ACCESS REQUEST')}
+              · {product === 'forge' ? t('FORGE · WAITLIST') : t('ANALYST · ACCESS REQUEST')}
             </div>
             <h3 style={{
               fontFamily: 'var(--font-sans)', fontSize: 34, lineHeight: 1.08,
@@ -236,7 +236,7 @@ function AccessModal() {
 
             <div className="am-field" style={{ marginTop: 14 }}>
               <label>
-                <span>{product === 'forge' ? t('Dataset of interest') : t('Why Oracle, why now?')}</span>
+                <span>{product === 'forge' ? t('Dataset of interest') : t('Why Promvis Analyst, why now?')}</span>
                 <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1-2 lines')}</span>
               </label>
               <textarea
@@ -251,7 +251,7 @@ function AccessModal() {
 
             <div style={{ marginTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
               <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>
-                <span style={{ color: 'var(--amber)' }}>·</span> {t('WE REPLY FROM ORACLE@PROMVIS.IO')}
+                <span style={{ color: 'var(--amber)' }}>·</span> {t('WE REPLY FROM ANALYST@PROMVIS.IO')}
               </div>
               <button
                 type="submit"
@@ -317,7 +317,7 @@ function SuccessState({ email, firm, product }) {
       <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)', margin: '14px 0 0' }}>
         {product === 'forge'
           ? <>{t('You’re on the Forge waitlist. We’ll write to')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('the moment the first dataset is ready to ship.')}</>
-          : <>{t('Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from Promvis at')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('within 24 hours.')}</>}
+          : <>{t('Promvis Analyst is curated. We onboard a handful of firms each month, by hand. Expect a note from Promvis at')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('within 24 hours.')}</>}
       </p>
 
       {/* Receipt-style detail panel */}
@@ -333,7 +333,7 @@ function SuccessState({ email, firm, product }) {
         <span style={{ color: 'var(--fg-soft)' }}>{t('FIRM')}</span>
         <span>{firm}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('PRODUCT')}</span>
-        <span>{product === 'forge' ? t('Forge - Waitlist') : t('Oracle - Early access')}</span>
+        <span>{product === 'forge' ? t('Forge - Waitlist') : t('Analyst - Early access')}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('REPLY-BY')}</span>
         <span>{t('24 hours')}</span>
       </div>
@@ -349,4 +349,4 @@ function SuccessState({ email, firm, product }) {
   );
 }
 
-Object.assign(window, { AccessModal, AlreadyInvited, ORACLE_URL });
+Object.assign(window, { AccessModal, AlreadyInvited, ANALYST_URL });

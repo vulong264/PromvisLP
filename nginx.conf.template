@@ -22,8 +22,13 @@ server {
     # Standalone product page lives in public/ → served as a real file.
     # The `try_files $uri` block below handles it, but we declare it explicitly
     # so an exact match short-circuits the SPA fallback.
-    location = /Oracle.html {
+    location = /Analyst.html {
         try_files $uri =404;
+    }
+
+    # Legacy URL from when the product was named Oracle.
+    location = /Oracle.html {
+        return 301 /Analyst.html;
     }
 
     # SPA fallback: serve real files when they exist, otherwise hand off to
