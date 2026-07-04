@@ -1,4 +1,4 @@
-// Foundation viz — 3 variants the user can cycle via Tweaks
+// Foundation viz - 3 variants the user can cycle via Tweaks
 const { useEffect, useRef, useState } = React;
 
 // ───── Variant 1: Ore → Molten typographic metaphor ─────
@@ -11,12 +11,12 @@ function FoundationOre({ accent }) {
       background: 'linear-gradient(180deg, var(--bg-elev), var(--bg))',
       overflow: 'hidden', minHeight: 280,
     }}>
-      {/* Stage 1 — raw */}
+      {/* Stage 1 - raw */}
       <div style={{ padding: '40px 28px', display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--fg-soft)' }}>STAGE 01 · RAW</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 10.5, lineHeight: 1.5, color: 'var(--fg-faint)' }}>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>STAGE 01 · RAW</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'var(--font-sans)', fontSize: 10.5, lineHeight: 1.5, color: 'var(--fg-faint)' }}>
           <div style={{ padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 3 }}>Note 14: Related-party transactions with subsidiary…</div>
-          <div style={{ padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 3 }}>ESG report § 4.2 — Scope 3 emissions methodology…</div>
+          <div style={{ padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 3 }}>ESG report § 4.2 - Scope 3 emissions methodology…</div>
           <div style={{ padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 3, color: 'var(--fg-soft)' }}>Q3 management discussion of inventory build…</div>
           <div style={{ padding: '6px 10px', border: '1px solid var(--border)', borderRadius: 3 }}>SBV circular on capital adequacy…</div>
         </div>
@@ -25,25 +25,25 @@ function FoundationOre({ accent }) {
 
       <ArrowSep />
 
-      {/* Stage 2 — foundation */}
+      {/* Stage 2 - foundation */}
       <div style={{ padding: '40px 28px', display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'space-between', background: 'color-mix(in oklab, var(--amber) 4%, var(--bg-elev))', position: 'relative' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 60%, var(--amber-soft), transparent 65%)', pointerEvents: 'none' }} />
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', position: 'relative' }}>STAGE 02 · FOUNDATION</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', position: 'relative' }}>STAGE 02 · FOUNDATION</div>
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, justifyContent: 'center', flex: 1 }}>
           <div style={{
-            fontFamily: 'var(--font-serif)', fontSize: 56, lineHeight: 1, color: 'var(--fg)',
+            fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tighter)', fontSize: 56, lineHeight: 1, color: 'var(--fg)',
             textShadow: '0 0 40px var(--amber-glow)',
-          }}>PROMVIS</div>
-          <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.18em', color: 'var(--amber)' }}>·  REFINED  ·</div>
+          }}>Promvis</div>
+          <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>·  REFINED  ·</div>
         </div>
         <div className="p-mono" style={{ fontSize: 10, color: 'var(--fg-mute)', position: 'relative' }}>structured · grounded · queryable</div>
       </div>
 
       <ArrowSep />
 
-      {/* Stage 3 — product */}
+      {/* Stage 3 - product */}
       <div style={{ padding: '40px 28px', display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'space-between' }}>
-        <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--fg-soft)' }}>STAGE 03 · PRODUCT</div>
+        <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>STAGE 03 · PRODUCT</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <ProductChip name="Oracle" status="Available" accent />
           <ProductChip name="Forge" status="Coming soon" />
@@ -75,8 +75,8 @@ function ProductChip({ name, status, accent, muted }) {
       borderColor: accent ? 'color-mix(in oklab, var(--amber) 40%, var(--border))' : 'var(--border)',
       opacity: muted ? 0.5 : 1,
     }}>
-      <span style={{ fontFamily: 'var(--font-serif)', fontSize: 22, color: 'var(--fg)' }}>{name}</span>
-      <span className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{status}</span>
+      <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)', fontSize: 22, color: 'var(--fg)' }}>{name}</span>
+      <span className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{status}</span>
     </div>
   );
 }
@@ -134,7 +134,7 @@ function FoundationColumns() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <ProductChip name="Oracle" status="Available" accent />
             <ProductChip name="Forge" status="Coming" />
-            <ProductChip name="—" status="In the forge" muted />
+            <ProductChip name="-" status="In the forge" muted />
           </div>
         )}
       />
@@ -154,8 +154,8 @@ function ColumnCard({ idx, label, title, sub, body, accent }) {
     }}>
       {accent && <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, var(--amber-soft), transparent 60%)', pointerEvents: 'none' }} />}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', position: 'relative', gap: 16 }}>
-        <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{label}</span>
-        <span className="p-mono" style={{ fontSize: 28, color: accent ? 'var(--amber)' : 'var(--fg-faint)', fontWeight: 300 }}>{idx}</span>
+        <span className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{label}</span>
+        <span className="p-mono" style={{ fontSize: 28, color: accent ? 'var(--amber)' : 'var(--fg-faint)', fontWeight: 'var(--weight-regular)' }}>{idx}</span>
       </div>
       <div style={{ position: 'relative' }}>
         <div className="p-serif" style={{ fontSize: 28, lineHeight: 1.05, color: 'var(--fg)' }}>{title}</div>
@@ -196,7 +196,7 @@ function FoundationLine() {
               background: 'var(--amber)',
               boxShadow: n.big ? '0 0 40px var(--amber), 0 0 80px var(--amber-glow)' : '0 0 16px var(--amber-glow)',
             }} />
-            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--fg-soft)', position: 'absolute', top: 28, whiteSpace: 'nowrap' }}>{n.label.toUpperCase()}</div>
+            <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)', position: 'absolute', top: 28, whiteSpace: 'nowrap' }}>{n.label.toUpperCase()}</div>
           </div>
         ))}
       </div>
@@ -209,7 +209,7 @@ function FoundationLine() {
         />
         <StateCol
           eyebrow="02 · FOUNDATION"
-          title="PROMVIS"
+          title="Promvis"
           body="Refined by LLMs into a structured, grounded, citable layer. The foundation under every product we ship."
           accent
         />
@@ -226,7 +226,7 @@ function FoundationLine() {
 function StateCol({ eyebrow, title, body, accent }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{eyebrow}</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: accent ? 'var(--amber)' : 'var(--fg-soft)' }}>{eyebrow}</div>
       <div className="p-serif" style={{ fontSize: 26, lineHeight: 1.1, color: 'var(--fg)' }}>{title}</div>
       <div style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--fg-mute)' }}>{body}</div>
     </div>

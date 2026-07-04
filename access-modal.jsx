@@ -37,18 +37,18 @@ function useAccessStore() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// "Already invited?" inline shortcut — sits under primary CTAs
+// "Already invited?" inline shortcut - sits under primary CTAs
 // ─────────────────────────────────────────────────────────────
 function AlreadyInvited({ align = 'left', mobile }) {
   const { t } = useTranslation();
   return (
     <div className="p-mono" style={{
       display: 'flex', alignItems: 'center', gap: 8,
-      fontSize: 11, letterSpacing: '0.08em', color: 'var(--fg-soft)',
+      fontSize: 11, color: 'var(--fg-soft)',
       marginTop: mobile ? 18 : 22,
       justifyContent: align === 'center' ? 'center' : 'flex-start',
     }}>
-      <span>{t('ALREADY INVITED?')}</span>
+      <span style={{ letterSpacing: 'var(--track-caps)' }}>{t('ALREADY INVITED?')}</span>
       <a
         href={ORACLE_URL}
         style={{ color: 'var(--amber)', textDecoration: 'none', borderBottom: '1px solid color-mix(in oklab, var(--amber) 50%, transparent)', paddingBottom: 1 }}
@@ -158,7 +158,7 @@ function AccessModal() {
         .am-field input::placeholder, .am-field textarea::placeholder { color: var(--fg-faint); }
         .am-field label {
           display: flex; justify-content: space-between; align-items: baseline;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+          font-family: var(--font-sans); font-size: 10px; letter-spacing: var(--track-caps);
           text-transform: uppercase; color: var(--fg-soft); margin-bottom: 8px;
         }
         .am-field { display: flex; flex-direction: column; }
@@ -205,12 +205,12 @@ function AccessModal() {
 
         {step !== 'done' ? (
           <form onSubmit={submit} style={{ padding: '36px 36px 32px', position: 'relative' }}>
-            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 14 }}>
+            <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginBottom: 14 }}>
               · {product === 'forge' ? t('FORGE · WAITLIST') : t('ORACLE · ACCESS REQUEST')}
             </div>
             <h3 style={{
-              fontFamily: 'var(--font-serif)', fontSize: 34, lineHeight: 1.08,
-              letterSpacing: '-0.018em', margin: 0, color: 'var(--fg)', fontWeight: 400, textWrap: 'balance',
+              fontFamily: 'var(--font-sans)', fontSize: 34, lineHeight: 1.08,
+              letterSpacing: 'var(--track-tighter)', margin: 0, color: 'var(--fg)', fontWeight: 'var(--weight-bold)', textWrap: 'balance',
             }}>{headline}</h3>
             <p style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--fg-mute)', margin: '14px 0 24px' }}>
               {lede}
@@ -237,7 +237,7 @@ function AccessModal() {
             <div className="am-field" style={{ marginTop: 14 }}>
               <label>
                 <span>{product === 'forge' ? t('Dataset of interest') : t('Why Oracle, why now?')}</span>
-                <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1–2 lines')}</span>
+                <span style={{ color: 'var(--fg-faint)' }}>{t('optional · 1-2 lines')}</span>
               </label>
               <textarea
                 value={form.why}
@@ -250,7 +250,7 @@ function AccessModal() {
             </div>
 
             <div style={{ marginTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-              <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.1em', color: 'var(--fg-faint)' }}>
+              <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>
                 <span style={{ color: 'var(--amber)' }}>·</span> {t('WE REPLY FROM ORACLE@PROMVIS.IO')}
               </div>
               <button
@@ -305,19 +305,19 @@ function SuccessState({ email, firm, product }) {
         <svg width="20" height="20" viewBox="0 0 20 20"><path className="ic" strokeWidth="1.6" d="M4 10.5l3.5 3.5L16 6" /></svg>
       </div>
 
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)', marginBottom: 12 }}>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', marginBottom: 12 }}>
         · {t('REQUEST RECEIVED')}
       </div>
       <h3 style={{
-        fontFamily: 'var(--font-serif)', fontSize: 32, lineHeight: 1.08,
-        letterSpacing: '-0.018em', margin: 0, color: 'var(--fg)', fontWeight: 400, textWrap: 'balance',
+        fontFamily: 'var(--font-sans)', fontSize: 32, lineHeight: 1.08,
+        letterSpacing: 'var(--track-tighter)', margin: 0, color: 'var(--fg)', fontWeight: 'var(--weight-bold)', textWrap: 'balance',
       }}>
         {t('We’ll be in touch.')}
       </h3>
       <p style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)', margin: '14px 0 0' }}>
         {product === 'forge'
           ? <>{t('You’re on the Forge waitlist. We’ll write to')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('the moment the first dataset is ready to ship.')}</>
-          : <>{t('Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from PROMVIS at')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('within 24 hours.')}</>}
+          : <>{t('Oracle is curated. We onboard a handful of firms each month, by hand. Expect a note from Promvis at')} <strong style={{ color: 'var(--fg)' }}>{email}</strong> {t('within 24 hours.')}</>}
       </p>
 
       {/* Receipt-style detail panel */}
@@ -326,14 +326,14 @@ function SuccessState({ email, firm, product }) {
         border: '1px solid var(--border)', borderRadius: 3,
         background: 'color-mix(in oklab, var(--bg) 60%, var(--bg-elev))',
         display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 18, rowGap: 8,
-        fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em', color: 'var(--fg-mute)',
+        fontFamily: 'var(--font-sans)', fontSize: 11, fontFeatureSettings: '"tnum"', color: 'var(--fg-mute)',
       }}>
         <span style={{ color: 'var(--fg-soft)' }}>REF</span>
         <span className="tnum">PV-{Math.random().toString(36).slice(2, 8).toUpperCase()}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('FIRM')}</span>
         <span>{firm}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('PRODUCT')}</span>
-        <span>{product === 'forge' ? t('Forge — Waitlist') : t('Oracle — Early access')}</span>
+        <span>{product === 'forge' ? t('Forge - Waitlist') : t('Oracle - Early access')}</span>
         <span style={{ color: 'var(--fg-soft)' }}>{t('REPLY-BY')}</span>
         <span>{t('24 hours')}</span>
       </div>

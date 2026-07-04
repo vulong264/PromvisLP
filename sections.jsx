@@ -1,4 +1,4 @@
-// PROMVIS landing — sections.
+// PROMVIS landing - sections.
 
 // ─────────────────────────────────────────────────────────────
 function useTranslation() {
@@ -65,7 +65,7 @@ function Nav({ mobile }) {
       borderRadius: '4px',
       fontSize: '10px',
       cursor: 'pointer',
-      letterSpacing: '0.1em'
+      letterSpacing: 'var(--track-caps)'
     }}>
       {lang === 'en' ? 'VI' : 'EN'}
     </button>
@@ -80,7 +80,7 @@ function Nav({ mobile }) {
             { !isOpen && <LangSwitch /> }
             <a href={window.ORACLE_URL || 'https://chatbot.promvis.io'}
                className="p-mono"
-               style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none', display: isOpen ? 'none' : 'block' }}>
+               style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)', textDecoration: 'none', display: isOpen ? 'none' : 'block' }}>
               {t('SIGN IN ↗')}
             </a>
             <button aria-label="menu" onClick={() => setIsOpen(!isOpen)} style={{
@@ -106,7 +106,7 @@ function Nav({ mobile }) {
             borderTop: '1px solid var(--border)',
             overflowY: 'auto'
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, fontSize: 24, fontFamily: 'var(--font-serif)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, fontSize: 24, fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)' }}>
               <a href="#manifesto" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('Manifesto')}</a>
               <a href="#foundation" onClick={() => setIsOpen(false)} style={{ color: 'var(--fg)', textDecoration: 'none' }}>{t('The Foundation')}</a>
               <a href="#oracle" onClick={() => setIsOpen(false)} style={{ color: 'var(--amber)', textDecoration: 'none' }}>{t('Oracle')}</a>
@@ -119,7 +119,7 @@ function Nav({ mobile }) {
               <div className="p-mono" style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '12px 0', borderTop: '1px solid var(--border)',
-                fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)'
+                fontSize: 11, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)'
               }}>
                 <span>{t('LANGUAGE')}</span>
                 <div style={{ display: 'flex', gap: 4 }}>
@@ -133,7 +133,7 @@ function Nav({ mobile }) {
                       border: '1px solid var(--border)',
                       color: lang === 'en' ? 'var(--bg)' : 'var(--fg-mute)',
                       padding: '6px 12px', borderRadius: 4,
-                      fontSize: 11, letterSpacing: '0.1em', cursor: 'pointer'
+                      fontSize: 11, letterSpacing: 'var(--track-caps)', cursor: 'pointer'
                     }}
                   >EN</button>
                   <button
@@ -146,7 +146,7 @@ function Nav({ mobile }) {
                       border: '1px solid var(--border)',
                       color: lang === 'vi' ? 'var(--bg)' : 'var(--fg-mute)',
                       padding: '6px 12px', borderRadius: 4,
-                      fontSize: 11, letterSpacing: '0.1em', cursor: 'pointer'
+                      fontSize: 11, letterSpacing: 'var(--track-caps)', cursor: 'pointer'
                     }}
                   >VI</button>
                 </div>
@@ -184,7 +184,7 @@ function Nav({ mobile }) {
         <a
           href={window.ORACLE_URL || 'https://chatbot.promvis.io'}
           className="p-mono"
-          style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--fg-mute)', textDecoration: 'none' }}
+          style={{ fontSize: 11, letterSpacing: 'var(--track-caps)', color: 'var(--fg-mute)', textDecoration: 'none' }}
         >
           {t('SIGN IN ↗')}
         </a>
@@ -202,7 +202,7 @@ function Nav({ mobile }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Hero — type-led massive serif, low horizon sweep, ember spark
+// Hero - type-led massive serif, low horizon sweep, ember spark
 // ─────────────────────────────────────────────────────────────
 function Hero({ motif, mobile }) {
   const { t } = useTranslation();
@@ -253,11 +253,11 @@ function Hero({ motif, mobile }) {
         </div>
 
         <h1 style={{
-          fontFamily: 'var(--font-serif)',
+          fontFamily: 'var(--font-sans)',
           fontSize: mobile ? 'clamp(40px, 10vw, 56px)' : 'clamp(64px, 7.2vw, 108px)',
           lineHeight: mobile ? 1.02 : 0.96,
-          letterSpacing: '-0.022em',
-          margin: 0, fontWeight: 400,
+          letterSpacing: 'var(--track-tighter)',
+          margin: 0, fontWeight: 'var(--weight-bold)',
           color: 'var(--fg)', textWrap: 'balance',
           maxWidth: mobile ? '100%' : '15ch',
         }}>
@@ -274,7 +274,7 @@ function Hero({ motif, mobile }) {
           maxWidth: mobile ? '100%' : '52ch',
           margin: mobile ? '28px 0 0' : '40px 0 0',
         }}>
-          {t('The AI-native financial data platform for Vietnam’s capital markets — reading footnotes, filings, and disclosures the pre-LLM stacks could never hold.')}
+          {t('The AI-native financial data platform for Vietnam’s capital markets - reading footnotes, filings, and disclosures the pre-LLM stacks could never hold.')}
         </p>
 
         <div style={{ display: 'flex', gap: 14, marginTop: mobile ? 32 : 48, flexWrap: 'wrap' }}>
@@ -290,10 +290,10 @@ function Hero({ motif, mobile }) {
             paddingLeft: 20, borderLeft: '1px solid var(--border-strong)',
             display: 'flex', flexDirection: 'column', gap: 14,
           }}>
-            <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--amber)' }}>
+            <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--amber)' }}>
               {t('· LIVE WITH')} <a href="https://tps.vn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>TPS</a>
             </div>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.4, color: 'var(--fg-mute)' }}>
+            <div style={{ fontFamily: 'var(--font-sans)', fontSize: 18, lineHeight: 1.4, color: 'var(--fg-mute)' }}>
               {t('Vietnam’s first AI-native securities firm is already on Oracle.')}
             </div>
           </div>
@@ -306,7 +306,7 @@ function Hero({ motif, mobile }) {
           position: 'absolute', left: 'var(--pad-x)', bottom: 32, display: 'flex',
           alignItems: 'center', gap: 12, color: 'var(--fg-soft)',
         }}>
-          <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.18em' }}>{t('SCROLL')}</span>
+          <span className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)' }}>{t('SCROLL')}</span>
           <span style={{ width: 36, height: 1, background: 'var(--fg-faint)' }} />
         </div>
       )}
@@ -356,17 +356,17 @@ function Etymology({ mobile }) {
         </div>
         <div>
           <div style={{
-            fontFamily: 'var(--font-serif)',
+            fontFamily: 'var(--font-sans)',
             fontSize: mobile ? 28 : 'clamp(32px, 3.4vw, 46px)',
-            lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.015em',
+            lineHeight: 1.15, color: 'var(--fg)', letterSpacing: 'var(--track-tighter)', fontWeight: 'var(--weight-bold)',
             textWrap: 'balance', maxWidth: 22 + 'ch'
           }}>
-            <span className="p-mono p-amber" style={{ fontSize: mobile ? 14 : 18, letterSpacing: '0.18em', display: 'block', marginBottom: 18 }}>
+            <span className="p-mono p-amber" style={{ fontSize: mobile ? 14 : 18, letterSpacing: 'var(--track-caps)', display: 'block', marginBottom: 18 }}>
               PROM · VIS
             </span>
             <i>{t('Prometheus stole fire from the gods and gave it to humans.')}</i>
             <br />
-            <span style={{ color: 'var(--fg-mute)' }}>{t('We use LLMs to surface what databases couldn’t — and hand it back to the people pricing Vietnam.')}</span>
+            <span style={{ color: 'var(--fg-mute)' }}>{t('We use LLMs to surface what databases couldn’t - and hand it back to the people pricing Vietnam.')}</span>
           </div>
         </div>
       </div>
@@ -387,9 +387,9 @@ function Manifesto({ mobile }) {
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 36 : 96 }}>
           <div>
             <h2 style={{
-              fontFamily: 'var(--font-serif)',
+              fontFamily: 'var(--font-sans)',
               fontSize: mobile ? 36 : 'clamp(40px, 4.4vw, 64px)',
-              lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400,
+              lineHeight: 1.05, letterSpacing: 'var(--track-tighter)', margin: 0, fontWeight: 'var(--weight-bold)',
               textWrap: 'balance',
             }}>
               {t('For a quarter century, the most valuable signals in Vietnam’s market')}
@@ -399,13 +399,13 @@ function Manifesto({ mobile }) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 26, fontSize: mobile ? 16 : 17.5, lineHeight: 1.6, color: 'var(--fg-mute)' }}>
             <p style={{ margin: 0 }}>
-              {t('Footnotes. Narrative disclosures. Sustainability reports. Regulatory filings. The signal sat in ')}<i>{t('text')}</i>{t(' — pages of it — and the pre-LLM stacks that defined Vietnam’s data layer could not efficiently structure, store, or query it.')}
+              {t('Footnotes. Narrative disclosures. Sustainability reports. Regulatory filings. The signal sat in ')}<i>{t('text')}</i>{t(' - pages of it - and the pre-LLM stacks that defined Vietnam’s data layer could not efficiently structure, store, or query it.')}
             </p>
             <p style={{ margin: 0 }}>
               {t('The pre-LLM incumbents who still define this market built their pipelines, schemas, and org charts before LLMs existed. Those decisions are dependencies they cannot shed.')}
             </p>
             <p style={{ margin: 0, color: 'var(--fg)' }}>
-              {t('PROMVIS was built in the AI era to do one thing: ')}<span className="p-amber"><i>{t('read what databases couldn’t')}</i></span>{t(', and refine it into the foundation under every product we ship.')}
+              {t('Promvis was built in the AI era to do one thing: ')}<span className="p-amber"><i>{t('read what databases couldn’t')}</i></span>{t(', and refine it into the foundation under every product we ship.')}
             </p>
             <div style={{ marginTop: 12 }}>
               <a className="btn-quiet btn" href="#foundation">
@@ -435,18 +435,18 @@ function Foundation({ variant, mobile }) {
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, gap: 24, flexWrap: 'wrap' }}>
           <div>
-            <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('MANIFESTO · §02 — THE FOUNDATION')}</div>
+            <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('MANIFESTO · §02 - THE FOUNDATION')}</div>
             <h2 style={{
-              fontFamily: 'var(--font-serif)',
+              fontFamily: 'var(--font-sans)',
               fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
-              lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400,
+              lineHeight: 1.05, letterSpacing: 'var(--track-tighter)', margin: 0, fontWeight: 'var(--weight-bold)',
               textWrap: 'balance', maxWidth: '18ch',
             }}>
               {t('Ore into something ')}<i className="p-amber">{t('molten and useful.')}</i>
             </h2>
           </div>
           <p style={{ maxWidth: 44 + 'ch', fontSize: mobile ? 15 : 16, lineHeight: 1.55, color: 'var(--fg-mute)', margin: 0 }}>
-            {t('Public disclosures, refined by LLMs into a structured, grounded, citable layer. Every product we ship stands on it — so every answer is the same kind of answer.')}
+            {t('Public disclosures, refined by LLMs into a structured, grounded, citable layer. Every product we ship stands on it - so every answer is the same kind of answer.')}
           </p>
         </div>
 
@@ -466,9 +466,9 @@ function Foundation({ variant, mobile }) {
 function FoundationStat({ n, label, foot }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <div style={{ fontFamily: 'var(--font-serif)', fontSize: 36, lineHeight: 1, color: 'var(--amber)', letterSpacing: '-0.02em' }}>{n}</div>
-      <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg-soft)' }}>{label}</div>
-      {foot && <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.08em', color: 'var(--fg-faint)', marginTop: 2 }}>{foot}</div>}
+      <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 36, lineHeight: 1, color: 'var(--amber)', letterSpacing: 'var(--track-tighter)', fontFeatureSettings: '"tnum"' }}>{n}</div>
+      <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase', color: 'var(--fg-soft)' }}>{label}</div>
+      {foot && <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)', marginTop: 2 }}>{foot}</div>}
     </div>
   );
 }
@@ -485,9 +485,9 @@ function ProductFamily({ mobile }) {
           <div>
             <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('THE PRODUCT FAMILY')}</div>
             <h2 style={{
-              fontFamily: 'var(--font-serif)',
+              fontFamily: 'var(--font-sans)',
               fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
-              lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400,
+              lineHeight: 1.05, letterSpacing: 'var(--track-tighter)', margin: 0, fontWeight: 'var(--weight-bold)',
               maxWidth: '20ch', textWrap: 'balance',
             }}>
               {t('Not a feature list. ')}<i className="p-amber">{t('A family.')}</i>
@@ -504,7 +504,7 @@ function ProductFamily({ mobile }) {
             status={t('AVAILABLE · EARLY ACCESS')}
             statusKind="live"
             tagline={t('The AI analyst on your desk.')}
-            body={t('Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst — grounded in the foundation, citing the filing, never guessing.')}
+            body={t('Ask anything about a listed Vietnamese company. Oracle answers like your sharpest in-house analyst - grounded in the foundation, citing the filing, never guessing.')}
             audience={t('Built for securities firms.')}
             cta={t('Request access')}
             learnMoreHref="/Oracle.html"
@@ -522,7 +522,7 @@ function ProductFamily({ mobile }) {
             status={t('COMING SOON')}
             statusKind="soon"
             tagline={t('Datasets you can’t buy anywhere else.')}
-            body={t('Research-grade datasets forged from raw corporate disclosures. We start with ESG and sustainability activity of public-listed companies — the data that incumbents can’t structure.')}
+            body={t('Research-grade datasets forged from raw corporate disclosures. We start with ESG and sustainability activity of public-listed companies - the data that incumbents can’t structure.')}
             audience={t('Built for research firms and institutional investors.')}
             cta={t('Get notified')}
             samples={[
@@ -537,7 +537,7 @@ function ProductFamily({ mobile }) {
             status={t('IN THE FORGE')}
             statusKind="ghost"
             tagline={t('More on the way.')}
-            body={t('The foundation supports many shapes of product. We’re shipping the next one when it earns its name — not before.')}
+            body={t('The foundation supports many shapes of product. We’re shipping the next one when it earns its name - not before.')}
             cta={t('Stay close')}
             ghost
             mobile={mobile}
@@ -562,16 +562,16 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, l
       )}
 
       <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
-        <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--fg)' }}>
+        <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 56, lineHeight: 1, letterSpacing: 'var(--track-tighter)', color: 'var(--fg)' }}>
           {name}
         </div>
         <StatusPill label={status} kind={statusKind} />
       </div>
 
       <div>
-        <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: '-0.012em' }}>{tagline}</div>
+        <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', fontSize: 22, lineHeight: 1.2, color: 'var(--fg)', letterSpacing: 'var(--track-tight)' }}>{tagline}</div>
         <div style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-mute)', marginTop: 12 }}>{body}</div>
-        {audience && <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--fg-soft)', marginTop: 14 }}>{audience}</div>}
+        {audience && <div className="p-mono" style={{ fontSize: 10.5, letterSpacing: 'var(--track-caps)', textTransform: 'uppercase', color: 'var(--fg-soft)', marginTop: 14 }}>{audience}</div>}
       </div>
 
       {samples && (
@@ -615,7 +615,7 @@ function ProductCard({ name, status, statusKind, tagline, body, audience, cta, l
             href={learnMoreHref}
             className="p-mono"
             style={{
-              fontSize: 11, letterSpacing: '0.08em',
+              fontSize: 11,
               color: 'var(--amber)', textDecoration: 'none',
               textAlign: 'center',
             }}
@@ -639,7 +639,7 @@ function StatusPill({ label, kind }) {
       display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
       padding: '5px 10px 5px 8px', borderRadius: 999,
       border: '1px solid ' + (kind === 'live' ? 'color-mix(in oklab, var(--amber) 35%, var(--border))' : 'var(--border)'),
-      background: colors.bg, fontSize: 9.5, letterSpacing: '0.14em', color: colors.fg,
+      background: colors.bg, fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: colors.fg,
     }}>
       <span style={{ width: 5, height: 5, borderRadius: '50%', background: colors.dot,
         boxShadow: kind === 'live' ? '0 0 8px var(--amber)' : 'none',
@@ -665,7 +665,7 @@ function TrustedBy({ mobile }) {
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div className="p-eyebrow" style={{ marginBottom: 18, justifyContent: 'center' }}><span className="dot" />{t('TRUSTED BY')}</div>
           <div style={{
-            fontFamily: 'var(--font-serif)', fontSize: mobile ? 24 : 32, lineHeight: 1.2,
+            fontFamily: 'var(--font-sans)', fontWeight: 'var(--weight-bold)', letterSpacing: 'var(--track-tight)', fontSize: mobile ? 24 : 32, lineHeight: 1.2,
             color: 'var(--fg)', maxWidth: '32ch', margin: '0 auto', textWrap: 'balance',
           }}>
             {t('Vietnam’s most forward-looking institutions.')}
@@ -687,7 +687,7 @@ function TrustedBy({ mobile }) {
         </div>
 
         <div style={{ marginTop: 32, textAlign: 'center', fontSize: 13, color: 'var(--fg-soft)' }}>
-          {t('TPBank Securities — Vietnam’s first AI-native securities firm — is live on Oracle.')}
+          {t('TPBank Securities - Vietnam’s first AI-native securities firm - is live on Oracle.')}
         </div>
       </div>
     </section>
@@ -720,7 +720,7 @@ function TPSLot() {
         {/* Fallback text just in case the image hasn't been uploaded yet */}
         <span style={{ opacity: 0 }} className="p-mono">TPS LOGO</span>
       </div>
-      <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: '0.18em', color: 'var(--amber)', position: 'relative' }}>{t('· LIVE ON ORACLE')}</div>
+      <div className="p-mono" style={{ fontSize: 9.5, letterSpacing: 'var(--track-caps)', color: 'var(--amber)', position: 'relative' }}>{t('· LIVE ON ORACLE')}</div>
     </a>
   );
 }
@@ -732,7 +732,7 @@ function LogoSlot({ label }) {
       borderRight: '1px solid var(--border)', minHeight: 180,
       background: 'repeating-linear-gradient(135deg, transparent 0 12px, color-mix(in oklab, var(--fg-faint) 8%, transparent) 12px 13px)',
     }}>
-      <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.18em', color: 'var(--fg-faint)' }}>· {label}</span>
+      <span className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-faint)' }}>· {label}</span>
     </div>
   );
 }
@@ -744,17 +744,17 @@ function WhyUs({ mobile }) {
   const { t } = useTranslation();
   const pillars = [
     {
-      num: '01', title: t('Built AI-First'),
+      num: '01', title: t('Built AI-first'),
       body: t('We were founded in the AI era. There is no legacy stack to defend, no pre-LLM schema to retrofit, no org chart to renegotiate.'),
       glyph: 'flame',
     },
     {
-      num: '02', title: t('Vietnam-Native'),
-      body: t('Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively — diacritics, conventions, regulatory dialect.'),
+      num: '02', title: t('Vietnam-native'),
+      body: t('Built in Vietnam, for Vietnam’s capital markets. We read Vietnamese disclosure language natively - diacritics, conventions, regulatory dialect.'),
       glyph: 'star',
     },
     {
-      num: '03', title: t('Foundation-Driven'),
+      num: '03', title: t('Foundation-driven'),
       body: t('Every product sits on the same refined data layer. Insight compounds across Oracle, Forge, and whatever we forge next.'),
       glyph: 'forge',
     },
@@ -765,9 +765,9 @@ function WhyUs({ mobile }) {
         <div style={{ marginBottom: 64 }}>
           <div className="p-eyebrow" style={{ marginBottom: 18 }}><span className="dot" />{t('WHY NOW · WHY US')}</div>
           <h2 style={{
-            fontFamily: 'var(--font-serif)',
+            fontFamily: 'var(--font-sans)',
             fontSize: mobile ? 34 : 'clamp(40px, 4.4vw, 62px)',
-            lineHeight: 1.05, letterSpacing: '-0.018em', margin: 0, fontWeight: 400, maxWidth: '24ch', textWrap: 'balance',
+            lineHeight: 1.05, letterSpacing: 'var(--track-tighter)', margin: 0, fontWeight: 'var(--weight-bold)', maxWidth: '24ch', textWrap: 'balance',
           }}>
             {t('Three reasons we’re the company built to do this.')}
           </h2>
@@ -791,16 +791,16 @@ function Pillar({ num, title, body, glyph, last, mobile }) {
       borderBottom: (mobile && !last) ? '1px solid var(--border)' : 'none',
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
-        <span className="p-mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--fg-soft)' }}>· {num}</span>
+        <span className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)' }}>· {num}</span>
         <div style={{ color: 'var(--amber)' }}><Glyph /></div>
       </div>
-      <div className="p-serif" style={{ fontSize: 28, lineHeight: 1.15, color: 'var(--fg)', letterSpacing: '-0.015em' }}>{title}</div>
+      <div className="p-serif" style={{ fontSize: 28, lineHeight: 1.15, color: 'var(--fg)' }}>{title}</div>
       <div style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--fg-mute)' }}>{body}</div>
     </div>
   );
 }
 
-// Minimal geometric glyphs — single concept each, no SVG slop
+// Minimal geometric glyphs - single concept each, no SVG slop
 function FlameGlyph() {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36">
@@ -810,7 +810,7 @@ function FlameGlyph() {
   );
 }
 function StarGlyph() {
-  // Vietnamese gold star — simplified geometry
+  // Vietnamese gold star - simplified geometry
   return (
     <svg width="36" height="36" viewBox="0 0 36 36">
       <polygon points="18,5 21.5,13.5 31,14 23.5,20 26,29 18,24 10,29 12.5,20 5,14 14.5,13.5" className="ic" strokeWidth="1.2" />
@@ -851,9 +851,9 @@ function CTAStrip({ mobile }) {
       <div style={{ maxWidth: 980, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
         <BrandSpark size={20} />
         <h2 style={{
-          fontFamily: 'var(--font-serif)',
+          fontFamily: 'var(--font-sans)',
           fontSize: mobile ? 36 : 'clamp(40px, 5.4vw, 76px)',
-          lineHeight: 1.02, letterSpacing: '-0.02em', margin: '24px 0 16px', fontWeight: 400, textWrap: 'balance',
+          lineHeight: 1.02, letterSpacing: 'var(--track-tighter)', margin: '24px 0 16px', fontWeight: 'var(--weight-bold)', textWrap: 'balance',
         }}>
           {t('Put the foundation on your desk.')}
         </h2>
@@ -881,26 +881,26 @@ function Footer({ mobile }) {
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1.5fr 1fr 1fr 1fr', gap: 36, marginBottom: 56 }}>
           <div>
             <Wordmark />
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.3, color: 'var(--fg-mute)', marginTop: 18, maxWidth: '28ch' }}>
+            <div style={{ fontFamily: 'var(--font-sans)', fontSize: 22, lineHeight: 1.3, color: 'var(--fg-mute)', marginTop: 18, maxWidth: '28ch' }}>
               {t('The AI-native financial data platform for Vietnam’s capital markets.')}
             </div>
           </div>
           <FooterCol title={t('Products')} links={[t('Oracle (Early access)'), t('Forge (Coming soon)'), t('Roadmap')]} />
           <FooterCol title={t('Company')} links={[t('Manifesto'), t('About'), t('Careers'), t('Contact')]} />
-          {/* The Prometheus inception story lives at /origin — surfaced quietly only in the footer copyright row. */}
+          {/* The Prometheus inception story lives at /origin - surfaced quietly only in the footer copyright row. */}
           <FooterCol title={t('Reach us')} links={['oracle@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
         </div>
         <hr className="rule" />
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginTop: 24,
-          fontSize: 12, color: 'var(--fg-soft)', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
+          fontSize: 12, color: 'var(--fg-soft)', fontFamily: 'var(--font-sans)' }}>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-            <span>© 2026 PROMVIS</span>
+            <span>© 2026 Promvis</span>
             <span>·</span>
             <span>{t('Built by the people at ')}<a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px dotted currentColor' }}>CoderPush</a></span>
             <span>·</span>
             <span>{t('MADE IN VIETNAM ')}★</span>
             <span>·</span>
-            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="—">ORIGIN</a>
+            <a href="/origin" style={{ color: 'var(--fg-faint)', textDecoration: 'none', borderBottom: '1px dotted var(--fg-faint)' }} title="-">ORIGIN</a>
           </div>
           <div>{t('EARLY ACCESS · 2026')}</div>
         </div>
@@ -912,7 +912,7 @@ function Footer({ mobile }) {
 function FooterCol({ title, links }) {
   return (
     <div>
-      <div className="p-mono" style={{ fontSize: 10, letterSpacing: '0.16em', color: 'var(--fg-soft)', textTransform: 'uppercase', marginBottom: 14 }}>{title}</div>
+      <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)', textTransform: 'uppercase', marginBottom: 14 }}>{title}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {links.map(l => (
           <a key={l} href="#" style={{ fontSize: 13.5, color: 'var(--fg-mute)', textDecoration: 'none' }}>{l}</a>

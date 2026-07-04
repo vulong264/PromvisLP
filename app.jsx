@@ -1,4 +1,4 @@
-// PROMVIS — production app entry point.
+// PROMVIS - production app entry point.
 // Renders the full landing page directly (no design-canvas wrapper or tweaks panel).
 
 function useMobile() {
