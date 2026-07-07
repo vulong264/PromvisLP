@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Promvis Analyst - The AI-native broker assistant for Vietnam's securities firms</title>
+<link rel="icon" href="/brand/promvis-icon-dark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/brand/promvis-icon-dark.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -1085,10 +1087,15 @@ function BrandSpark({ size = 14, animated = true }) {
 }
 
 function Wordmark({ size = 13 }) {
+  // Official brand logo; the SVG viewBox has built-in whitespace, so negative
+  // margins keep the layout box matched to the old text wordmark.
   return (
-    <div className="wordmark" style={{ fontSize: size }}>
-      <BrandSpark size={size + 1} />
-      <span>PROMVIS</span>
+    <div className="wordmark" style={{ display: 'flex', alignItems: 'center' }}>
+      <img
+        src="/brand/promvis-logo-reverse-animated.svg"
+        alt="Promvis"
+        style={{ height: size * 2.6, display: 'block', margin: `${-size * 0.55}px ${-size * 0.75}px` }}
+      />
     </div>
   );
 }
