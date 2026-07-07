@@ -30,10 +30,17 @@ function BrandSpark({ size = 14, animated = true }) {
 }
 
 function Wordmark({ size = 13 }) {
+  // Official brand logo (white-on-transparent for the dark site). The SVG's
+  // viewBox carries built-in whitespace around the glyphs, so it renders
+  // taller than the visible mark — negative margins keep the layout box
+  // matched to the old 13px text wordmark.
   return (
-    <div className="wordmark" style={{ fontSize: size }}>
-      <BrandSpark size={size + 1} />
-      <span>PROMVIS</span>
+    <div className="wordmark" style={{ display: 'flex', alignItems: 'center' }}>
+      <img
+        src="/brand/promvis-logo-reverse-animated.svg"
+        alt="Promvis"
+        style={{ height: size * 2.6, display: 'block', margin: `${-size * 0.55}px ${-size * 0.75}px` }}
+      />
     </div>
   );
 }
