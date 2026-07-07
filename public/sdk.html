@@ -1,62 +1,88 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Promvis SDK — Integration Guide · Promvis</title>
 <meta name="description" content="Integration guide for the Promvis AI Chatbot SDK — embed a white-label, native AI stock-analysis assistant in your Android, iOS, Flutter, or React Native app.">
+<script>
+  (function () {
+    try { var l = localStorage.getItem('promvis-lang'); document.documentElement.setAttribute('data-lang', l === 'en' || l === 'vi' ? l : 'vi'); }
+    catch (e) { document.documentElement.setAttribute('data-lang', 'vi'); }
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/blog.css">
 <style>
-:root { color-scheme: dark; }
-* { box-sizing: border-box; }
-body { margin:0; padding:0; background:#0a0d12; color:#cdd3db;
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  line-height:1.65; -webkit-font-smoothing:antialiased; }
-.site-nav { max-width:880px; margin:0 auto; padding:20px 48px 0;
-  display:flex; justify-content:space-between; align-items:center; }
-.site-nav .wordmark { font-weight:700; letter-spacing:.12em; color:#f0f2f6; text-decoration:none; font-size:14px; }
-.site-nav .wordmark:hover { text-decoration:none; }
-.site-nav .nav-right a { font-size:13px; color:#8aa0ff; margin-left:18px; }
-.container { max-width:880px; margin:24px auto 32px; padding:40px 48px; background:#0e1116;
-  border:1px solid #232a35; border-radius:12px; box-shadow:0 1px 24px rgba(0,0,0,.35); }
-h1,h2,h3,h4 { line-height:1.25; margin:1.6em 0 .6em; font-weight:700; color:#f0f2f6; }
-h1 { font-size:2em; padding-bottom:.3em; border-bottom:1px solid #2a3340; margin-top:0; }
-h2 { font-size:1.45em; padding-bottom:.3em; border-bottom:1px solid #20272f; }
-h3 { font-size:1.2em; } h4 { font-size:1em; }
-p,ul,ol,table,pre,blockquote { margin:0 0 16px; }
-a { color:#8aa0ff; text-decoration:none; } a:hover { text-decoration:underline; }
-code { font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
-  font-size:85%; background:#1b2230; color:#e6edf3; padding:.2em .4em; border-radius:6px; }
-pre { background:#0c1016; border:1px solid #222a35; border-radius:10px; padding:14px 16px;
-  overflow-x:auto; font-size:85%; line-height:1.5; }
-pre code { background:none; padding:0; font-size:100%; color:#cdd3db; }
-blockquote { border-left:4px solid #7d8aff; background:#141a27; padding:10px 16px;
-  border-radius:0 8px 8px 0; color:#bac1cc; }
-blockquote p { margin:.3em 0; }
-table { border-collapse:collapse; width:100%; display:block; overflow-x:auto; }
-th,td { border:1px solid #262e3a; padding:8px 12px; text-align:left; vertical-align:top; }
-th { background:#161b22; color:#e6edf3; font-weight:700; }
-tr:nth-child(2n) td { background:#11161d; }
-hr { border:none; border-top:1px solid #232a35; margin:28px 0; }
-@media (max-width:640px){
-  .site-nav{ padding:16px 18px 0; }
-  .container{ margin:16px 0 0; border-radius:0; padding:22px 18px; }
+/* Doc-specific styles on top of the shared site tokens (blog.css). */
+.doc { max-width: 58rem; margin: 44px auto 0; }
+.doc h2 {
+  font-weight: var(--weight-bold); letter-spacing: var(--track-tight); color: var(--fg);
+  font-size: clamp(22px, 2.6vw, 27px); line-height: 1.25;
+  margin: 2.3em 0 .7em; padding-bottom: .35em; border-bottom: 1px solid var(--border);
 }
-@media print { .site-nav{ display:none; } .container{ border:none; margin:0; max-width:none; box-shadow:none; } }
+.doc h3 { font-weight: var(--weight-bold); color: var(--fg); font-size: 19px; margin: 1.8em 0 .5em; }
+.doc p, .doc li { font-size: 16px; line-height: 1.7; color: var(--fg-mute); }
+.doc p, .doc ul, .doc ol, .doc table, .doc pre, .doc blockquote { margin: 0 0 18px; }
+.doc li { margin-bottom: 6px; }
+.doc strong { color: var(--fg); font-weight: var(--weight-bold); }
+.doc a { color: var(--amber); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--amber) 45%, transparent); }
+.doc a:hover { border-color: var(--amber); }
+.doc code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 85%; color: var(--fg);
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: .12em .4em; border-radius: 5px;
+}
+.doc pre {
+  background: color-mix(in oklab, var(--bg) 72%, black); border: 1px solid var(--border);
+  border-radius: 10px; padding: 15px 18px; overflow-x: auto;
+  font-size: 13.5px; line-height: 1.55;
+}
+.doc pre code { background: none; border: none; padding: 0; font-size: 100%; color: var(--fg-mute); }
+.doc blockquote {
+  border-left: 3px solid var(--amber);
+  background: color-mix(in oklab, var(--amber) 5%, var(--bg-elev));
+  border-radius: 0 8px 8px 0; padding: 14px 20px; color: var(--fg-mute);
+}
+.doc blockquote p { margin: .3em 0; font-size: 15.5px; }
+.doc table { border-collapse: collapse; width: 100%; display: block; overflow-x: auto; font-size: 14.5px; }
+.doc th, .doc td { border: 1px solid var(--border); padding: 9px 13px; text-align: left; vertical-align: top; color: var(--fg-mute); }
+.doc th { background: var(--bg-elev); color: var(--fg); font-weight: var(--weight-bold); }
+.doc tr:nth-child(2n) td { background: color-mix(in oklab, var(--bg-elev) 55%, var(--bg)); }
+.doc hr { border: none; border-top: 1px solid var(--border); margin: 34px 0; }
+@media print { .blog-nav { display: none; } }
 </style>
 </head>
 <body>
-<nav class="site-nav">
-  <a class="wordmark" href="/">PROMVIS</a>
+
+<nav class="blog-nav">
+  <a class="wordmark" href="/"><span class="spark"></span>PROMVIS</a>
   <div class="nav-right">
-    <a href="/Analyst.html">Analyst</a>
-    <a href="/blog.html">Blog</a>
+    <a class="nav-link" href="/blog.html"><span class="lang-en">Blog</span><span class="lang-vi">Blog</span></a>
+    <a class="nav-link" href="/Analyst.html">Analyst</a>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" data-lang-set="en">EN</button>
+      <button type="button" data-lang-set="vi">VI</button>
+    </div>
   </div>
 </nav>
-<main class="container">
-<h1>Promvis SDK — Integration Guide</h1>
+
+<div class="wrap">
+  <article class="article">
+
+    <div class="article-head">
+      <div class="p-eyebrow"><span class="dot"></span><span class="lang-en">Developer documentation</span><span class="lang-vi">Tài liệu cho lập trình viên</span></div>
+      <h1>Promvis SDK — Integration Guide</h1>
+      <p class="deck">
+        <span class="lang-en">Embed a white-label, native AI stock-analysis assistant in your Android, iOS, Flutter, or React Native app.</span>
+        <span class="lang-vi">Nhúng trợ lý AI phân tích cổ phiếu white-label, giao diện native vào ứng dụng Android, iOS, Flutter hoặc React Native của bạn.</span>
+      </p>
+    </div>
+
+    <div class="doc">
 <p><strong>Promvis SDK</strong> is a white-label, native-core AI stock-analysis assistant that
 securities firms (CTCKs) embed into their own mobile apps. The chat UI renders
 <strong>natively</strong> (Kotlin/Compose on Android, Swift/SwiftUI on iOS) — no WebView — with
@@ -411,7 +437,16 @@ refresh semantics).</li>
 </ol>
 <hr>
 <p><em>Questions? Contact <a href="mailto:analyst@promvis.io">analyst@promvis.io</a>.</em></p>
+    </div>
 
-</main>
+  </article>
+
+  <footer class="site-foot">
+    <span>© 2026 Promvis</span>
+    <span><span class="lang-en">Built by the people at </span><span class="lang-vi">Được xây dựng bởi đội ngũ </span><a href="https://coderpush.com/" target="_blank" rel="noopener noreferrer">CoderPush</a></span>
+  </footer>
+</div>
+
+<script src="/blog/blog.js" defer></script>
 </body>
 </html>
