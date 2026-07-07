@@ -83,6 +83,9 @@ html[data-lang="en"] .lang-vi { display: none !important; }
   font-family: var(--font-sans); font-weight: var(--weight-bold); letter-spacing: var(--track-caps); font-size: 13px;
   color: var(--fg); text-decoration: none; display: inline-flex; align-items: center; gap: 12px;
 }
+/* Official brand logo. The SVG viewBox carries built-in whitespace around the
+   glyphs, so negative margins keep the nav's layout box compact. */
+.wordmark img { height: 34px; display: block; margin: -7px -10px; }
 .spark { width: 13px; height: 13px; position: relative; flex: 0 0 auto; display: inline-block; }
 .spark::before, .spark::after {
   content: ""; position: absolute; inset: 0; border-radius: 50%;
