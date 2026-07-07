@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Promvis SDK — Integration Guide · Promvis</title>
+<meta name="description" content="Integration guide for the Promvis AI Chatbot SDK — embed a white-label, native AI stock-analysis assistant in your Android, iOS, Flutter, or React Native app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin:0; padding:0; background:#0a0d12; color:#cdd3db;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.65; -webkit-font-smoothing:antialiased; }
+.site-nav { max-width:880px; margin:0 auto; padding:20px 48px 0;
+  display:flex; justify-content:space-between; align-items:center; }
+.site-nav .wordmark { font-weight:700; letter-spacing:.12em; color:#f0f2f6; text-decoration:none; font-size:14px; }
+.site-nav .wordmark:hover { text-decoration:none; }
+.site-nav .nav-right a { font-size:13px; color:#8aa0ff; margin-left:18px; }
+.container { max-width:880px; margin:24px auto 32px; padding:40px 48px; background:#0e1116;
+  border:1px solid #232a35; border-radius:12px; box-shadow:0 1px 24px rgba(0,0,0,.35); }
+h1,h2,h3,h4 { line-height:1.25; margin:1.6em 0 .6em; font-weight:700; color:#f0f2f6; }
+h1 { font-size:2em; padding-bottom:.3em; border-bottom:1px solid #2a3340; margin-top:0; }
+h2 { font-size:1.45em; padding-bottom:.3em; border-bottom:1px solid #20272f; }
+h3 { font-size:1.2em; } h4 { font-size:1em; }
+p,ul,ol,table,pre,blockquote { margin:0 0 16px; }
+a { color:#8aa0ff; text-decoration:none; } a:hover { text-decoration:underline; }
+code { font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  font-size:85%; background:#1b2230; color:#e6edf3; padding:.2em .4em; border-radius:6px; }
+pre { background:#0c1016; border:1px solid #222a35; border-radius:10px; padding:14px 16px;
+  overflow-x:auto; font-size:85%; line-height:1.5; }
+pre code { background:none; padding:0; font-size:100%; color:#cdd3db; }
+blockquote { border-left:4px solid #7d8aff; background:#141a27; padding:10px 16px;
+  border-radius:0 8px 8px 0; color:#bac1cc; }
+blockquote p { margin:.3em 0; }
+table { border-collapse:collapse; width:100%; display:block; overflow-x:auto; }
+th,td { border:1px solid #262e3a; padding:8px 12px; text-align:left; vertical-align:top; }
+th { background:#161b22; color:#e6edf3; font-weight:700; }
+tr:nth-child(2n) td { background:#11161d; }
+hr { border:none; border-top:1px solid #232a35; margin:28px 0; }
+@media (max-width:640px){
+  .site-nav{ padding:16px 18px 0; }
+  .container{ margin:16px 0 0; border-radius:0; padding:22px 18px; }
+}
+@media print { .site-nav{ display:none; } .container{ border:none; margin:0; max-width:none; box-shadow:none; } }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="wordmark" href="/">PROMVIS</a>
+  <div class="nav-right">
+    <a href="/Analyst.html">Analyst</a>
+    <a href="/blog.html">Blog</a>
+  </div>
+</nav>
+<main class="container">
+<h1>Promvis SDK — Integration Guide</h1>
+<p><strong>Promvis SDK</strong> is a white-label, native-core AI stock-analysis assistant that
+securities firms (CTCKs) embed into their own mobile apps. The chat UI renders
+<strong>natively</strong> (Kotlin/Compose on Android, Swift/SwiftUI on iOS) — no WebView — with
+first-class bridges for <strong>Flutter</strong> and <strong>React Native</strong>.</p>
+<blockquote>
+<p>⚠️ <strong>DRAFT / PREVIEW.</strong> The public API below is the intended integration
+contract. The distributable artifacts (AAR, Swift Package, plugins) are not
+published yet, and three backend decisions are still open (multi-tenant
+routing, token issuance, API versioning — see <a href="#open-items">Open items</a>).
+Names and coordinates may change.</p>
+</blockquote>
+<hr>
+<h2>1. What you get</h2>
+<ul>
+<li>A drop-in chat surface: streaming answers with <strong>GFM markdown, tables, inline +
+block LaTeX, and charts</strong>, rendered natively.</li>
+<li>One <strong>launch entry point</strong> per platform — pass a ticker, get the assistant.</li>
+<li><strong>White-label</strong> theming + <strong>vi/en</strong> localization.</li>
+<li><strong>Advisory-only</strong> by design: the SDK never places orders, payments, or OTP, and
+never bridges into your trading flows.</li>
+</ul>
+<p>You bring: a <strong>base URL</strong> + a way to mint a <strong>short-lived auth token</strong> for the
+logged-in user (your backend ↔ the AI backend). Nothing secret is hardcoded in
+the app.</p>
+<h2>2. Compatibility</h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Minimum</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Android</strong></td>
+<td>minSdk 26 (8.0), Java 17</td>
+<td>Kotlin 2.0.21, Compose BOM 2024.09.03. Compose host required for the inline <code>AiChatView</code>; an Activity/Fragment entry is also provided.</td>
+</tr>
+<tr>
+<td><strong>iOS</strong></td>
+<td>iOS 16.0, Xcode 16</td>
+<td>Swift 5.9+, SwiftUI. UIKit wrapper provided.</td>
+</tr>
+<tr>
+<td><strong>Flutter</strong></td>
+<td>3.x (Dart 3)</td>
+<td>Android + iOS. Embeds the native view via a <code>PlatformView</code>.</td>
+</tr>
+<tr>
+<td><strong>React Native</strong></td>
+<td>0.74+</td>
+<td>Old-arch verified; Fabric (new-arch) support tracked.</td>
+</tr>
+</tbody></table>
+<h2>3. Get credentials</h2>
+<p>You need two values, <strong>provisioned per tenant</strong> by the SDK vendor:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Example</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>baseUrl</code></td>
+<td><code>https://&lt;tenant&gt;.ai-gateway.example.com</code></td>
+<td>App config / build-time env — <strong>never</strong> committed</td>
+</tr>
+<tr>
+<td>auth token</td>
+<td>short-lived JWT</td>
+<td>Minted at runtime by <strong>your</strong> backend, fed to the SDK via a <code>tokenProvider</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🧪 <strong>Demo / sandbox environment.</strong> A shared demo AI backend is available on
+request — contact <a href="mailto:analyst@promvis.io">analyst@promvis.io</a> for the
+sandbox <code>baseUrl</code> and a test token to try the SDK before your per-tenant
+instance is provisioned.</p>
+</blockquote>
+<blockquote>
+<p>🔒 <strong>Keep secrets out of source.</strong> Inject <code>baseUrl</code> from your build config and
+obtain the token at runtime via your <code>tokenProvider</code>. Never ship a static token
+in the binary, and don&#39;t commit real tokens to source control.</p>
+</blockquote>
+<h2>4. Install</h2>
+<blockquote>
+<p>Coordinates are placeholders for the preview. Replace with the published ones.</p>
+</blockquote>
+<p><strong>Android</strong> — <code>build.gradle.kts</code></p>
+<pre><code class="language-kotlin">repositories {
+    maven { url = uri(&quot;https://maven.example.com/promvis&quot;) } // provided per tenant
+}
+dependencies {
+    implementation(&quot;com.promvis:ai-chat-sdk:0.1.0&quot;)
+}
+</code></pre>
+<p><strong>iOS</strong> — Swift Package Manager (<code>Package.swift</code> or Xcode → Add Package)</p>
+<pre><code class="language-swift">.package(url: &quot;https://github.com/promvis/ai-chat-sdk-ios.git&quot;, from: &quot;0.1.0&quot;)
+// product: &quot;AIChatSDK&quot;
+</code></pre>
+<p>…or CocoaPods: <code>pod &#39;AIChatSDK&#39;, &#39;~&gt; 0.1&#39;</code></p>
+<p><strong>Flutter</strong> — <code>pubspec.yaml</code></p>
+<pre><code class="language-yaml">dependencies:
+  promvis_ai_chat: ^0.1.0
+</code></pre>
+<p><strong>React Native</strong></p>
+<pre><code class="language-bash">npm install @promvis/ai-chat-sdk
+cd ios &amp;&amp; pod install
+</code></pre>
+<h2>5. Initialize (once, at app start)</h2>
+<p>Configure the SDK before presenting any chat. The token is supplied through a
+<strong>provider</strong> so the SDK can refresh it on expiry (see <a href="#7-authentication--token-refresh">Authentication</a>).</p>
+<p><strong>Android</strong></p>
+<pre><code class="language-kotlin">AiChatSdk.initialize(
+    AiChatConfig(
+        baseUrl = BuildConfig.AI_BASE_URL,          // injected, not hardcoded
+        tenantId = &quot;ctck-demo&quot;,                     // if the gateway model is used
+        tokenProvider = { authRepository.freshAiToken() }, // suspend fun, may refresh
+        theme = AiChatTheme(primary = Color(0xFF1565C0)),
+        locale = AiChatLocale.VI,
+    ),
+)
+</code></pre>
+<p><strong>iOS</strong></p>
+<pre><code class="language-swift">AIChatSDK.initialize(.init(
+    baseURL: AppConfig.aiBaseURL,
+    tenantId: &quot;ctck-demo&quot;,
+    tokenProvider: { await authService.freshAIToken() },
+    theme: .init(primary: .init(hex: 0x1565C0)),
+    locale: .vi
+))
+</code></pre>
+<p><strong>Flutter</strong></p>
+<pre><code class="language-dart">await AiChatSdk.initialize(AiChatConfig(
+  baseUrl: const String.fromEnvironment(&#39;AI_BASE_URL&#39;),
+  tenantId: &#39;ctck-demo&#39;,
+  tokenProvider: () =&gt; auth.freshAiToken(),
+  theme: AiChatTheme(primary: Color(0xFF1565C0)),
+  locale: AiChatLocale.vi,
+));
+</code></pre>
+<p><strong>React Native</strong></p>
+<pre><code class="language-tsx">import { AiChatSdk } from &#39;@promvis/ai-chat-sdk&#39;;
+
+await AiChatSdk.initialize({
+  baseUrl: Config.AI_BASE_URL,
+  tenantId: &#39;ctck-demo&#39;,
+  tokenProvider: () =&gt; auth.freshAiToken(),
+  theme: { primary: &#39;#1565C0&#39; },
+  locale: &#39;vi&#39;,
+});
+</code></pre>
+<h2>6. Present the chatbot</h2>
+<p>Launch with a <code>ticker</code> and an optional <strong>mode</strong> — <code>overview</code> (quick take) or
+<code>deep</code> (in-depth). You may also seed an initial <code>userMessage</code>.</p>
+<table>
+<thead>
+<tr>
+<th><code>LaunchParams</code></th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ticker</code></td>
+<td><code>String</code></td>
+<td>✅</td>
+<td>e.g. <code>&quot;HPG&quot;</code></td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>overview</code> | <code>deep</code></td>
+<td>—</td>
+<td>default <code>overview</code></td>
+</tr>
+<tr>
+<td><code>userMessage</code></td>
+<td><code>String?</code></td>
+<td>—</td>
+<td>seed the first question (e.g. a tapped suggestion)</td>
+</tr>
+<tr>
+<td><code>onClosed</code></td>
+<td>callback</td>
+<td>—</td>
+<td>fired when the user dismisses the chat</td>
+</tr>
+</tbody></table>
+<p><strong>Android</strong> — modal (Activity/Fragment host)</p>
+<pre><code class="language-kotlin">AiChatSdk.presentChatbot(
+    context,
+    LaunchParams(ticker = &quot;HPG&quot;, mode = ChatMode.Overview),
+    onClosed = { viewModel.refreshRateLimit() },
+)
+</code></pre>
+<p>…or inline inside your Compose tree:</p>
+<pre><code class="language-kotlin">AiChatView(ticker = &quot;HPG&quot;, mode = ChatMode.Overview, modifier = Modifier.fillMaxSize())
+</code></pre>
+<p><strong>iOS</strong></p>
+<pre><code class="language-swift">// SwiftUI
+AIChatView(ticker: &quot;HPG&quot;, mode: .overview)
+
+// UIKit
+let vc = AIChatViewController(ticker: &quot;HPG&quot;, mode: .overview)
+present(vc, animated: true)
+</code></pre>
+<p><strong>Flutter</strong></p>
+<pre><code class="language-dart">AiChatView(ticker: &#39;HPG&#39;, mode: ChatMode.overview) // embed in a sheet/page
+</code></pre>
+<p><strong>React Native</strong></p>
+<pre><code class="language-tsx">import { AiChatView } from &#39;@promvis/ai-chat-sdk&#39;;
+
+&lt;AiChatView ticker=&quot;HPG&quot; mode=&quot;overview&quot; style={{ flex: 1 }} /&gt;
+</code></pre>
+<h2>7. Authentication &amp; token refresh</h2>
+<ul>
+<li>The SDK authenticates every request with the header <strong><code>x-auth-token: &lt;token&gt;</code></strong>
+(not <code>Authorization: Bearer</code>).</li>
+<li><code>tokenProvider</code> is called on init and again <strong>whenever a request returns 401</strong>
+mid-stream — the SDK swaps the header and resumes the SSE stream. Return a fresh,
+short-lived token; do not cache an expired one.</li>
+<li><strong>Your backend mints the token</strong> for the signed-in user (the trust model — S2S
+exchange vs OIDC federation — is <a href="#open-items">open</a>). The app never embeds a
+static, long-lived token.</li>
+</ul>
+<pre><code class="language-kotlin">// tokenProvider should be cheap when the cached token is still valid,
+// and perform a real refresh when it isn&#39;t.
+tokenProvider = {
+    authRepository.cachedAiToken()?.takeIf { it.notExpired }
+        ?: authRepository.refreshAiToken()
+}
+</code></pre>
+<h2>8. Theming (white-label)</h2>
+<p>Brand the chat to match your app via <code>AiChatTheme</code> at <code>initialize()</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>primary</code></td>
+<td>accent (buttons, user bubble, links)</td>
+</tr>
+<tr>
+<td><code>secondary</code></td>
+<td>secondary accent</td>
+</tr>
+<tr>
+<td><code>background</code> / <code>surface</code></td>
+<td>screen + card backgrounds</td>
+</tr>
+<tr>
+<td><code>onSurface</code></td>
+<td>primary text color</td>
+</tr>
+<tr>
+<td><code>fontFamily</code> <em>(optional)</em></td>
+<td>brand typeface</td>
+</tr>
+<tr>
+<td><code>darkMode</code> <em>(optional)</em></td>
+<td><code>system</code> | <code>light</code> | <code>dark</code></td>
+</tr>
+</tbody></table>
+<p>For v1, token-level theming (colors + typography) is supported; deeper
+layout/density customization is on the roadmap.</p>
+<h2>9. Localization</h2>
+<p>Set <code>locale</code> to <code>vi</code> or <code>en</code> at init; all built-in strings and the assistant&#39;s
+response language follow it. Default is <code>vi</code>.</p>
+<h2>10. Guardrails &amp; security</h2>
+<ul>
+<li><strong>Advisory-only (hard rule).</strong> The chatbot is informational. It does not create
+orders, payments, OTP/SmartOTP, and it will not bridge into your trading APIs.</li>
+<li><strong>TLS per tenant.</strong> Transport uses standard system trust by default; optional
+certificate pinning can be supplied through config. The SDK ships <strong>no</strong>
+certificate-bypass logic.</li>
+<li><strong>No secrets in the app.</strong> <code>baseUrl</code> comes from your build config; the token
+comes from your <code>tokenProvider</code>. Nothing sensitive is baked into the binary.</li>
+</ul>
+<h2>11. Backend contract (for your BE team)</h2>
+<p>The SDK talks only to the Promvis Analyst AI endpoints below (header <code>x-auth-token</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>POST /api/chat/new</code></td>
+<td>open a chat thread → <code>threadId</code></td>
+</tr>
+<tr>
+<td><code>POST /agno-chat</code></td>
+<td>AG-UI <code>RunAgentInput</code>; <strong>SSE</strong> stream of <code>TEXT_MESSAGE_*</code>, <code>CUSTOM</code>, <code>RUN_*</code> events. Assistant replies may include <code>```assistant_chart</code> blocks (chart schema v1.0).</td>
+</tr>
+<tr>
+<td><code>GET /api/insights/ticker?ticker=&lt;symbol&gt;</code></td>
+<td>insight cards + suggested follow-up questions for the ticker</td>
+</tr>
+</tbody></table>
+<p>Your backend&#39;s job is to (a) mint the per-user token and (b) route to the correct
+tenant&#39;s Promvis Analyst instance.</p>
+<h2>12. Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>OkHttp</code>/dependency clash on Android</td>
+<td>the SDK relocates (shades) its OkHttp; if you still see a clash, align versions or report it</td>
+</tr>
+<tr>
+<td>R8/Proguard strips rendering</td>
+<td>the SDK ships consumer rules; ensure you don&#39;t override them</td>
+</tr>
+<tr>
+<td>iOS LaTeX renders blank</td>
+<td>known SwiftUI snapshot timing — fixed inside the SDK; update to the latest patch</td>
+</tr>
+<tr>
+<td>401 loop</td>
+<td>your <code>tokenProvider</code> is returning a stale/expired token — return a freshly refreshed one</td>
+</tr>
+<tr>
+<td>Chat shows offline fallback</td>
+<td>the SDK couldn&#39;t reach <code>baseUrl</code> or the token was rejected; check both</td>
+</tr>
+</tbody></table>
+<h2>13. Versioning &amp; support</h2>
+<ul>
+<li>The SDK follows <strong>SemVer</strong>; the public facade is stable within a major version.</li>
+<li>A compatibility matrix maps each <strong>SDK x.y ↔ Promvis Analyst API vN</strong> (published
+with each release).</li>
+</ul>
+<h2 id="open-items">Open items</h2>
+<p>These are pending backend decisions that may slightly change the contract above:</p>
+<ol>
+<li><strong>Multi-tenant routing</strong> — per-tenant base URL vs a shared gateway + <code>tenantId</code>
+(affects whether you pass <code>tenantId</code>).</li>
+<li><strong>Token issuance / trust</strong> — S2S token-exchange vs OIDC federation (+ TTL /
+refresh semantics).</li>
+<li><strong>API versioning &amp; error taxonomy</strong> — the SDK↔API version table and error codes.</li>
+</ol>
+<hr>
+<p><em>Questions? Contact <a href="mailto:analyst@promvis.io">analyst@promvis.io</a>.</em></p>
+
+</main>
+</body>
+</html>

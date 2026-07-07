@@ -885,7 +885,7 @@ function Footer({ mobile }) {
               {t('The AI-native financial data platform for Vietnam’s capital markets.')}
             </div>
           </div>
-          <FooterCol title={t('Products')} links={[t('Analyst (Early access)'), t('Forge (Coming soon)'), t('Roadmap')]} />
+          <FooterCol title={t('Products')} links={[t('Analyst (Early access)'), t('Forge (Coming soon)'), t('Roadmap'), { label: t('SDK integration guide'), href: '/sdk.html' }]} />
           <FooterCol title={t('Company')} links={[t('Manifesto'), t('About'), t('Careers'), t('Contact')]} />
           {/* The Prometheus inception story lives at /origin - surfaced quietly only in the footer copyright row. */}
           <FooterCol title={t('Reach us')} links={['analyst@promvis.io', t('Hanoi · District Ba Đình'), 'LinkedIn']} />
@@ -914,9 +914,12 @@ function FooterCol({ title, links }) {
     <div>
       <div className="p-mono" style={{ fontSize: 10, letterSpacing: 'var(--track-caps)', color: 'var(--fg-soft)', textTransform: 'uppercase', marginBottom: 14 }}>{title}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {links.map(l => (
-          <a key={l} href="#" style={{ fontSize: 13.5, color: 'var(--fg-mute)', textDecoration: 'none' }}>{l}</a>
-        ))}
+        {links.map(l => {
+          const { label, href } = typeof l === 'string' ? { label: l, href: '#' } : l;
+          return (
+            <a key={label} href={href} style={{ fontSize: 13.5, color: 'var(--fg-mute)', textDecoration: 'none' }}>{label}</a>
+          );
+        })}
       </div>
     </div>
   );
